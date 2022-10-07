@@ -4,14 +4,13 @@ import HomePage from "../pages/HomePage"
 import Template from "../components/Template";
 import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
-import DashboardCustomer from "../pages/DashboardCustomer";
 import CartPage from "../pages/CartPage";
-// import DashboardAdmin from "../pages/DashboardAdmin";
-import ProductListPage from "../pages/ProductListPage";
 import Register from "../pages/Register";
+import ProductListPage from "../pages/ProductListPage";
+import Dashboard from "../pages/Dashboard";
+import DashboardSettings from "../components/DashboardSettings";
 
-// import Dashboard from "../pages/Dashboard";
-
+// import Dashboard from "../pa../components/DashboardSettings
 
 const router = createBrowserRouter([
   {
@@ -28,16 +27,22 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <DashboardCustomer />
+        element: <Dashboard />,
+        children: [
+          {
+            path: "settings",
+            element: <DashboardSettings />
+          },
+          {
+            path: "cart",
+            element: <CartPage />
+          },
+          {
+            path: "products",
+            element: <ProductListPage />
+          }
+        ]
       },
-      {
-        path: "cart",
-        element: <CartPage />
-      },
-      {
-        path: "products",
-        element: <ProductListPage />
-      }
     ]
   },
   {
