@@ -26,12 +26,8 @@ const router = createBrowserRouter([
         element: <DetailPage />
       },
       {
-        path: 'dashboard-customer',
+        path: 'dashboard',
         element: <DashboardCustomer />
-      },
-      {
-        path: 'dashboard-admin',
-        element: <DashboardAdmin />
       },
       {
         path: "cart",

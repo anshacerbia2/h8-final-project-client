@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../store/actions";
 import logo from "../logo.png";
-import Footer  from "../components/Footer";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -17,48 +17,7 @@ export default function HomePage() {
 
   return (
     <div className="container mt-4">
-      <div
-        className="row"
-        // style={{ border: "0.1px solid #999999", height: "80" }}
-      >
-        <div className="col-3 d-flex align-items-center">
-          <img src={logo} height="80px" width="100px" alt="Agro Shop" />
-        </div>
-        <div
-          className="col d-flex justify-content-center align-items-center"
-          style={{
-            borderLeft: "0.2px solid #999999",
-          }}
-        >
-          <nav className="">
-            <ul class="nav">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  product
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  login
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  register
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className="col d-flex justify-content-center align-items-center">
-          Cart
-        </div>
-      </div>
+
       {/* Section Header */}
       <div
         className="row mt-2"

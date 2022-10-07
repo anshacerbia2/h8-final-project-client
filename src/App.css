@@ -52,9 +52,9 @@
 }
 
 /* ------------- DETAIL PAGE ------------- */
-#DetailPage {
+/* #DetailPage {
   min-height: 100vh;
-}
+} */
 
 .detail-navbar {
   height: 60px;

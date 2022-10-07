@@ -1,20 +1,11 @@
 import '../App.css';
+import Breadcumb from '../components/Breadcumb';
 import '../css/detailPage.css';
 
 export default function DetailPage() {
   return (
     <div id="DetailPage">
-      <div className="detail-navbar">
-        <div className="container">
-          <div className="detail-navbar-wrapper">
-            <a>Home</a>
-            /
-            <a>Category</a>
-            /
-            <a>Product Name</a>
-          </div>
-        </div>
-      </div>
+      <Breadcumb />
       <div className="container">
         <div className="custom-row-1">
           <div className="custom-col-2"
