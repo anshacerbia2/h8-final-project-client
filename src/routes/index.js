@@ -9,6 +9,9 @@ import CartPage from "../pages/CartPage";
 import DashboardAdmin from "../pages/DashboardAdmin";
 import ProductListPage from "../pages/ProductListPage";
 
+// import Dashboard from "../pages/Dashboard";
+
+
 const router = createBrowserRouter([
   {
     path: '/',
