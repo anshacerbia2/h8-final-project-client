@@ -1,0 +1,246 @@
+h3 {
+  font-family: 'Bebas Neue';
+  font-size: 36px;
+  line-height: 36px;
+  margin-bottom: 30px;
+  text-align: left;
+  letter-spacing: 1px;
+  padding-bottom: 20px;
+  /* font-weight: 600; */
+  text-align: center;
+  border-bottom: 1px solid #9e9e9e;
+}
+
+#loginPage {
+  /* max-width: 350px; */
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+}
+
+#loginLogo {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#loginLogo>img {
+  width: 80px;
+}
+
+/* -------------------- FORM FLOATING -------------------- */
+.form-floating {
+  position: relative;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.form-floating::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #111111;
+  transform: scaleX(0);
+  z-index: 1;
+  transition: transform 0.4s ease-in-out;
+}
+
+.form-floating>.form-control,
+.form-floating>.form-select {
+  display: flex;
+  align-items: center;
+  height: 54px;
+  padding: 0;
+  border: none;
+  border-radius: 2px;
+  /* background-color: #252525; */
+  /* border: 1px solid; */
+  /* border-color: #252525; */
+  color: #5b5959;
+  font-family: 'Source Sans Pro';
+  font-size: 18px;
+  font-weight: 600;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.form-floating:focus-within:before {
+  transform: scaleX(1);
+}
+
+.form-floating>input[name='password'] {
+  padding: 0 50px 0 0;
+}
+
+.form-floating>.form-control.is-invalid {
+  padding: 0 40px 0 0;
+}
+
+.form-floating>input[name='password'].is-invalid {
+  padding: 0 70px 0 0;
+}
+
+.form-floating>label {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  color: #5b5959;
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-floating>.form-control:disabled,
+.form-floating>.form-control[readonly] {
+  background-color: transparent;
+}
+
+.form-floating>.form-control:focus,
+.form-floating>.form-control:not(:placeholder-shown),
+.form-floating>.form-select {
+  padding: 12px 0 0 0;
+  box-shadow: none;
+}
+
+.form-floating>.form-control:focus,
+.form-floating>.form-select:focus {
+  border-color: #64daa529;
+}
+
+.form-floating>input[name='password']:focus,
+.form-floating>input[name='password']:not(:placeholder-shown) {
+  padding: 12px 50px 0 0;
+}
+
+.form-floating>.form-control.is-invalid:focus,
+.form-floating>.form-control.is-invalid:not(:placeholder-shown) {
+  padding: 12px 40px 0 0;
+}
+
+.form-floating>input[name='password'].is-invalid:focus,
+.form-floating>input[name='password'].is-invalid:not(:placeholder-shown) {
+  padding: 12px 70px 0 0;
+}
+
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label,
+.form-floating>.form-select~label {
+  opacity: 1;
+  transform: scale(.75) translateY(-7px) translateX(0);
+}
+
+.float-textarea>.form-control:focus,
+.float-textarea>.form-control:not(:placeholder-shown),
+.float-textarea>.form-select {
+  padding: 24px 0 0 0 !important;
+}
+
+/* Password Visibility */
+.password-visibility {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 100%;
+  user-select: none;
+}
+
+.password-visibility>span {
+  position: absolute;
+  color: #cbcbcb;
+  cursor: pointer;
+}
+
+.invalid-password {
+  right: 25px;
+}
+
+/* Invalid Validation */
+.invalid-validation {
+  margin: -15px 0 10px;
+  padding: 0;
+  color: #54a5cc;
+  font-family: 'Source Sans Pro';
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 13px;
+}
+
+.global-error-validation {
+  font-size: 14px;
+  text-align: center;
+}
+
+.privacy-policy {
+  font-size: 12px;
+  text-align: center;
+  color: #8d8d8d;
+}
+
+.custom-btn-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 36px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  background-color: #111111;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  font-family: 'Bebas Neue';
+  font-size: 16px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease-in-out;
+  /* box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 20%),
+    inset 0px 0px 0px 1px rgb(127 217 176 / 10%); */
+}
+
+/* .custom-btn-1[type='reset'] {
+  margin-right: 20px;
+  background-color: rgb(82, 105, 175);
+  box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 20%), inset 0px 0px 0px 1px rgb(82, 105, 175 / 10%);
+} */
+
+.custom-btn-1:hover {
+  color: #fff !important;
+  background-color: #111111 !important;
+}
+
+/* .custom-btn-1[type='reset']:hover {
+  color: rgba(255 255 255 / 87%);
+  background-color: rgb(84 115 209);
+} */
+
+#login-page .register-link,
+#register-page .login-link {
+  padding: 15px 0 0;
+  /* border-top: 1px solid #444444; */
+}
+
+#login-page .register-link>p,
+#register-page .login-link>p {
+  color: rgba(255 255 255 / 87%);
+  font-family: 'Source Sans Pro';
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+#login-page .register-link>p>a,
+#register-page .login-link>p>a {
+  color: #357192;
+  font-weight: 600;
+  font-style: italic;
+}
