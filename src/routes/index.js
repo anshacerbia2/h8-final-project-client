@@ -6,8 +6,9 @@ import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
 import DashboardCustomer from "../pages/DashboardCustomer";
 import CartPage from "../pages/CartPage";
-import DashboardAdmin from "../pages/DashboardAdmin";
+// import DashboardAdmin from "../pages/DashboardAdmin";
 import ProductListPage from "../pages/ProductListPage";
+import Register from "../pages/Register";
 
 // import Dashboard from "../pages/Dashboard";
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
   }
 ]);
 

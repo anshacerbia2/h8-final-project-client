@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Nav from "./Nav";
 import Footer from "./Footer";
 
 export default function Template() {
   const jumbotron = false;
   return (
     <>
-      {/* <div className="container"> */}
-      <Navbar jumbotron={jumbotron} />
+      {/* <Navbar jumbotron={jumbotron} /> */}
+      <Nav />
       <Outlet />
       <Footer />
-      {/* </div> */}
     </>
   );
 }

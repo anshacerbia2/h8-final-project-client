@@ -16,17 +16,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="container mt-4">
-
+    <div className="container mt-2">
       {/* Section Header */}
       <div
-        className="row mt-2"
+        className="row"
         style={{
-          // height: "500px",
-          // backgroundRepeat: "no-repeat",
-          // backgroundSize: "cover",
-          // backgroundBlendMode: "darken",
           color: "#fff",
+          width: "100%",
           backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')",
         }}
       >
@@ -42,14 +38,6 @@ export default function HomePage() {
             It uses utility classes for typography and spacing to space content
             out within the larger container.
           </p>
-          <a
-            class="btn btn-sm"
-            href="#"
-            role="button"
-            style={{ backgroundColor: "#83c81f", color: "#fff" }}
-          >
-            Learn more
-          </a>
         </div>
       </div>
       {/* Section Lelang */}

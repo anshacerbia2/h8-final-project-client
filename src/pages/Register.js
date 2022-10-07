@@ -14,10 +14,16 @@ export default function LoginPage() {
   const { isLoadingSubmit } = useSelector((state) => state.globalReducer);
   const [loginPwType, setLoginPwType] = useState("password");
   const [inputVal, setInputVal] = useState({
+    fName: "",
+    lName: "",
     email: "",
+    phoneNumber: "",
     password: "",
   });
   const [errorGlobal, setErrorGlobal] = useState("");
+  const [errorFirstName, setErrorFirstName] = useState("");
+  const [errorLastName, setErrorLastName] = useState("");
+  const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
@@ -36,7 +42,10 @@ export default function LoginPage() {
   const handleChange = (event) => {
     let name = event.currentTarget.name;
     let value = event.currentTarget.value;
-    setInputVal({ ...inputVal, [name]: value.toString() });
+    setInputVal({
+      ...inputVal,
+      [name]: value.toString(),
+    });
   };
 
   const clearError = () => {
@@ -52,8 +61,9 @@ export default function LoginPage() {
     // setErrorPassword('');
   };
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    // console.log(inputVal);
     // try {
     //   e.preventDefault();
     //   const response = await dispatch(userLogin(inputVal));
@@ -85,16 +95,70 @@ export default function LoginPage() {
     <section id="loginPage">
       <div className="container">
         <div className="login-page-wrapper">
-          <div
-            className="login-image"
-            style={{
-              backgroundImage: `url(${harvest1})`,
-            }}
-          ></div>
           <div id="login-page">
-            <h3 className="login-title">Login</h3>
+            <h4 className="login-title">
+              <strong>Buat akun baru kamu</strong>
+            </h4>
             <div className="login-page-form">
-              <form onSubmit={handleLogin}>
+              <form onSubmit={handleRegister}>
+                {/* Fistname */}
+                {errorFirstName && (
+                  <div className="invalid-validation">{errorFirstName}</div>
+                )}
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    name="fName"
+                    id="floatingFirstNameLoginPage"
+                    className="form-control"
+                    placeholder="example@mail.com"
+                    value={inputVal.fName}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="floatingEmailLoginPage">Nama depan</label>
+                </div>
+                {/* End Firstname */}
+                {/* Lastname */}
+                {errorLastName && (
+                  <div className="invalid-validation">{errorLastName}</div>
+                )}
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    name="lName"
+                    id="floatingFirstNameLoginPage"
+                    className="form-control"
+                    placeholder="example@mail.com"
+                    value={inputVal.lName}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="floatingEmailLoginPage">Nama belakang</label>
+                </div>
+                {/* End lastname */}
+                {/* Phone Number */}
+                {errorPhoneNumber && (
+                  <div className="invalid-validation">{errorPhoneNumber}</div>
+                )}
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    id="floatingFirstNameLoginPage"
+                    className="form-control"
+                    placeholder="example@mail.com"
+                    value={inputVal.phoneNumber}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="floatingEmailLoginPage">Phone Number</label>
+                </div>
+                {/* End Phone Number */}
+                {/* Email */}
+                {errorEmail && (
+                  <div className="invalid-validation">{errorEmail}</div>
+                )}
+                {errorEmail && (
+                  <div className="invalid-validation">{errorEmail}</div>
+                )}
                 {errorGlobal && (
                   <div className="invalid-validation global-error-validation">
                     {errorGlobal}
@@ -115,6 +179,8 @@ export default function LoginPage() {
                 {errorEmail && (
                   <div className="invalid-validation">{errorEmail}</div>
                 )}
+                {/* End Email */}
+                {/* Password */}
                 <div className="form-floating">
                   <input
                     type={loginPwType}
@@ -144,6 +210,23 @@ export default function LoginPage() {
                 {errorPassword && (
                   <div className="invalid-validation">{errorPassword}</div>
                 )}
+                {/* End Password */}
+                <div className="d-flex">
+                  <span
+                    class="material-icons-sharp"
+                    style={{
+                      color: "rgb(185 185 185)",
+                      fontSize: "20px",
+                      marginRight: "6px",
+                    }}
+                  >
+                    https
+                  </span>
+                  <p className="privacy-policy">
+                    Data kamu dilindungi dan tidak dibagikan, dan sudah
+                    mengikuti syarat dan ketentuan.
+                  </p>
+                </div>
                 <button className="btn custom-btn-1" onClick={clearError}>
                   {isLoadingSubmit ? (
                     <>
@@ -159,13 +242,19 @@ export default function LoginPage() {
                       <span style={{ marginLeft: "10px" }}>Loading...</span>
                     </>
                   ) : (
-                    "Login"
+                    "Daftar"
                   )}
                 </button>
               </form>
-              <small>Belum punya akun, silahkan <Link to="/register"> register</Link> dahulu</small>
+              <small>Sudah punya akun, silahkan <Link to="/login">login</Link></small>
             </div>
           </div>
+          <div
+            className="login-image"
+            style={{
+              backgroundImage: `url('https://cdn.pixabay.com/photo/2017/07/31/04/11/tomato-2556426__480.jpg')`,
+            }}
+          ></div>
         </div>
       </div>
     </section>
