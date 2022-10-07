@@ -1,7 +1,8 @@
 const initialstate = {
   users: [],
   isLoading: false,
-  isLoadingSubmit: false
+  isLoadingSubmit: false,
+  isLogin: false,
 }
 
 export default function userReducer(state = initialstate, action) {

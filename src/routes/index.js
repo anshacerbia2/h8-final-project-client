@@ -5,6 +5,7 @@ import Template from "../components/Template";
 import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
 import CartPage from "../pages/CartPage";
+import Register from "../pages/Register";
 import ProductListPage from "../pages/ProductListPage";
 import Dashboard from "../pages/Dashboard";
 import DashboardSettings from "../components/DashboardSettings";
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
   }
 ]);
 
