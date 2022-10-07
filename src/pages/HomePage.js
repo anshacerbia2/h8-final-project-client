@@ -255,8 +255,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      {/* Section Footer */}
-      <Footer />
       <div className="custom-row-1">
         {products?.map((product, i) => {
           return (

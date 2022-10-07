@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage"
 import Template from "../components/Template";
 import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
+import DashboardCustomer from "../pages/DashboardCustomer";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: 'product',
         element: <DetailPage />
+      },
+      {
+        path: 'dashboard-customer',
+        element: <DashboardCustomer />
       }
     ]
   },
