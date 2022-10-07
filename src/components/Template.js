@@ -8,7 +8,6 @@ export default function Template() {
     <>
       <div className="container">
         {/* <Navbar jumbotron={jumbotron} /> */}
-
         <Outlet />
         <Footer />
       </div>

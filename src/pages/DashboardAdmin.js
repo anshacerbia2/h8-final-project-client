@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashboardCustomer = () => {
+const DashboardAdmin = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,26 +40,20 @@ const DashboardCustomer = () => {
           className="row"
           style={{ backgroundColor: "#49b773", height: "150px" }}
         >
-          <div className="col d-flex flex-column justify-content-center align-items-center" style={{ color: "#fff"}}>
-            <h5>Dashboard Page</h5>
+          <div
+            className="col d-flex flex-column justify-content-center align-items-center"
+            style={{ color: "#fff" }}
+          >
+            <h5>Dashboard Page Admin</h5>
             <p>Lorem ipsum dolor siet amet consectetur adipisicing elit.</p>
           </div>
         </div>
         <main className="row my-4">
           <div className="col">
-            <h5>Dashboard Konsumer</h5>
-            <p>Hi, there!</p>
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <a href="#">Home</a>
-                </li>
-                <li className="breadcrumb-item">
-                  <a href="#">Product</a>
-                </li>
-              </ol>
-            </nav>
-            <button className="btn btn-sm btn-primary my-4 py-2">+ Add Product</button>
+            <h5>Dashboard Admin</h5>
+            <button className="btn btn-sm btn-primary my-4 py-2">
+              + Add Product
+            </button>
             <table className="table">
               <thead>
                 <tr>
@@ -77,8 +71,12 @@ const DashboardCustomer = () => {
                   <td>Rp. 200.000,00</td>
                   <td>Sayur dan buah</td>
                   <td>
-                    <a href="" className="btn btn-sm btn-secondary ml-3">Edit</a>
-                    <a href="" className="btn btn-sm btn-danger">Delete</a>
+                    <a href="" className="btn btn-sm btn-secondary ml-3">
+                      Edit
+                    </a>
+                    <a href="" className="btn btn-sm btn-danger">
+                      Delete
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -90,4 +88,4 @@ const DashboardCustomer = () => {
   );
 };
 
-export default DashboardCustomer;
+export default DashboardAdmin;
