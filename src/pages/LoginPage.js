@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Toast } from '../helpers.js';
+import { Toast } from '../helpers';
 import { userLogin } from '../store/actions';
 import '../css/login.css';
 import harvest1 from '../harvest-1.png';
