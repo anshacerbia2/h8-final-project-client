@@ -20,4 +20,12 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 });
 
-export { Toast, swalWithBootstrapButtons }
+const toIDR = (number) => {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+}
+
+const formatDate = (date) => {
+  return date.slice(0, 10);
+}
+
+export { Toast, swalWithBootstrapButtons, toIDR, formatDate }

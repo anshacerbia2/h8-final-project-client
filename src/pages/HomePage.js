@@ -11,7 +11,6 @@ export default function HomePage() {
   const { products } = useSelector((state) => state.productReducer);
 
   useEffect(() => {
-    // if (!localStorage.getItem('access_token')) navigate('/login');
     dispatch(fetchProducts());
   }, []);
 

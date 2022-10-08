@@ -9,8 +9,10 @@ import Register from "../pages/Register";
 import ProductListPage from "../pages/ProductListPage";
 import Dashboard from "../pages/Dashboard";
 import DashboardSettings from "../components/DashboardSettings";
-
-// import Dashboard from "../pa../components/DashboardSettings
+import DashboardAddress from "../components/DashboardAddress";
+import DashboardProducts from "../components/DashboardProducts";
+import DashboardCart from "../components/DashboardCart";
+import DashboardHistory from "../components/DashboardHistory";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: 'product',
+        path: 'product/:id',
         element: <DetailPage />
       },
       {
@@ -34,12 +36,20 @@ const router = createBrowserRouter([
             element: <DashboardSettings />
           },
           {
+            path: "address",
+            element: <DashboardAddress />
+          },
+          {
             path: "cart",
-            element: <CartPage />
+            element: <DashboardCart />
           },
           {
             path: "products",
-            element: <ProductListPage />
+            element: <DashboardProducts />
+          },
+          {
+            path: "history",
+            element: <DashboardHistory />
           }
         ]
       },

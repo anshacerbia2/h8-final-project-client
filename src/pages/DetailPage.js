@@ -1,8 +1,38 @@
 import '../App.css';
-import Breadcumb from '../components/Breadcumb';
 import '../css/detailPage.css';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProduct, fetchProvinces } from "../store/actions";
+import Breadcumb from '../components/Breadcumb';
+import { formatDate, toIDR } from '../helpers';
+import { isValidInputTimeValue } from '@testing-library/user-event/dist/utils';
 
 export default function DetailPage() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { product } = useSelector((state) => state.productReducer);
+  const { isLoading, provinces, cities } = useSelector((state) => state.globalReducer);
+  const [province, setProvince] = useState('');
+  const [inputVal, setInputVal] = useState({
+    courier: '',
+    province: '',
+    city: '',
+  });
+
+  useEffect(() => {
+    dispatch(fetchProduct(id));
+  }, []);
+
+  // dispatch(fetchProvinces());
+  const handleChange = (event) => {
+    let name = event.currentTarget.name;
+    let value = event.currentTarget.value;
+
+    setInputVal({ ...inputVal, [name]: value });
+
+  }
+
   return (
     <div id="DetailPage">
       <Breadcumb />
@@ -14,7 +44,7 @@ export default function DetailPage() {
               margin: '10px'
             }}
           >
-            <img className="detail-img" src={'https://cdn.shopify.com/s/files/1/0018/8327/5325/products/184710490.webp?v=1659441918'} />
+            <img className="detail-img" src={product.mainImg} />
           </div>
           <div className="custom-col-2"
             style={{
@@ -23,27 +53,24 @@ export default function DetailPage() {
               margin: '10px'
             }}
           >
-            <h3 className="detail-name">Tomat Super</h3>
+            <h3 className="detail-name">{product.name}</h3>
             <p className="detail-price">
-              <span className="price">Rp. 8000</span>
-              <span className="unit-price">/kg</span>
+              <span className="price">{toIDR(product.price)}</span>
+              <span className="unit-price">/{product.unit}</span>
             </p>
-            <p className="detail-info">Tanggal panen: {new Date().toISOString().slice(0, 10)}</p>
+            <p className="detail-info">Tanggal panen : &nbsp;{formatDate(product.harvestDate ? product.harvestDate : '')}</p>
             <p className="detail-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec erat luctus, vestibulum ante sodales, imperdiet est. Vivamus sodales mauris nisi. Etiam nec lacinia sem, nec dapibus eros. Cras sed turpis vitae odio posuere hendrerit viverra a sem. Phasellus neque ante, lacinia ut nibh in, pharetra accumsan ipsum. Nulla facilisi. Fusce consectetur malesuada metus, eget lobortis diam semper at. Etiam volutpat nec dui faucibus suscipit.
-            </p>
-            <p className="detail-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec erat luctus, vestibulum ante sodales, imperdiet est. Vivamus sodales mauris nisi. Etiam nec lacinia sem, nec dapibus eros. Cras sed turpis vitae odio posuere hendrerit viverra a sem. Phasellus neque ante, lacinia ut nibh in, pharetra accumsan ipsum. Nulla facilisi. Fusce consectetur malesuada metus, eget lobortis diam semper at. Etiam volutpat nec dui faucibus suscipit.
+              {product.description}
             </p>
             <div className="detail-seller">
               <div className="detail-seller-header">
-                <img src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80" />
+                <img src={product.User?.avatar} />
                 <div style={{ flexGrow: 1 }}>
-                  <h6>stevenalaq</h6>
+                  <h6 className="mb-0">{product.User?.fName + ' ' + product.User?.lName}</h6>
                 </div>
                 <div className="detail-cart-action" >
                   <button id="openChat" className="btn custom-btn-1" style={{ marginTop: 0 }}>
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                       chat
                     </span>
                     <span>Chat</span>
@@ -54,13 +81,13 @@ export default function DetailPage() {
             <div className="detail-sender">
               <span>Pengiriman</span>
               <div>
-                <span class="material-icons" style={{ marginLeft: '-3px' }}>
+                <span className="material-icons" style={{ marginLeft: '-3px' }}>
                   location_on
                 </span>
-                <p>Dikirim dari <span>Jakarta Barat</span></p>
+                <p>Dikirim dari <span>{product.User?.Addresses[0].city}</span></p>
               </div>
               <div>
-                <span class="material-icons">
+                <span className="material-icons">
                   local_shipping
                 </span>
                 <p>Ongkos kirim ekonomis Rp.18.000</p>
@@ -77,14 +104,54 @@ export default function DetailPage() {
             <div className="detail-cart">
               <div className="detail-cart-form-wrapper">
                 <form>
-                  <h6 className="detail-cart-title">Atur Pengiriman </h6>
+                  {/* <h6 className="detail-cart-title">Atur Pengiriman </h6>
                   <div className="group-input mb-3">
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Pilih kurir</option>
-                      <option value="1">Ninja Express</option>
-                      <option value="2">J&T</option>
+                    <select
+                      name="courier"
+                      className="form-select"
+                      aria-label="Default select example"
+                      // value={inputVal.courier}
+                      onChange={() => handleChange()}
+                    >
+                      <option value="">Pilih Kurir</option>
+                      <option value="1">JNE</option>
+                      <option value="2">Pos Indonesia</option>
+                      <option value="3">TIKI</option>
                     </select>
                   </div>
+                  {
+                    provinces.length !== 0 && (
+                      <div className="group-input mb-3">
+                        <select
+                          name="courier"
+                          className="form-select"
+                          aria-label="Default select example"
+                          // value={inputVal.courier}
+                          onChange={() => handleChange()}
+                        >
+                          <option value="">Pilih Provinsi</option>
+                          <option value="jne">JNE</option>
+                          <option value="pos">Pos Indonesia</option>
+                          <option value="tiki">TIKI</option>
+                        </select>
+                      </div>
+
+                    )
+                  }
+                  <div className="group-input mb-3">
+                    <select
+                      name="courier"
+                      className="form-select"
+                      aria-label="Default select example"
+                      // value={inputVal.courier}
+                      onChange={() => handleChange()}
+                    >
+                      <option value="">Pilih Kota</option>
+                      <option value="1">JNE</option>
+                      <option value="2">Pos Indonesia</option>
+                      <option value="3">TIKI</option>
+                    </select>
+                  </div> */}
                   <h6 className="detail-cart-title">Atur Jumlah</h6>
                   <div className="group-input">
                     <button type="button" className="btn min">
@@ -109,7 +176,7 @@ export default function DetailPage() {
                   </p>
                   <div className="detail-cart-action">
                     <button id="openChat" className="btn custom-btn-1">
-                      <span className="material-symbols-outlined">
+                      <span className="material-symbols-outlined" style={{ marginBottom: 0 }}>
                         add
                       </span>
                       <span>Keranjang</span>
