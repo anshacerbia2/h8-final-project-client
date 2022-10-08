@@ -9,10 +9,13 @@ import Register from "../pages/Register";
 import ProductListPage from "../pages/ProductListPage";
 import Dashboard from "../pages/Dashboard";
 import DashboardSettings from "../components/DashboardSettings";
+
 import DashboardAddress from "../components/DashboardAddress";
 import DashboardProducts from "../components/DashboardProducts";
 import DashboardCart from "../components/DashboardCart";
 import DashboardHistory from "../components/DashboardHistory";
+import AllProducts from "../pages/AllProducts";
+
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'product/:id',
         element: <DetailPage />
+      },
+      {
+        path: '/all-products',
+        element: <AllProducts />
       },
       {
         path: 'dashboard',
