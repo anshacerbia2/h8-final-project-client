@@ -1,4 +1,4 @@
-const baseUrl = "https://b675-180-242-186-51.ap.ngrok.io";
+const baseUrl = "http://localhost:3001";
 
 export function userLogin(...resArgs) {
   const body = resArgs[0];
@@ -25,19 +25,19 @@ export function userLogin(...resArgs) {
 }
 
 export function fetchUser() {
-  const { id } = localStorage.getItem('user');
+  const { id } = localStorage.getItem("user");
   return (dispatch, getState) => {
     fetch(`${baseUrl}/users/${id}`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'user/userSuccess',
-          payload: data
-        })
-      })
-  }
+          type: "user/userSuccess",
+          payload: data,
+        });
+      });
+  };
 }
 
 export function fetchProducts() {
@@ -48,14 +48,13 @@ export function fetchProducts() {
       })
       .then((data) => {
         dispatch({
-          type: 'products/fetchSuccess',
-          payload: data
-        })
+          type: "products/fetchSuccess",
+          payload: data,
+        });
+        return data;
       })
-  }
+  };
 }
-
-
 
 export function userRegister(...resArgs) {
   const body = resArgs[0];
@@ -66,8 +65,8 @@ export function userRegister(...resArgs) {
       mode: "cors",
       body: JSON.stringify(body),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => {
         return response;
@@ -128,7 +127,7 @@ export function fetchCategories() {
 export function fetchSubCategories() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    fetch(`${baseUrl}/sub-categories`)
+    return fetch(`${baseUrl}/sub-categories`)
       .then((response) => {
         return response.json();
       })
@@ -361,31 +360,31 @@ export function fetchProvinces() {
   return (dispatch, getState) => {
     fetch(`${baseUrl}/provinces`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'provinces/fetchSuccess',
-          payload: data
-        })
-      })
-  }
+          type: "provinces/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
 }
 
 export function fetchCities(provinceId) {
   return (dispatch, getState) => {
     fetch(`${baseUrl}/cities/${provinceId}`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'cities/fetchSuccess',
-          payload: data
-        })
+          type: "cities/fetchSuccess",
+          payload: data,
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  };
 }

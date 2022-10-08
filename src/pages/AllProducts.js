@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Breadcumb from "../components/Breadcumb";
 import CardAllProducts from "../components/CardAllProducts";
 import Accordion from "react-bootstrap/Accordion";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSubCategories, fetchProducts } from "../store/actions";
+import CategoriesRadio from "../components/CategoriesRadio";
 
 const AllProducts = () => {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.productReducer);
+  const { subCategories } = useSelector((state) => state.subCategoriesReducer);
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchSubCategories());
+  }, []);
   return (
     <>
       <Breadcumb />
@@ -11,12 +21,7 @@ const AllProducts = () => {
         <div className="row">
           <div className="col-9">
             <div className="row">
-              <CardAllProducts />
-              <CardAllProducts />
-              <CardAllProducts />
-              <CardAllProducts />
-              <CardAllProducts />
-              <CardAllProducts />
+              <CardAllProducts products={products} />
             </div>
           </div>
           <div className="col-3">
@@ -29,48 +34,7 @@ const AllProducts = () => {
                   <strong>Kategori</strong>
                 </Accordion.Header>
                 <Accordion.Body>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexRadioDefault1"
-                    >
-                      Susu
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexRadioDefault1"
-                    >
-                      Susu dan popok
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexRadioDefault1"
-                    >
-                      Daging
-                    </label>
-                  </div>
+                  <CategoriesRadio subCategories={subCategories}/>                 
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">

@@ -9,11 +9,13 @@ import CardProduct from "../components/CardProduct";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
+  const [latestProduct, setLatestProduct] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products } = useSelector((state) => state.productReducer);
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts())
+    .then(resp => setLatestProduct(resp.slice(0, 4)))
   }, []);
   return (
     <div className="container">
@@ -137,12 +139,10 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-        <CardProduct />
-        <CardProduct />
-        <CardProduct />
-        <CardProduct />
+        <CardProduct products={latestProduct} />
+        {/* <CardProduct /> */}
       </div>
-      <div className="custom-row-1">
+      {/* <div className="custom-row-1">
         {products?.map((product, i) => {
           return (
             <div className="custom-col-1" key={"list-product-" + i}>
@@ -158,7 +158,7 @@ export default function HomePage() {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }
