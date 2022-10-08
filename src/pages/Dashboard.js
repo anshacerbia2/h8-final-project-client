@@ -1,4 +1,5 @@
 import '../css/dashboard.css';
+import cashAvatar from '../cash.png';
 import avatar from '../avatar.jpg'
 import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import '../css/dashboard.css';
@@ -12,6 +13,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const refs = useRef([]);
   const [l, setL] = useState(0);
@@ -20,7 +22,10 @@ export default function Dashboard() {
   useLayoutEffect(() => {
     let idx = 0;
     if (location.pathname === '/dashboard/settings') idx = 0;
-    if (location.pathname === '/dashboard/cart') idx = 1;
+    if (location.pathname === '/dashboard/address') idx = 1;
+    if (location.pathname === '/dashboard/products') idx = 2;
+    if (location.pathname === '/dashboard/cart') idx = 3;
+    if (location.pathname === '/dashboard/history') idx = 4;
     const w = refs.current[idx]?.clientWidth;
     const l = refs.current[idx]?.offsetLeft;
     setW(w);
@@ -41,7 +46,10 @@ export default function Dashboard() {
     setL(l);
     let path = 'settings';
     if (idx === 0) navigate('/dashboard/settings');
-    if (idx === 1) navigate('/dashboard/cart');
+    if (idx === 1) navigate('/dashboard/address');
+    if (idx === 2) navigate('/dashboard/products');
+    if (idx === 3) navigate('/dashboard/cart');
+    if (idx === 4) navigate('/dashboard/history');
   }
 
   return (
@@ -56,13 +64,23 @@ export default function Dashboard() {
       <div className="container">
         <div className="custom-row-1">
           <div className="dashboard-side">
-            <div className="detail-seller-header">
+            <div className="detail-seller-header" style={{
+              height: 60, padding: 20, borderRadius: 30, marginBottom: 14,
+              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px'
+            }}>
               <img src={avatar} />
               <div style={{ flexGrow: 1 }}>
-                <h6 className="mb-0">stevenalaq</h6>
+                <h6 className="mb-0">{user?.fName + ' ' + user?.lName}</h6>
               </div>
             </div>
-
+            <div style={{
+              height: 60, padding: 20, borderRadius: 30,
+              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#696969', fontWeight: 700
+            }}>
+              <img src={cashAvatar} style={{ marginTop: '-5px' }} />
+              <span style={{ flexGrow: '1', marginLeft: 10 }}>Saldo</span>
+              <span>0</span>
+            </div>
           </div>
           <div className="dashboard-content">
             <div className="dc-header">

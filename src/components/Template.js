@@ -7,8 +7,8 @@ export default function Template() {
   const jumbotron = false;
   return (
     <>
-      {/* <Navbar jumbotron={jumbotron} /> */}
-      <Nav />
+      <Navbar jumbotron={jumbotron} />
+      {/* <Nav /> */}
       <Outlet />
       <Footer />
     </>

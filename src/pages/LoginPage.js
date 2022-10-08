@@ -40,45 +40,42 @@ export default function LoginPage() {
   };
 
   const clearError = () => {
-    const x = document.querySelectorAll("#loginPage")[0];
-    const y = document.createElement("div");
-    const textNode = document.createTextNode("Hello World");
-    y.appendChild(textNode);
-    x.appendChild(DetailPage());
-
-    // x.appendChild('<div>xxxxxxxxx</div>')
-    // setErrorGlobal('');
-    // setErrorEmail('');
-    // setErrorPassword('');
+    setErrorGlobal('');
+    setErrorEmail('');
+    setErrorPassword('');
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    // try {
-    //   e.preventDefault();
-    //   const response = await dispatch(userLogin(inputVal));
-    //   const responseJSON = await response.json();
+    try {
+      e.preventDefault();
+      const response = await dispatch(userLogin(inputVal));
+      const responseJSON = await response.json();
 
-    //   if (response.status === 200) {
-    //     navigate('/');
-    //     localStorage.setItem('access_token', responseJSON.access_token);
-    //     localStorage.setItem('user', JSON.stringify(responseJSON.user));
-    //     Toast.fire({ icon: 'success', title: 'Product has been deleted successfully..' });
-    //   } else {
-    //     if (responseJSON.message === 'Invalid email or password') {
-    //       setErrorGlobal(responseJSON.message);
-    //     }
+      if (response.status === 200) {
+        localStorage.setItem('user', JSON.stringify(responseJSON.user));
+        localStorage.setItem('access_token', responseJSON.access_token);
+        console.log(responseJSON.user);
+        dispatch({
+          type: 'user/loginSuccess',
+          payload: responseJSON.user
+        });
+        Toast.fire({ icon: 'success', title: 'Login success..' });
+        navigate('/');
+      } else {
+        if (responseJSON.message === 'Invalid email or password') {
+          setErrorGlobal(responseJSON.message);
+        }
 
-    //     if (responseJSON.errors) {
-    //       responseJSON.errors.forEach(v => {
-    //         if (v.path === 'email' && errorEmail === '') setErrorEmail(v.message);
-    //         if (v.path === 'password' && errorPassword === '') setErrorPassword(v.message);
-    //       });
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+        if (responseJSON.errors) {
+          responseJSON.errors.forEach(v => {
+            if (v.path === 'email' && errorEmail === '') setErrorEmail(v.message);
+            if (v.path === 'password' && errorPassword === '') setErrorPassword(v.message);
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -163,7 +160,7 @@ export default function LoginPage() {
                   )}
                 </button>
               </form>
-              <small>Belum punya akun, silahkan <Link to="/register"> register</Link> dahulu</small>
+              <small className="register-link">Belum punya akun, silahkan <Link to="/register"> register</Link> dahulu</small>
             </div>
           </div>
         </div>

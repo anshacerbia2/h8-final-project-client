@@ -24,6 +24,22 @@ export function userLogin(...resArgs) {
   };
 }
 
+export function fetchUser() {
+  const { id } = localStorage.getItem('user');
+  return (dispatch, getState) => {
+    fetch(`${baseUrl}/users/${id}`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        dispatch({
+          type: 'user/userSuccess',
+          payload: data
+        })
+      })
+  }
+}
+
 export function fetchProducts() {
   return (dispatch, getState) => {
     return fetch(`${baseUrl}/products`)
@@ -32,18 +48,17 @@ export function fetchProducts() {
       })
       .then((data) => {
         dispatch({
-          type: "products/fetchSuccess",
-          payload: data,
-        });
-      });
-  };
+          type: 'products/fetchSuccess',
+          payload: data
+        })
+      })
+  }
 }
 
-// const baseUrl = 'https://react-project-1-h8.herokuapp.com';
+
 
 export function userRegister(...resArgs) {
   const body = resArgs[0];
-  const access_token = localStorage.getItem("access_token");
   return (dispatch, getState) => {
     dispatch({ type: "loadingSubmit/true" });
     return fetch(`${baseUrl}/register`, {
@@ -51,9 +66,8 @@ export function userRegister(...resArgs) {
       mode: "cors",
       body: JSON.stringify(body),
       headers: {
-        "Content-Type": "application/json",
-        access_token,
-      },
+        'Content-Type': 'application/json'
+      }
     })
       .then((response) => {
         return response;
@@ -343,21 +357,35 @@ export function deleteProduct(id) {
   };
 }
 
-export function deleteSubCategory(id) {
-  const access_token = localStorage.getItem("access_token");
+export function fetchProvinces() {
   return (dispatch, getState) => {
-    return fetch(`${baseUrl}/sub-categories/${id}`, {
-      method: "DELETE",
-      mode: "cors",
-      headers: {
-        access_token,
-      },
-    })
+    fetch(`${baseUrl}/provinces`)
       .then((response) => {
-        return response;
+        return response.json()
       })
-      .catch((err) => {
-        return err;
+      .then((data) => {
+        dispatch({
+          type: 'provinces/fetchSuccess',
+          payload: data
+        })
+      })
+  }
+}
+
+export function fetchCities(provinceId) {
+  return (dispatch, getState) => {
+    fetch(`${baseUrl}/cities/${provinceId}`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        dispatch({
+          type: 'cities/fetchSuccess',
+          payload: data
+        })
+      })
+      .catch(err => {
+        console.log(err);
       });
-  };
+  }
 }

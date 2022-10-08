@@ -1,15 +1,19 @@
+#DashboardPage {
+  padding-bottom: 50px;
+}
+
 .dashboard-side {
   min-width: 275px;
   width: 275px;
   margin: 0 10px;
-  height: 100vh;
+  min-height: 500px;
 }
 
 .dashboard-content {
   min-width: calc(100% - 315px);
   width: calc(100% - 315px);
   margin: 0 10px;
-  height: 100vh;
+  padding-left: 30px;
 }
 
 .dc-header {
@@ -41,11 +45,6 @@
   width: 0;
   transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
   background-color: #94d537;
-}
-
-.product-item-list {
-  max-width: 768px;
-  margin: 0 auto;
 }
 
 .product-item {
@@ -174,4 +173,35 @@
 .custom-col-1 {
   width: calc(50% - 24px);
   margin: 0 12px;
+}
+
+/* Settings */
+.dc-settings-content {
+  padding-left: 20px;
+  font-family: 'Lato';
+  font-size: 16px;
+  color: #696969;
+}
+
+.dc-tag {
+  font-weight: 700;
+}
+
+.dc-settings-content>p {
+  margin-bottom: 6px;
+}
+
+.dc-settings-content>p>span {
+  display: inline-block;
+  width: 150px;
+}
+
+.address-card {
+  padding: 20px;
+  margin-top: 20px;
+  border-left: 3px solid #6daf0d;
+  font-family: 'Lato';
+  font-size: 16px;
+  color: #696969;
+  background-color: #4fd15a29;
 }

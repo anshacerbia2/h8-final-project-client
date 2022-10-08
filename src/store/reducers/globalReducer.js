@@ -1,5 +1,7 @@
 const initialstate = {
-  users: [],
+  provinces: [],
+  cities: [],
+  city: null,
   isLoading: false,
   isLoadingSubmit: false,
   isLogin: false,
@@ -7,10 +9,20 @@ const initialstate = {
 
 export default function userReducer(state = initialstate, action) {
   switch (action.type) {
-    case 'users/registerSuccess':
+    case 'provinces/fetchSuccess':
       return {
         ...state,
-        users: action.payload
+        provinces: action.payload
+      }
+    case 'cities/fetchSuccess':
+      return {
+        ...state,
+        cities: action.payload
+      }
+    case 'city/fetchSuccess':
+      return {
+        ...state,
+        city: action.payload
       }
     case 'loading/true':
       return {
