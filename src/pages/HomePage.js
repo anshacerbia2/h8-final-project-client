@@ -6,6 +6,7 @@ import logo from "../logo.png";
 import Footer from "../components/Footer";
 import CardAuction from "../components/CardAuction";
 import CardProduct from "../components/CardProduct";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -122,8 +123,19 @@ export default function HomePage() {
           <div className="col">
             <h5>Produk Agro</h5>
           </div>
-          <div className="col d-flex justify-content-end">
-            <p>See more</p>
+          <div
+            className="col d-flex justify-content-end"
+            style={{ color: "rgb(3,172,14)" }}
+          >
+            <Link
+              style={{ color: "rgb(3,172,14)", textDecoration: "none"}}
+              to="/all-products"
+            >
+              Selengkapnya
+            </Link>
+            <span class="material-symbols-outlined">
+              keyboard_double_arrow_right
+            </span>
           </div>
         </div>
         <CardProduct />

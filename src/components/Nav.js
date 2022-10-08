@@ -50,7 +50,8 @@ const Nav = () => {
             </form>
             <div className="navbar-menu" style={{ marginLeft: "10rem" }}>
               {!isLogin && (
-                <a
+                <NavLink
+                  to="/login"
                   className="d-flex"
                   style={{
                     cursor: "pointer",
@@ -61,7 +62,7 @@ const Nav = () => {
                 >
                   Login
                   <span class="material-symbols-outlined">login</span>
-                </a>
+                </NavLink>
               )}
               {isLogin && (
                 <a
