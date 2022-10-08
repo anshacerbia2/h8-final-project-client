@@ -9,12 +9,7 @@ const Nav = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg sticky-top navbar-light bg-light"
-        style={{
-          border: "1px solid",
-          padding: "10px",
-          boxShadow: "0 2px 4px 0 rgba(0,0,0,0.2);",
-        }}
+        className="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow p-3 bg-white rounded"
       >
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">

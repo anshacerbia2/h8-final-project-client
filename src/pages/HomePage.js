@@ -4,130 +4,112 @@ import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../store/actions";
 import logo from "../logo.png";
 import Footer from "../components/Footer";
+import CardAuction from "../components/CardAuction";
+import CardProduct from "../components/CardProduct";
 
 export default function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products } = useSelector((state) => state.productReducer);
-
   useEffect(() => {
     // if (!localStorage.getItem('access_token')) navigate('/login');
     dispatch(fetchProducts());
   }, []);
-
   return (
-    <div className="container mt-2">
+    <div className="container">
       {/* Section Header */}
       <div
         className="row"
         style={{
           color: "#fff",
           width: "100%",
-          backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')",
+          backgroudRepeat: "no-repeat",
+          backgroundSize: "center",
+          backgroundBlendMode: "darken",
+          background:
+            "rgba(0, 0, 0, 0.6) url('https://cdn.pixabay.com/photo/2017/11/13/16/19/tea-2946057_1280.jpg')",
         }}
       >
-        <div class="jumbotron d-flex flex-column justify-content-center align-items-center">
-          <h3 class="display-4">Welcome to Agro Shop</h3>
-          <p class="text-center">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi iure
-            ducimus accusamus mollitia nisi. Doloremque consequuntur ea,
-            excepturi cupiditate error libero.
-          </p>
-          <hr />
-          <p>
-            It uses utility classes for typography and spacing to space content
-            out within the larger container.
+        <div className="jumbotron d-flex flex-column justify-content-center align-items-center">
+          <h3 className="display-4">Selamat datang di Agro Shop</h3>
+          <p className="text-center" style={{ padding: "0 15rem" }}>
+            Belanja semua kebutuhan pangan sayuran dan buah mu disini, langsung
+            dari petani. Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit. Sequi iure ducimus accusamus mollitia nisi.
           </p>
         </div>
       </div>
       {/* Section Lelang */}
       <div className="row my-4">
         <h5>Lelang saat ini</h5>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
+        <CardAuction />
+        <CardAuction />
+        <CardAuction />
       </div>
       {/* Section Why Us*/}
-      <div className="row">
+      <div
+        className="row"
+        style={{
+          fontSize: "0.875rem",
+          color: "#fff",
+          backgroudRepeat: "no-repeat",
+          backgroundSize: "center",
+          backgroundBlendMode: "darken",
+          background:
+            "rgba(0, 0, 0, 0.6) url('https://cdn.pixabay.com/photo/2017/07/31/04/11/tomato-2556426_1280.jpg')",
+        }}
+      >
         <div
-          className="col d-flex flex-column justify-content-center align-items-center text-center"
-          style={{ height: "25rem", backgroundColor: "#e8e8e8" }}
+          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+          style={{
+            height: "25rem",
+          }}
         >
-          <p>Fresh Ingredients</p>
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: "5rem", color: "#94d537" }}
+          >
+            nest_eco_leaf
+          </span>
+          <h5>
+            <strong> Produk segar </strong>
+          </h5>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
             a doloremque quam, corporis illo quisquam eum.
           </p>
         </div>
         <div
-          className="col d-flex flex-column justify-content-center align-items-center text-center"
-          style={{ height: "25rem", backgroundColor: "#e8e8e8" }}
+          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+          style={{ height: "25rem" }}
         >
-          <p>Fast Delivery</p>
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: "5rem", color: "#94d537" }}
+          >
+            schedule
+          </span>
+          <h5>
+            <strong> Pengiriman yang cepat</strong>
+          </h5>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
             a doloremque quam, corporis illo quisquam eum.
           </p>
         </div>
         <div
-          className="col d-flex flex-column justify-content-center align-items-center text-center"
-          style={{ height: "25rem", backgroundColor: "#e8e8e8" }}
+          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+          style={{ height: "25rem" }}
         >
-          <p>Fast Service</p>
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: "5rem", color: "#94d537" }}
+          >
+            priority
+          </span>
+          <h5>
+            <strong>Pelayanan memuaskan</strong>
+          </h5>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
             a doloremque quam, corporis illo quisquam eum.
@@ -138,69 +120,16 @@ export default function HomePage() {
       <div className="row my-4">
         <div className="row">
           <div className="col">
-            <h5>Today Special</h5>
+            <h5>Produk Agro</h5>
           </div>
           <div className="col d-flex justify-content-end">
             <p>See more</p>
           </div>
         </div>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card" style={{ width: "auto" }}>
-            <img
-              src="https://cdn.pixabay.com/photo/2016/03/05/22/06/tomatoes-1239176__340.jpg"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                See detail
-              </a>
-            </div>
-          </div>
-        </div>
+        <CardProduct />
+        <CardProduct />
+        <CardProduct />
+        <CardProduct />
       </div>
       <div className="custom-row-1">
         {products?.map((product, i) => {
