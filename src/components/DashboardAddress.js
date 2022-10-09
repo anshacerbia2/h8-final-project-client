@@ -20,7 +20,7 @@ export default function DashboardAddress() {
         user={user ? user.id : null}
         onHide={() => setShowModal(false)}
       />
-      <div style={{ width: 100 }}>
+      <div style={{ width: 100, marginLeft: 'auto' }}>
         <button className="btn custom-btn-1" onClick={() => setShowModal(true)}>
           <span className="material-symbols-outlined" style={{ fontSize: 18, marginRight: 2 }}>
             add

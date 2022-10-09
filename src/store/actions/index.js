@@ -210,7 +210,6 @@ export function fetchProduct(id) {
     dispatch({ type: "loading/true" });
     fetch(`${baseUrl}/products/${id}`)
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((data) => {
@@ -319,7 +318,7 @@ export function putSubCategory(...resArgs) {
 export function putProduct(...resArgs) {
   const access_token = localStorage.getItem("access_token");
   const body = resArgs[0];
-  const id = resArgs[1].id;
+  const { id } = body;
   return (dispatch, getState) => {
     dispatch({ type: "loadingSubmit/true" });
     return fetch(`${baseUrl}/products/${id}`, {
