@@ -14,48 +14,48 @@ export default function Navbar(props) {
             <div className="dropdown-container">
               <button className="cat-dropdown btn">Category</button>
             </div>
-            <form class="input-group global-search">
+            <form className="input-group global-search">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Recipient's username"
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
               />
-              <div class="input-group-append">
-                <button class="btn" type="button">
-                  <span class="material-symbols-outlined">search</span>
+              <div className="input-group-append">
+                <button className="btn" type="button">
+                  <span className="material-symbols-outlined">search</span>
                 </button>
               </div>
             </form>
-            {/* <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav ms-auto ">
-                <li class="nav-item">
+            {/* <div className=" collapse navbar-collapse" id="navbarNavDropdown">
+              <ul className="navbar-nav ms-auto ">
+                <li className="nav-item">
                   <a
-                    class="nav-link mx-2 text-uppercase active"
+                    className="nav-link mx-2 text-uppercase active"
                     aria-current="page"
                     href="#"
                   >
                     Offers
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-2 text-uppercase" href="#">
+                <li className="nav-item">
+                  <a className="nav-link mx-2 text-uppercase" href="#">
                     Products
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-2 text-uppercase" href="#">
+                <li className="nav-item">
+                  <a className="nav-link mx-2 text-uppercase" href="#">
                     Catalog
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-2 text-uppercase" href="#">
+                <li className="nav-item">
+                  <a className="nav-link mx-2 text-uppercase" href="#">
                     Services
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-2 text-uppercase" href="#">
+                <li className="nav-item">
+                  <a className="nav-link mx-2 text-uppercase" href="#">
                     About
                   </a>
                 </li>
@@ -63,12 +63,12 @@ export default function Navbar(props) {
             </div> */}
             <div className="navbar-menu">
               {/* <a>
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                   shopping_cart
                 </span>
               </a>
               <a>
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                   shopping_cart
                 </span>
               </a> */}

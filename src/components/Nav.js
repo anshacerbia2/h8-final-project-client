@@ -60,7 +60,7 @@ const Nav = () => {
                   }}
                 >
                   Login
-                  <span class="material-symbols-outlined">login</span>
+                  <span className="material-symbols-outlined">login</span>
                 </NavLink>
               )}
               {isLogin && (
@@ -74,7 +74,7 @@ const Nav = () => {
                   }}
                 >
                   Logout
-                  <span class="material-symbols-outlined">login</span>
+                  <span className="material-symbols-outlined">login</span>
                 </a>
               )}
               {isLogin && (
