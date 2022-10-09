@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:3001";
 
 export function userLogin(...resArgs) {
   const body = resArgs[0];
@@ -25,7 +25,7 @@ export function userLogin(...resArgs) {
 }
 
 export function fetchUser() {
-  let user = localStorage.getItem('user');
+  let user = localStorage.getItem("user");
   user = JSON.parse(user);
   const { id } = user;
   return (dispatch, getState) => {
@@ -73,18 +73,18 @@ export function fetchUserProducts() {
       headers: {
         "Content-Type": "application/json",
         access_token,
-      }
+      },
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'userProducts/fetchSuccess',
-          payload: data
-        })
-      })
-  }
+          type: "userProducts/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
 }
 
 export function userRegister(...resArgs) {
@@ -176,6 +176,29 @@ export function fetchSubCategory(id) {
         setTimeout(() => {
           dispatch({ type: "loading/false" });
         }, 500);
+      });
+  };
+}
+
+export function postCart(args) {
+  // console.log(args);
+  // const { ProductId, quantity } = args;
+  return (dispatch, getState) => {
+    dispatch({ type: "loading/true" });
+    const access_token = localStorage.getItem("access_token");
+    fetch(`${baseUrl}/cart`, {
+      method: "POST",
+      body: JSON.stringify(args),
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((resp) => {
+        console.log(resp);
+      })
+      .finally(() => {
+        dispatch({ type: "loading/false" });
       });
   };
 }
@@ -371,7 +394,7 @@ export function fetchProvinces() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         dispatch({
           type: "provinces/fetchSuccess",
           payload: data,
@@ -395,7 +418,6 @@ export function fetchCities(provinceId) {
       .catch((err) => {
         console.log(err);
       });
-
   };
 }
 
@@ -414,7 +436,7 @@ export function postAddress(...resArgs) {
       },
     })
       .then((response) => {
-        console.log(response, '<<<<<<<<<<<<<');
+        console.log(response, "<<<<<<<<<<<<<");
         return response;
       })
       .catch((err) => {
