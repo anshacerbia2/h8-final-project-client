@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const CategoriesRadio = ({ subCategories }) => {
+const CategoriesRadio = ({ subCategories, filterHandler }) => {
   return (
     <>
       {subCategories.map((subCategory) => {
@@ -10,8 +10,10 @@ const CategoriesRadio = ({ subCategories }) => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id={subCategories.name}
+                name="category"
+                id={subCategory.name}
+                value={subCategory.id}
+                onChange={(e) => filterHandler(e.currentTarget.value)}
               />
               <label className="form-check-label" htmlFor="category">
                 {subCategory.name}

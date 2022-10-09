@@ -1,7 +1,12 @@
 import React from "react";
 import { toIDR } from "../helpers";
+import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 const CardAllProducts = ({ products }) => {
+  const { isLoading } = useSelector((state) => state.globalReducer);
   return (
     <>
       {products.map((product) => {
@@ -11,24 +16,49 @@ const CardAllProducts = ({ products }) => {
               className="card mb-4"
               style={{ width: "17rem", fontSize: "0.875rem" }}
             >
-              <img
-                src={product.mainImg}
-                className="card-img-top"
-                alt={product.name}
-                style={{ objectFit: "contain" }}
-                height="200px"
-                width="300px"
-              />
+              {isLoading ? (
+                <Skeleton height="200px" />
+              ) : (
+                <img
+                  src={product.mainImg}
+                  className="card-img-top"
+                  alt={product.name}
+                  style={{ objectFit: "contain" }}
+                  height="200px"
+                  width="300px"
+                />
+              )}
+
               <div className="card-body" style={{ fontSize: "0.875rem" }}>
-                <h5 className="card-title"><strong>{product.name}</strong></h5>
-                <p className="card-text"><strong>{toIDR(product.price)}/{product.unit}</strong></p>
-                <p className="card-text">Stock: {product.stock}</p>
+                <h5 className="card-title">
+                  {isLoading ? <Skeleton /> : <strong>{product.name}</strong>}
+                </h5>
                 <p className="card-text">
-                  {product.description.substring(0, 100)}
+                  <strong>
+                    {isLoading ? <Skeleton /> : toIDR(product.price)}/
+                    {product.unit}
+                  </strong>
                 </p>
-                <a href="#" className="btn btn-sm btn-outline-primary" onClick={() => console.log(product.id)}>
-                  Lihat selengkapnya
-                </a>
+                <p className="card-text">
+                  Stock: {isLoading ? <Skeleton /> : product.stock}
+                </p>
+                <p className="card-text">
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    product.description.substring(0, 100)
+                  )}
+                </p>
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  <Link
+                    to={"/product/" + product.id}
+                    className="btn btn-sm btn-outline-primary"
+                  >
+                    Lihat selengkapnya
+                  </Link>
+                )}
               </div>
             </div>
           </div>

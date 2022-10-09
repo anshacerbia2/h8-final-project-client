@@ -47,6 +47,7 @@ export default function HomePage() {
         <CardAuction />
         <CardAuction />
         <CardAuction />
+        <CardAuction />
       </div>
       {/* Section Why Us*/}
       <div

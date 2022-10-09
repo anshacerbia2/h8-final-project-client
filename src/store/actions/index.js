@@ -42,6 +42,7 @@ export function fetchUser() {
 
 export function fetchProducts() {
   return (dispatch, getState) => {
+    dispatch({ type: "loading/true" });
     return fetch(`${baseUrl}/products`)
       .then((response) => {
         return response.json();
@@ -53,6 +54,11 @@ export function fetchProducts() {
         });
         return data;
       })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch({ type: "loading/false" });
+        }, 1000);
+      });
   };
 }
 
@@ -136,6 +142,7 @@ export function fetchSubCategories() {
           type: "subCategories/fetchSuccess",
           payload: data,
         });
+        return data;
       })
       .catch((err) => {
         console.log(err);
