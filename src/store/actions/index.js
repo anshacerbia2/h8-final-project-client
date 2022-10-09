@@ -180,7 +180,6 @@ export function fetchSubCategory(id) {
   };
 }
 
-
 export function fetchcart() {
   const access_token = localStorage.getItem("access_token");
   return (dispatch, getState) => {
@@ -189,7 +188,7 @@ export function fetchcart() {
       headers: {
         "Content-Type": "application/json",
         access_token,
-      }
+      },
     })
       .then((response) => {
         return response.json();
@@ -205,7 +204,6 @@ export function fetchcart() {
 
 export function postCart(args) {
   return (dispatch, getState) => {
-    dispatch({ type: "loading/true" });
     const access_token = localStorage.getItem("access_token");
     return fetch(`${baseUrl}/cart`, {
       method: "POST",
@@ -214,13 +212,9 @@ export function postCart(args) {
         "Content-Type": "application/json",
         access_token,
       },
-    })
-      .then((resp) => {
-        return resp;
-      })
-      .finally(() => {
-        dispatch({ type: "loading/false" });
-      });
+    }).then((resp) => {
+      return resp;
+    });
   };
 }
 
