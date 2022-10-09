@@ -3,6 +3,7 @@ const initialstate = {
   user: null,
   provinces: [],
   cities: [],
+  carts: [],
   isLoading: false,
   isLoadingSubmit: false,
   isLogin: false,
@@ -24,6 +25,11 @@ export default function userReducer(state = initialstate, action) {
       return {
         ...state,
         cities: action.payload
+      }
+    case 'cart/fetchSuccess':
+      return {
+        ...state,
+        carts: action.payload
       }
     case 'loading/true':
       return {

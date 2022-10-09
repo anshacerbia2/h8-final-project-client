@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, fetchProvinces, postCart } from "../store/actions";
 import Breadcumb from "../components/Breadcumb";
-import { formatDate, toIDR } from "../helpers";
+import { formatDate, swalImg, toIDR } from "../helpers";
 import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
 
@@ -31,7 +31,8 @@ export default function DetailPage() {
     setQuantity(quantity + 1);
   };
 
-  const addCartHandler = async (e) => {
+  const addCartHandler = (e) => {
+    // try {
     e.preventDefault();
     if (quantity > product.stock) {
       console.log('invalid stock');
@@ -43,8 +44,24 @@ export default function DetailPage() {
       // UserId: 1
     }
     // Add process cart
-    const response = await dispatch(postCart(cartInfo))
-    console.log(response.status);
+    dispatch(postCart(cartInfo))
+      .then((resp) => {
+        console.log(resp);
+      })
+    // if (response.status === 200) {
+    //   const responseJSON = await response.json();
+    //   swalImg.fire({
+    //     title: 'Berhasil Ditambahkan',
+    //     text: responseJSON.message,
+    //     imageUrl: product.mainImg,
+    //     imageWidth: 300,
+    //     imageHeight: 300,
+    //     timer: 3000,
+    //   })
+    // }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   return (
     <div id="DetailPage">
@@ -155,7 +172,7 @@ export default function DetailPage() {
           >
             <div className="detail-cart">
               <div className="detail-cart-form-wrapper">
-                <form>
+                <form onSubmit={addCartHandler}>
                   <h6 className="detail-cart-title">Atur Pengiriman </h6>
                   <div className="group-input mb-3">
                     <select
@@ -252,8 +269,8 @@ export default function DetailPage() {
                   <div className="detail-cart-action">
                     <button
                       id="openChat"
+                      type="submit"
                       className="btn custom-btn-1"
-                      onClick={addCartHandler}
                     >
                       <span
                         className="material-symbols-outlined"

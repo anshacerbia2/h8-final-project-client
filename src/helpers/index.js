@@ -20,6 +20,14 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 });
 
+const swalImg = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
 const toIDR = (number) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
 }
@@ -28,4 +36,4 @@ const formatDate = (date) => {
   return date.slice(0, 10);
 }
 
-export { Toast, swalWithBootstrapButtons, toIDR, formatDate }
+export { Toast, swalWithBootstrapButtons, swalImg, toIDR, formatDate }

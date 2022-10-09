@@ -180,6 +180,29 @@ export function fetchSubCategory(id) {
   };
 }
 
+
+export function fetchcart() {
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/cart`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      }
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: "cart/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
+}
+
 export function postCart(args) {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
