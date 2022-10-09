@@ -1,76 +1,125 @@
-import '../App.css';
-import '../css/detailPage.css';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProduct, fetchProvinces } from "../store/actions";
-import Breadcumb from '../components/Breadcumb';
-import { formatDate, toIDR } from '../helpers';
-import { isValidInputTimeValue } from '@testing-library/user-event/dist/utils';
+import "../App.css";
+import "../css/detailPage.css";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct, fetchProvinces, postCart } from "../store/actions";
+import Breadcumb from "../components/Breadcumb";
+import { formatDate, toIDR } from "../helpers";
+import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
+import Skeleton from "react-loading-skeleton";
 
 export default function DetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.productReducer);
-  const { isLoading, provinces, cities } = useSelector((state) => state.globalReducer);
-  const [province, setProvince] = useState('');
-  const [inputVal, setInputVal] = useState({
-    courier: '',
-    province: '',
-    city: '',
-  });
-
+  const { isLoading, provinces, cities } = useSelector(
+    (state) => state.globalReducer
+  );
+  const [quantity, setQuantity] = useState(1);
+  let totalPrice = quantity * product.price;
   useEffect(() => {
     dispatch(fetchProduct(id));
+    // dispatch(fetchProvinces());
   }, []);
+  const decrementHandler = () => {
+    if (quantity <= 1) return;
+    setQuantity(quantity - 1);
+  };
+  const incrementHandler = () => {
+    if (quantity >= product.stock) return;
+    setQuantity(quantity + 1);
+  };
 
-  // dispatch(fetchProvinces());
-  const handleChange = (event) => {
-    let name = event.currentTarget.name;
-    let value = event.currentTarget.value;
-    setInputVal({ ...inputVal, [name]: value });
-  }
-
+  const addCartHandler = (e) => {
+    e.preventDefault();
+    if (quantity > product.stock) {
+      console.log('invalid stock');
+      return;
+    }
+    const cartInfo = {
+      ProductId: product.id,
+      quantity: quantity,
+      UserId: 1
+    }
+    // Add process cart
+    dispatch(postCart(cartInfo))
+  };
   return (
     <div id="DetailPage">
       <Breadcumb />
       <div className="container">
         <div className="custom-row-1">
-          <div className="custom-col-2"
+          <div
+            className="custom-col-2"
             style={{
-              width: 'calc(27% - 20px)',
-              margin: '10px'
+              width: "calc(27% - 20px)",
+              margin: "10px",
             }}
           >
-            <img className="detail-img" src={product.mainImg} />
+            {isLoading ? (
+              <Skeleton height="200px" />
+            ) : (
+              <img
+                className="detail-img"
+                src={product.mainImg}
+                alt={product.name}
+              />
+            )}
           </div>
-          <div className="custom-col-2"
+          <div
+            className="custom-col-2"
             style={{
-              width: 'calc(43% - 20px)',
-              paddingLeft: '40px',
-              margin: '10px'
+              width: "calc(43% - 20px)",
+              paddingLeft: "40px",
+              margin: "10px",
             }}
           >
-            <h3 className="detail-name">{product.name}</h3>
+            <h3 className="detail-name">
+              {isLoading ? <Skeleton /> : product.name}
+            </h3>
             <p className="detail-price">
-              <span className="price">{toIDR(product.price)}</span>
-              <span className="unit-price">/{product.unit}</span>
+              <span className="price">
+                {isLoading ? <Skeleton /> : toIDR(product.price)}
+              </span>
+              <span className="unit-price">
+                /{isLoading ? <Skeleton /> : product.unit}
+              </span>
             </p>
-            <p className="detail-info">Tanggal panen : &nbsp;{formatDate(product.harvestDate ? product.harvestDate : '')}</p>
+            <p className="detail-info">
+              Tanggal panen : &nbsp;
+              {isLoading ? (
+                <Skeleton />
+              ) : (
+                formatDate(product.harvestDate ? product.harvestDate : "")
+              )}
+            </p>
             <p className="detail-desc">
-              {product.description}
+              {isLoading ? <Skeleton /> : product.description}
             </p>
             <div className="detail-seller">
               <div className="detail-seller-header">
-                <img src={product.User?.avatar} />
+                {isLoading ? (
+                  <Skeleton height="40px" />
+                ) : (
+                  <img src={product.User?.avatar} alt={product.User?.fName} />
+                )}
                 <div style={{ flexGrow: 1 }}>
-                  <h6 className="mb-0">{product.User?.fName + ' ' + product.User?.lName}</h6>
+                  <h6 className="mb-0">
+                    {isLoading ? (
+                      <Skeleton />
+                    ) : (
+                      product.User?.fName + " " + product.User?.lName
+                    )}
+                  </h6>
                 </div>
-                <div className="detail-cart-action" >
-                  <button id="openChat" className="btn custom-btn-1" style={{ marginTop: 0 }}>
-                    <span className="material-symbols-outlined">
-                      chat
-                    </span>
+                <div className="detail-cart-action">
+                  <button
+                    id="openChat"
+                    className="btn custom-btn-1"
+                    style={{ marginTop: 0 }}
+                  >
+                    <span className="material-symbols-outlined">chat</span>
                     <span>Chat</span>
                   </button>
                 </div>
@@ -79,24 +128,28 @@ export default function DetailPage() {
             <div className="detail-sender">
               <span>Pengiriman</span>
               <div>
-                <span className="material-icons" style={{ marginLeft: '-3px' }}>
+                <span className="material-icons" style={{ marginLeft: "-3px" }}>
                   location_on
                 </span>
-                <p>Dikirim dari <span>{product.User?.Addresses[0].city}</span></p>
+                <p>
+                  Dikirim dari{" "}
+                  <span>
+                    {isLoading ? <Skeleton /> : product.User?.Addresses[0].city}
+                  </span>
+                </p>
               </div>
               <div>
-                <span className="material-icons">
-                  local_shipping
-                </span>
+                <span className="material-icons">local_shipping</span>
                 <p>Ongkos kirim ekonomis Rp.18.000</p>
               </div>
             </div>
           </div>
-          <div className="custom-col-2"
+          <div
+            className="custom-col-2"
             style={{
-              width: 'calc(30% - 20px)',
-              paddingLeft: '20px',
-              margin: '10px'
+              width: "calc(30% - 20px)",
+              paddingLeft: "20px",
+              margin: "10px",
             }}
           >
             <div className="detail-cart">
@@ -109,7 +162,7 @@ export default function DetailPage() {
                       className="form-select"
                       aria-label="Default select example"
                       // value={inputVal.courier}
-                      onChange={() => handleChange()}
+                      // onChange={() => handleChange()}
                     >
                       <option value="">Pilih Kurir</option>
                       <option value="1">JNE</option>
@@ -117,32 +170,29 @@ export default function DetailPage() {
                       <option value="3">TIKI</option>
                     </select>
                   </div>
-                  {
-                    provinces.length !== 0 && (
-                      <div className="group-input mb-3">
-                        <select
-                          name="courier"
-                          className="form-select"
-                          aria-label="Default select example"
-                          // value={inputVal.courier}
-                          onChange={() => handleChange()}
-                        >
-                          <option value="">Pilih Provinsi</option>
-                          <option value="jne">JNE</option>
-                          <option value="pos">Pos Indonesia</option>
-                          <option value="tiki">TIKI</option>
-                        </select>
-                      </div>
-
-                    )
-                  }
+                  {provinces.length !== 0 && (
+                    <div className="group-input mb-3">
+                      <select
+                        name="courier"
+                        className="form-select"
+                        aria-label="Default select example"
+                        // value={inputVal.courier}
+                        // onChange={() => handleChange()}
+                      >
+                        <option value="">Pilih Provinsi</option>
+                        <option value="jne">JNE</option>
+                        <option value="pos">Pos Indonesia</option>
+                        <option value="tiki">TIKI</option>
+                      </select>
+                    </div>
+                  )}
                   <div className="group-input mb-3">
                     <select
                       name="courier"
                       className="form-select"
                       aria-label="Default select example"
                       // value={inputVal.courier}
-                      onChange={() => handleChange()}
+                      // onChange={() => handleChange()}
                     >
                       <option value="">Pilih Kota</option>
                       <option value="1">JNE</option>
@@ -152,29 +202,62 @@ export default function DetailPage() {
                   </div>
                   <h6 className="detail-cart-title">Atur Jumlah</h6>
                   <div className="group-input">
-                    <button type="button" className="btn min">
-                      <span className="material-symbols-outlined">
-                        remove
-                      </span>
+                    <button
+                      type="button"
+                      className="btn min"
+                      onClick={decrementHandler}
+                    >
+                      <span className="material-symbols-outlined">remove</span>
                     </button>
-                    <input className="form-control stock" value={1} />
-                    <button type="button" className="btn add">
-                      <span className="material-symbols-outlined">
-                        add
-                      </span>
+                    <input
+                      className="form-control stock"
+                      name="quantity"
+                      value={quantity}
+                      min={0}
+                      max={product.stock}
+                      onChange={(e) => {
+                        let value = e.target.value;
+                        if (value > product.stock) {
+                          return;
+                        }
+                        setQuantity(value);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="btn add"
+                      onClick={incrementHandler}
+                    >
+                      <span className="material-symbols-outlined">add</span>
                     </button>
                     <div className="detail-stock">
-                      Stock: <span>660</span>
+                      Stock:{" "}
+                      {isLoading ? <Skeleton /> : <span>{product.stock}</span>}
                     </div>
                   </div>
-                  <small style={{ fontFamily: 'Lato', fontSize: '12px', color: '#666666' }}>Max. pembelian 660 kg</small>
+                  <small
+                    style={{
+                      fontFamily: "Lato",
+                      fontSize: "12px",
+                      color: "#666666",
+                    }}
+                  >
+                    Max. pembelian {product.stock} {product.unit}
+                  </small>
                   <p className="total-cart">
                     <span>Subtotal</span>
-                    <span>Rp. 16.000</span>
+                    <span>{toIDR(totalPrice)}</span>
                   </p>
                   <div className="detail-cart-action">
-                    <button id="openChat" className="btn custom-btn-1">
-                      <span className="material-symbols-outlined" style={{ marginBottom: 0 }}>
+                    <button
+                      id="openChat"
+                      className="btn custom-btn-1"
+                      onClick={addCartHandler}
+                    >
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ marginBottom: 0 }}
+                      >
                         add
                       </span>
                       <span>Keranjang</span>
@@ -183,10 +266,9 @@ export default function DetailPage() {
                 </form>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
