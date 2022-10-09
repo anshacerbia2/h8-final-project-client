@@ -51,6 +51,11 @@ export default function userReducer(state = initialstate, action) {
         ...state,
         isLoadingSubmit: false
       }
+    case 'login':
+      return {
+        ...state,
+        isLogin: true
+      }
     default:
       return state
   }

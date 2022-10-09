@@ -3,7 +3,7 @@ import Breadcumb from "../components/Breadcumb";
 import CardAllProducts from "../components/CardAllProducts";
 import Accordion from "react-bootstrap/Accordion";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchSubCategories, fetchProducts } from "../store/actions";
+import { fetchSubCategories, fetchProducts, fetchProductByTitle } from "../store/actions";
 import CategoriesRadio from "../components/CategoriesRadio";
 
 const AllProducts = () => {
@@ -27,8 +27,7 @@ const AllProducts = () => {
   };
   const searchProductHandler = (event) => {
     event.preventDefault();
-    // console.log(searchProduct);
-    // code below
+    dispatch(fetchProductByTitle(searchProduct)).then(data => setFilterProduct(data))
   }
   return (
     <>
@@ -45,7 +44,7 @@ const AllProducts = () => {
               <strong> Filter</strong>
             </h5>
             <div className="row mb-3">
-              <form class="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0"}}>
+              <form onSubmit={searchProductHandler} class="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem"}}>
                 <input
                   type="text"
                   class="form-control"
@@ -56,7 +55,7 @@ const AllProducts = () => {
                   onChange={(e) => setSearchProduct(e.target.value)}
                 />
                 <div class="input-group-append">
-                  <button class="btn" type="button" onClick={searchProductHandler}>
+                  <button class="btn" type="submit">
                     <span class="material-symbols-outlined">search</span>
                   </button>
                 </div>
@@ -72,46 +71,6 @@ const AllProducts = () => {
                     subCategories={subCategories}
                     filterHandler={filterHandler}
                   />
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>
-                  <strong>Lokasi</strong>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                    <label className="form-check-label" for="flexCheckDefault">
-                      Jakarta
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                    <label className="form-check-label" for="flexCheckDefault">
-                      Bekasi
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                    <label className="form-check-label" for="flexCheckDefault">
-                      Luar pulau jawa
-                    </label>
-                  </div>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>

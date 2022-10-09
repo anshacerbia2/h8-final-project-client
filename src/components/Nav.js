@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
-  const { isLogin } = useSelector((state) => state.globalReducer);
+  const navigate = useNavigate();
+  // const { isLogin } = useSelector((state) => state.globalReducer);
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("access_token")) {
+      setIsLogin(true);
+    }
+  }, [isLogin])
+  const logoutHandler = () => {
+    setIsLogin(false);
+    localStorage.clear();
+    navigate("/")
+  }
   return (
     <>
-      <nav
-        className="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow p-3 bg-white rounded"
-      >
+      <nav className="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow p-3 bg-white rounded">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             <img src={logo} alt="Agro Shop" height="30px" />
@@ -36,7 +47,7 @@ const Nav = () => {
                 <NavLink className="nav-link">Product</NavLink>
               </li>
             </ul>
-            <form className="d-flex">
+            {/* <form className="d-flex">
               <input
                 className="form-control me-2"
                 type="search"
@@ -46,7 +57,7 @@ const Nav = () => {
               <button className="btn btn-outline-success" type="submit">
                 Search
               </button>
-            </form>
+            </form> */}
             <div className="navbar-menu" style={{ marginLeft: "10rem" }}>
               {!isLogin && (
                 <NavLink
@@ -65,6 +76,8 @@ const Nav = () => {
               )}
               {isLogin && (
                 <a
+                  onClick={logoutHandler}
+                  type="submit"
                   className="d-flex"
                   style={{
                     cursor: "pointer",
@@ -74,11 +87,12 @@ const Nav = () => {
                   }}
                 >
                   Logout
-                  <span className="material-symbols-outlined">login</span>
+                  <span class="material-symbols-outlined">logout</span>
                 </a>
               )}
               {isLogin && (
-                <a
+                <Link
+                  to="/dashboard/cart"
                   className="d-flex"
                   style={{
                     cursor: "pointer",
@@ -90,7 +104,7 @@ const Nav = () => {
                   <span className="material-symbols-outlined">
                     shopping_cart
                   </span>
-                </a>
+                </Link>
               )}
             </div>
           </div>

@@ -11,6 +11,7 @@ export function userLogin(...resArgs) {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
+        dispatch({type: "login"})
         return response;
       })
       .catch((err) => {
@@ -62,6 +63,27 @@ export function fetchProducts() {
         }, 1000);
       });
   };
+}
+
+export function fetchProductByTitle(title) {
+  // console.log(title);
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/products/search`, {
+      method: "POST",
+      body: JSON.stringify({"search": title}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      dispatch({
+        type: "products/searchByTitle",
+        payload: data
+      })
+      return data;
+    })
+  }
 }
 
 export function fetchUserProducts() {
