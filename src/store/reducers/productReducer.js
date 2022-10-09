@@ -1,6 +1,7 @@
 const initialstate = {
   products: [],
-  product: {}
+  product: {},
+  userProducts: []
 }
 
 export default function productReducer(state = initialstate, action) {
@@ -14,6 +15,11 @@ export default function productReducer(state = initialstate, action) {
       return {
         ...state,
         product: action.payload
+      }
+    case 'userProducts/fetchSuccess':
+      return {
+        ...state,
+        userProducts: action.payload
       }
     default:
       return state

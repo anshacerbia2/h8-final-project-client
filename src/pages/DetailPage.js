@@ -28,9 +28,7 @@ export default function DetailPage() {
   const handleChange = (event) => {
     let name = event.currentTarget.name;
     let value = event.currentTarget.value;
-
     setInputVal({ ...inputVal, [name]: value });
-
   }
 
   return (
@@ -104,7 +102,7 @@ export default function DetailPage() {
             <div className="detail-cart">
               <div className="detail-cart-form-wrapper">
                 <form>
-                  {/* <h6 className="detail-cart-title">Atur Pengiriman </h6>
+                  <h6 className="detail-cart-title">Atur Pengiriman </h6>
                   <div className="group-input mb-3">
                     <select
                       name="courier"
@@ -151,7 +149,7 @@ export default function DetailPage() {
                       <option value="2">Pos Indonesia</option>
                       <option value="3">TIKI</option>
                     </select>
-                  </div> */}
+                  </div>
                   <h6 className="detail-cart-title">Atur Jumlah</h6>
                   <div className="group-input">
                     <button type="button" className="btn min">
