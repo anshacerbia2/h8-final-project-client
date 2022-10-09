@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl = "http://localhost:3000";
 
 export function userLogin(...resArgs) {
   const body = resArgs[0];
@@ -181,12 +181,10 @@ export function fetchSubCategory(id) {
 }
 
 export function postCart(args) {
-  // console.log(args);
-  // const { ProductId, quantity } = args;
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
     const access_token = localStorage.getItem("access_token");
-    fetch(`${baseUrl}/cart`, {
+    return fetch(`${baseUrl}/cart`, {
       method: "POST",
       body: JSON.stringify(args),
       headers: {
@@ -195,7 +193,7 @@ export function postCart(args) {
       },
     })
       .then((resp) => {
-        console.log(resp);
+        return resp;
       })
       .finally(() => {
         dispatch({ type: "loading/false" });

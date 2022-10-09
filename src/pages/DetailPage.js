@@ -31,7 +31,7 @@ export default function DetailPage() {
     setQuantity(quantity + 1);
   };
 
-  const addCartHandler = (e) => {
+  const addCartHandler = async (e) => {
     e.preventDefault();
     if (quantity > product.stock) {
       console.log('invalid stock');
@@ -40,10 +40,11 @@ export default function DetailPage() {
     const cartInfo = {
       ProductId: product.id,
       quantity: quantity,
-      UserId: 1
+      // UserId: 1
     }
     // Add process cart
-    dispatch(postCart(cartInfo))
+    const response = await dispatch(postCart(cartInfo))
+    console.log(response.status);
   };
   return (
     <div id="DetailPage">
@@ -161,8 +162,8 @@ export default function DetailPage() {
                       name="courier"
                       className="form-select"
                       aria-label="Default select example"
-                      // value={inputVal.courier}
-                      // onChange={() => handleChange()}
+                    // value={inputVal.courier}
+                    // onChange={() => handleChange()}
                     >
                       <option value="">Pilih Kurir</option>
                       <option value="1">JNE</option>
@@ -176,8 +177,8 @@ export default function DetailPage() {
                         name="courier"
                         className="form-select"
                         aria-label="Default select example"
-                        // value={inputVal.courier}
-                        // onChange={() => handleChange()}
+                      // value={inputVal.courier}
+                      // onChange={() => handleChange()}
                       >
                         <option value="">Pilih Provinsi</option>
                         <option value="jne">JNE</option>
@@ -191,8 +192,8 @@ export default function DetailPage() {
                       name="courier"
                       className="form-select"
                       aria-label="Default select example"
-                      // value={inputVal.courier}
-                      // onChange={() => handleChange()}
+                    // value={inputVal.courier}
+                    // onChange={() => handleChange()}
                     >
                       <option value="">Pilih Kota</option>
                       <option value="1">JNE</option>
