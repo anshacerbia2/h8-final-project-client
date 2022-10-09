@@ -31,30 +31,37 @@ export function fetchUser() {
   return (dispatch, getState) => {
     return fetch(`${baseUrl}/users/${id}`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'user/userSuccess',
-          payload: data
-        })
-      })
-  }
+          type: "user/userSuccess",
+          payload: data,
+        });
+      });
+  };
 }
 
 export function fetchProducts() {
   return (dispatch, getState) => {
+    dispatch({ type: "loading/true" });
     return fetch(`${baseUrl}/products`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'products/fetchSuccess',
-          payload: data
-        })
+          type: "products/fetchSuccess",
+          payload: data,
+        });
+        return data;
       })
-  }
+      .finally(() => {
+        setTimeout(() => {
+          dispatch({ type: "loading/false" });
+        }, 1000);
+      });
+  };
 }
 
 export function fetchUserProducts() {
@@ -89,8 +96,8 @@ export function userRegister(...resArgs) {
       mode: "cors",
       body: JSON.stringify(body),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => {
         return response;
@@ -105,30 +112,6 @@ export function userRegister(...resArgs) {
       });
   };
 }
-
-// export function userLogin(...resArgs) {
-//   const body = resArgs[0];
-//   return (dispatch, getState) => {
-//     dispatch({ type: 'loadingSubmit/true' });
-//     return fetch(`${baseUrl}/login`, {
-//       method: 'POST',
-//       mode: 'cors',
-//       body: JSON.stringify(body),
-//       headers: { 'Content-Type': 'application/json' }
-//     })
-//       .then((response) => {
-//         return response;
-//       })
-//       .catch(err => {
-//         return err;
-//       })
-//       .finally(() => {
-//         setTimeout(() => {
-//           dispatch({ type: 'loadingSubmit/false' });
-//         }, 250);
-//       });
-//   }
-// }
 
 export function fetchCategories() {
   return (dispatch, getState) => {
@@ -151,7 +134,7 @@ export function fetchCategories() {
 export function fetchSubCategories() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    fetch(`${baseUrl}/sub-categories`)
+    return fetch(`${baseUrl}/sub-categories`)
       .then((response) => {
         return response.json();
       })
@@ -160,6 +143,7 @@ export function fetchSubCategories() {
           type: "subCategories/fetchSuccess",
           payload: data,
         });
+        return data;
       })
       .catch((err) => {
         console.log(err);
@@ -384,34 +368,35 @@ export function fetchProvinces() {
   return (dispatch, getState) => {
     fetch(`${baseUrl}/provinces`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         console.log(data);
         dispatch({
-          type: 'provinces/fetchSuccess',
-          payload: data
-        })
-      })
-  }
+          type: "provinces/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
 }
 
 export function fetchCities(provinceId) {
   return (dispatch, getState) => {
     fetch(`${baseUrl}/cities/${provinceId}`)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         dispatch({
-          type: 'cities/fetchSuccess',
-          payload: data
-        })
+          type: "cities/fetchSuccess",
+          payload: data,
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+
+  };
 }
 
 export function postAddress(...resArgs) {

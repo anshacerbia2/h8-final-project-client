@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const Toast = Swal.mixin({
+export const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
@@ -12,7 +12,7 @@ const Toast = Swal.mixin({
   }
 });
 
-const swalWithBootstrapButtons = Swal.mixin({
+export const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
     cancelButton: 'btn btn-danger'
@@ -20,12 +20,12 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 });
 
-const toIDR = (number) => {
+export const toIDR = (number) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
 }
 
-const formatDate = (date) => {
+export const formatDate = (date) => {
   return date.slice(0, 10);
 }
 
-export { Toast, swalWithBootstrapButtons, toIDR, formatDate }
+// export { Toast, swalWithBootstrapButtons, toIDR, formatDate }

@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const Nav = () => {
   const { isLogin } = useSelector((state) => state.globalReducer);
-  console.log(isLogin);
   return (
     <>
       <nav
