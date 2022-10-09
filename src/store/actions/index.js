@@ -45,7 +45,7 @@ export function fetchUser() {
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    return fetch(`${baseUrl}/products`)
+    fetch(`${baseUrl}/products`)
       .then((response) => {
         return response.json();
       })
@@ -54,7 +54,6 @@ export function fetchProducts() {
           type: "products/fetchSuccess",
           payload: data,
         });
-        return data;
       })
       .finally(() => {
         setTimeout(() => {
@@ -67,7 +66,7 @@ export function fetchProducts() {
 export function fetchUserProducts() {
   const access_token = localStorage.getItem("access_token");
   return (dispatch, getState) => {
-    return fetch(`${baseUrl}/products/user`, {
+    fetch(`${baseUrl}/products/user`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -181,7 +180,7 @@ export function fetchSubCategory(id) {
 }
 
 
-export function fetchcart() {
+export function fetchCarts() {
   const access_token = localStorage.getItem("access_token");
   return (dispatch, getState) => {
     return fetch(`${baseUrl}/cart`, {
@@ -196,7 +195,7 @@ export function fetchcart() {
       })
       .then((data) => {
         dispatch({
-          type: "cart/fetchSuccess",
+          type: "carts/fetchSuccess",
           payload: data,
         });
       });
@@ -221,6 +220,39 @@ export function postCart(args) {
       .finally(() => {
         dispatch({ type: "loading/false" });
       });
+  };
+}
+
+export function incCart(id) {
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    return fetch(`${baseUrl}/cart/${id}/inc`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((resp) => {
+        return resp;
+      })
+  };
+}
+
+export function decCart(id) {
+  console.log(id);
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    return fetch(`${baseUrl}/cart/${id}/dec`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((resp) => {
+        return resp;
+      })
   };
 }
 
@@ -257,6 +289,7 @@ export function fetchProduct(id) {
         return response.json();
       })
       .then((data) => {
+        console.log(data, '<<<<<<<<<<<<<<');
         dispatch({
           type: "product/fetchSuccess",
           payload: data,
