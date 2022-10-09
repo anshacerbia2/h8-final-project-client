@@ -17,6 +17,7 @@ export default function DetailPage() {
   const { isLoading, provinces, cities } = useSelector(
     (state) => state.globalReducer
   );
+  console.log(product);
   const [quantity, setQuantity] = useState(1);
   let totalPrice = quantity * product.price;
   useEffect(() => {
@@ -161,9 +162,11 @@ export default function DetailPage() {
                   location_on
                 </span>
                 <p>
-                  Dikirim dari{" "}
+                  Dikirim dari
                   <span>
-                    {isLoading ? <Skeleton /> : product.User?.Addresses[0].city}
+                    {
+                      isLoading ? <Skeleton /> : product.User?.Addresses.find(v => v.default === true)?.city
+                    }
                   </span>
                 </p>
               </div>

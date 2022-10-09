@@ -26,7 +26,7 @@ export default function userReducer(state = initialstate, action) {
         ...state,
         cities: action.payload
       }
-    case 'cart/fetchSuccess':
+    case 'carts/fetchSuccess':
       return {
         ...state,
         carts: action.payload
