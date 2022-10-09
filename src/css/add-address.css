@@ -1,0 +1,26 @@
+#formAddress .form-select {
+  font-family: 'Lato';
+  font-size: 14px;
+  height: 40px;
+  border-radius: 2px;
+}
+
+#formAddress button:focus,
+#formAddress button:active:focus,
+#formAddress .form-select:active,
+#formAddress .form-select:focus,
+#formAddress .form-select:active:focus {
+  border-color: #6daf0d !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#formAddress .form-select {
+  padding: 2px 36px 2px 16px;
+  color: #696969;
+}
+
+.modal-content {
+  max-width: 650px !important;
+  margin: 0 auto;
+}

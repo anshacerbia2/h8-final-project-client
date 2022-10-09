@@ -7,149 +7,52 @@ import { useSelector, useDispatch } from 'react-redux';
 import FormModalNew from './FormModalNew'
 import FormModalEdit from './FormModalEdit'
 import Button from 'react-bootstrap/Button';
-import { fetchProducts, fetchProduct, deleteProduct, fetchSubCategories } from '../store/actions';
+import { fetchProducts, fetchProduct, deleteProduct, fetchSubCategories, fetchUserProducts } from '../store/actions';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { Toast, swalWithBootstrapButtons } from "../helpers";
+import { Toast, swalWithBootstrapButtons, formatDate } from "../helpers";
 
 export default function DashboardProducts(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { isLoading } = useSelector((state) => state.globalReducer);
-  const isLoading = false;
-  // const { products, product } = useSelector((state) => state.productReducer);
-  const products = [
-    {
-      id: 1,
-      name: "Tomat Lembang",
-      slug: "tomat-lembang",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec erat luctus, vestibulum ante sodales, imperdiet est. Vivamus sodales mauris nisi. Etiam nec lacinia sem, nec dapibus eros. Cras sed turpis vitae odio posuere hendrerit viverra a sem. Phasellus neque ante, lacinia ut nibh in, pharetra accumsan ipsum. Nulla facilisi. Fusce consectetur malesuada metus, eget lobortis diam semper at. Etiam volutpat nec dui faucibus suscipit.",
-      price: 20000,
-      mainImg: "https://cdn.medcom.id/images/content/2020/10/08/1196942/3Rw1PQrlYn.jpeg",
-      harvestDate: "2022-10-01 07:00:00+07",
-      unit: "kg",
-      stock: 100,
-      SubCategoryId: 2,
-      authorId: 1,
-      SubCategory: {
-        id: 2,
-        name: 'Buah-buahan',
-        CategoryId: 2,
-        Category: {
-          id: 2,
-          name: 'Hortikultura',
-        }
-      }
-    },
-    {
-      id: 1,
-      name: "Tomat Lembang",
-      slug: "tomat-lembang",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec erat luctus, vestibulum ante sodales, imperdiet est. Vivamus sodales mauris nisi. Etiam nec lacinia sem, nec dapibus eros. Cras sed turpis vitae odio posuere hendrerit viverra a sem. Phasellus neque ante, lacinia ut nibh in, pharetra accumsan ipsum. Nulla facilisi. Fusce consectetur malesuada metus, eget lobortis diam semper at. Etiam volutpat nec dui faucibus suscipit.",
-      price: 20000,
-      mainImg: "https://cdn.medcom.id/images/content/2020/10/08/1196942/3Rw1PQrlYn.jpeg",
-      harvestDate: "2022-10-01 07:00:00+07",
-      unit: "kg",
-      stock: 100,
-      SubCategoryId: 2,
-      authorId: 1,
-      SubCategory: {
-        id: 2,
-        name: 'Buah-buahan',
-        CategoryId: 2,
-        Category: {
-          id: 2,
-          name: 'Hortikultura',
-        }
-      }
-    },
-    {
-      id: 1,
-      name: "Tomat Lembang",
-      slug: "tomat-lembang",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec erat luctus, vestibulum ante sodales, imperdiet est. Vivamus sodales mauris nisi. Etiam nec lacinia sem, nec dapibus eros. Cras sed turpis vitae odio posuere hendrerit viverra a sem. Phasellus neque ante, lacinia ut nibh in, pharetra accumsan ipsum. Nulla facilisi. Fusce consectetur malesuada metus, eget lobortis diam semper at. Etiam volutpat nec dui faucibus suscipit.",
-      price: 20000,
-      mainImg: "https://cdn.medcom.id/images/content/2020/10/08/1196942/3Rw1PQrlYn.jpeg",
-      harvestDate: "2022-10-01 07:00:00+07",
-      unit: "kg",
-      stock: 100,
-      SubCategoryId: 2,
-      authorId: 1,
-      SubCategory: {
-        id: 2,
-        name: 'Buah-buahan',
-        CategoryId: 2,
-        Category: {
-          id: 2,
-          name: 'Hortikultura',
-        }
-      }
-    }
-  ]
+  const { isLoading } = useSelector((state) => state.globalReducer);
+  const { userProducts, product } = useSelector((state) => state.productReducer);
   // const { subCategories } = useSelector((state) => state.categoryReducer);
-  const subCategories = [
-    {
-      id: 1,
-      name: "Sayuran",
-      CategoryId: 2,
-      createdAt: "2022-8-06T00:00:00.000Z",
-      updatedAt: "2022-8-06T00:00:00.000Z"
-    },
-    {
-      id: 2,
-      name: "Buah-buahan",
-      CategoryId: 2,
-      createdAt: "2022-8-06T00:00:00.000Z",
-      updatedAt: "2022-8-06T00:00:00.000Z"
-    },
-    {
-      id: 3,
-      name: "Tanaman Obat-obatan",
-      CategoryId: 2,
-      createdAt: "2022-8-06T00:00:00.000Z",
-      updatedAt: "2022-8-06T00:00:00.000Z"
-    },
-    {
-      id: 4,
-      name: "Tanaman Hias",
-      CategoryId: 2,
-      createdAt: "2022-8-06T00:00:00.000Z",
-      updatedAt: "2022-8-06T00:00:00.000Z"
-    }
-  ]
-  const [modalNewShow, setModalNewShow] = useState(false);
-  const [modalEditShow, setModalEditShow] = useState(false);
-
+  // const [modalNewShow, setModalNewShow] = useState(false);
+  // const [modalEditShow, setModalEditShow] = useState(false);
+  useEffect(() => {
+    dispatch(fetchUserProducts());
+  }, []);
   const openModalEdit = (id) => {
-    dispatch(fetchProduct(id))
-    dispatch(fetchSubCategories())
-    setModalEditShow(true)
+    // dispatch(fetchProduct(id))
+    // dispatch(fetchSubCategories())
+    // setModalEditShow(true)
   }
 
   const handleDelete = async (id) => {
-    const result = await swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, do it!',
-      cancelButtonText: 'No, cancel!',
-      reverseButtons: true
-    });
+    //   const result = await swalWithBootstrapButtons.fire({
+    //     title: 'Are you sure?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Yes, do it!',
+    //     cancelButtonText: 'No, cancel!',
+    //     reverseButtons: true
+    //   });
 
-    if (result.isConfirmed) {
-      const response = await dispatch(deleteProduct(id));
-      if (response.status === 200) {
-        dispatch(fetchProducts());
-        Toast.fire({ icon: 'success', title: 'Product has been deleted successfully..' });
-      } else {
-        const responseJSON = await response.json();
-        swalWithBootstrapButtons.fire({
-          title: responseJSON.message,
-          icon: 'error',
-          timer: 2000
-        });
-      }
-    }
+    //   if (result.isConfirmed) {
+    //     const response = await dispatch(deleteProduct(id));
+    //     if (response.status === 200) {
+    //       dispatch(fetchProducts());
+    //       Toast.fire({ icon: 'success', title: 'Product has been deleted successfully..' });
+    //     } else {
+    //       const responseJSON = await response.json();
+    //       swalWithBootstrapButtons.fire({
+    //         title: responseJSON.message,
+    //         icon: 'error',
+    //         timer: 2000
+    //       });
+    //     }
+    //   }
   }
 
   const truncateString = (str) => {
@@ -162,14 +65,8 @@ export default function DashboardProducts(props) {
 
   return (
     <div className="product-item-list">
-      {/* <h1 className='d-flex align-items-start'>Product List
-                  <span style={{ flexGrow: 1 }}></span>
-                  <Button className="custom-btn-1 btn-add-form" onClick={() => setModalNewShow(true)}>
-                    Add Product&nbsp;<span className="material-symbols-outlined">add_circle</span>
-                  </Button>
-                </h1> */}
       {
-        products.sort((a, b) => b.id - a.id).map((product, key) => {
+        userProducts.sort((a, b) => b.id - a.id).map((product, key) => {
           return (
             <div className="product-item" key={'product-item-' + key}>
               {
@@ -221,6 +118,26 @@ export default function DashboardProducts(props) {
                       :
                       <>
                         {toIDR(product.price)}
+                      </>
+                  }
+                </p>
+                <p className="product-item-stock" style={{ marginTop: 12 }}>
+                  {
+                    isLoading ?
+                      <Skeleton height={17} width={250} />
+                      :
+                      <>
+                        <span>Stock :</span> &nbsp;{product.stock}, &nbsp;&nbsp;<span>Unit :</span> &nbsp;{product.unit}
+                      </>
+                  }
+                </p>
+                <p className="product-item-stock" style={{ marginBottom: 12 }}>
+                  {
+                    isLoading ?
+                      <Skeleton height={17} width={250} />
+                      :
+                      <>
+                        <span>Tanggal Panen :</span> &nbsp;{formatDate(product.harvestDate)}
                       </>
                   }
                 </p>

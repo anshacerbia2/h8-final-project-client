@@ -1,8 +1,16 @@
 import '../css/dashboard.css';
 import avatar from '../avatar.jpg'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../store/actions';
+import { useEffect } from 'react';
 
 export default function DashboardSettings(props) {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.globalReducer);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
   return (
     <div id="DashboardSettings">
@@ -25,11 +33,11 @@ export default function DashboardSettings(props) {
         >
           <div className="dc-settings-content">
             <p className="dc-tag">Data Diri</p>
-            <p><span>Nama</span> :&nbsp;&nbsp; {user?.fName + ' ' + user?.lName}</p>
-            <p style={{ marginBottom: 24 }}><span>Jenis Kelamin</span> :&nbsp;&nbsp; {user.gender ? user.gender : '-'}</p>
+            <p><span>Nama</span> :&nbsp;&nbsp; {user ? user.fName + ' ' + user.lName : ''}</p>
+            <p style={{ marginBottom: 24 }}><span>Jenis Kelamin</span> :&nbsp;&nbsp; {user ? user.gender : '-'}</p>
             <p className="dc-tag">Kontak</p>
-            <p><span>Email</span> :&nbsp;&nbsp; {user.email ? user.email : '-'}</p>
-            <p style={{ marginBottom: 24 }}><span>Nomor HP</span> :&nbsp;&nbsp; {user.phoneNumber ? user.phoneNumber : '-'}</p>
+            <p><span>Email</span> :&nbsp;&nbsp; {user ? user.email : '-'}</p>
+            <p style={{ marginBottom: 24 }}><span>Nomor HP</span> :&nbsp;&nbsp; {user ? user.phoneNumber : '-'}</p>
           </div>
         </div>
       </div>

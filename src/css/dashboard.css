@@ -3,15 +3,15 @@
 }
 
 .dashboard-side {
-  min-width: 275px;
-  width: 275px;
+  min-width: 225px;
+  width: 225px;
   margin: 0 10px;
   min-height: 500px;
 }
 
 .dashboard-content {
-  min-width: calc(100% - 315px);
-  width: calc(100% - 315px);
+  min-width: calc(100% - 265px);
+  width: calc(100% - 265px);
   margin: 0 10px;
   padding-left: 30px;
 }
@@ -50,9 +50,12 @@
 .product-item {
   display: flex;
   width: 100%;
-  padding-bottom: 20px;
+  padding: 20px;
   margin-bottom: 40px;
-  border-bottom: 1px solid #ced4da;
+  border-radius: 3px;
+  border-bottom: 1px solid #ddd;
+  border-left: 3px solid #6daf0d;
+  box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;
 }
 
 .product-item>img {
@@ -60,8 +63,9 @@
   min-height: 150px;
   width: 150px;
   height: 150px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  border-radius: 2px;
 }
 
 .product-item-detail {
@@ -112,15 +116,23 @@
   color: #696969;
 }
 
-.product-item-price {
+.product-item-price,
+.product-item-stock {
   font-family: 'Lato';
-  margin: 6px 0;
+  font-size: 16px;
+  margin: 2px 0;
   font-weight: 700;
   color: #696969;
 }
 
+.product-item-stock {
+  font-weight: normal;
+  font-size: 13px;
+}
+
 .product-item-description {
   font-family: 'Lato';
+  margin-bottom: 0;
   font-size: 14px;
   color: #696969;
 }
@@ -135,18 +147,19 @@
 }
 
 .modal-header {
-  padding: 35px 40px;
+  padding: 25px 40px;
 }
 
 .custom-modal-title {
   font-family: 'Lato';
-  font-size: 40px;
+  font-size: 26px;
   line-height: 0px;
   color: #696969;
+  font-weight: 700;
 }
 
 .modal-body {
-  padding: 20px 40px;
+  padding: 20px 40px 30px;
 }
 
 .swal2-popup {
@@ -203,5 +216,33 @@
   font-family: 'Lato';
   font-size: 16px;
   color: #696969;
+  border-radius: 2px;
+  /* background-color: #4fd15a29; */
+  box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;
+}
+
+.full-address {
+  margin-bottom: 0;
+}
+
+.full-address span {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.default-address {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 2px;
   background-color: #4fd15a29;
+}
+
+.address-name {
+  display: block;
+  font-weight: 900;
+  margin: 2px 0 8px;
+  font-size: 26px;
 }
