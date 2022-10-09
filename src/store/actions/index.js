@@ -11,6 +11,7 @@ export function userLogin(...resArgs) {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
+        dispatch({type: "login"})
         return response;
       })
       .catch((err) => {
@@ -61,6 +62,27 @@ export function fetchProducts() {
         }, 1000);
       });
   };
+}
+
+export function fetchProductByTitle(title) {
+  // console.log(title);
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/products/search`, {
+      method: "POST",
+      body: JSON.stringify({"search": title}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      dispatch({
+        type: "products/searchByTitle",
+        payload: data
+      })
+      return data;
+    })
+  }
 }
 
 export function fetchUserProducts() {
@@ -180,6 +202,7 @@ export function fetchSubCategory(id) {
 }
 
 
+
 export function fetchCarts() {
   const access_token = localStorage.getItem("access_token");
   return (dispatch, getState) => {
@@ -188,7 +211,7 @@ export function fetchCarts() {
       headers: {
         "Content-Type": "application/json",
         access_token,
-      }
+      },
     })
       .then((response) => {
         return response.json();
@@ -204,7 +227,6 @@ export function fetchCarts() {
 
 export function postCart(args) {
   return (dispatch, getState) => {
-    dispatch({ type: "loading/true" });
     const access_token = localStorage.getItem("access_token");
     return fetch(`${baseUrl}/cart`, {
       method: "POST",
@@ -213,13 +235,9 @@ export function postCart(args) {
         "Content-Type": "application/json",
         access_token,
       },
-    })
-      .then((resp) => {
-        return resp;
-      })
-      .finally(() => {
-        dispatch({ type: "loading/false" });
-      });
+    }).then((resp) => {
+      return resp;
+    });
   };
 }
 

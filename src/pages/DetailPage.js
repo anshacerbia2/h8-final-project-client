@@ -13,6 +13,7 @@ export default function DetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.productReducer);
+  const { isLoadingSubmit } = useSelector((state) => state.globalReducer);
   const { isLoading, provinces, cities } = useSelector(
     (state) => state.globalReducer
   );
@@ -36,19 +37,29 @@ export default function DetailPage() {
     // try {
     e.preventDefault();
     if (quantity > product.stock) {
-      console.log('invalid stock');
+      console.log("invalid stock");
       return;
     }
     const cartInfo = {
       ProductId: product.id,
       quantity: quantity,
       // UserId: 1
-    }
+    };
+    // console.log(cartInfo);
     // Add process cart
-    dispatch(postCart(cartInfo))
-      .then((resp) => {
-        console.log(resp);
-      })
+    dispatch(postCart(cartInfo)).then((resp) => {
+      if (resp.status === 201) {
+        const responseJSON = resp.json();
+        swalImg.fire({
+          title: "Berhasil Ditambahkan",
+          text: responseJSON.message,
+          imageUrl: product.mainImg,
+          imageWidth: 300,
+          imageHeight: 300,
+          timer: 3000,
+        });
+      }
+    });
     // if (response.status === 200) {
     //   const responseJSON = await response.json();
     //   swalImg.fire({
@@ -176,51 +187,6 @@ export default function DetailPage() {
             <div className="detail-cart">
               <div className="detail-cart-form-wrapper">
                 <form onSubmit={addCartHandler}>
-                  <h6 className="detail-cart-title">Atur Pengiriman </h6>
-                  <div className="group-input mb-3">
-                    <select
-                      name="courier"
-                      className="form-select"
-                      aria-label="Default select example"
-                    // value={inputVal.courier}
-                    // onChange={() => handleChange()}
-                    >
-                      <option value="">Pilih Kurir</option>
-                      <option value="1">JNE</option>
-                      <option value="2">Pos Indonesia</option>
-                      <option value="3">TIKI</option>
-                    </select>
-                  </div>
-                  {provinces.length !== 0 && (
-                    <div className="group-input mb-3">
-                      <select
-                        name="courier"
-                        className="form-select"
-                        aria-label="Default select example"
-                      // value={inputVal.courier}
-                      // onChange={() => handleChange()}
-                      >
-                        <option value="">Pilih Provinsi</option>
-                        <option value="jne">JNE</option>
-                        <option value="pos">Pos Indonesia</option>
-                        <option value="tiki">TIKI</option>
-                      </select>
-                    </div>
-                  )}
-                  <div className="group-input mb-3">
-                    <select
-                      name="courier"
-                      className="form-select"
-                      aria-label="Default select example"
-                    // value={inputVal.courier}
-                    // onChange={() => handleChange()}
-                    >
-                      <option value="">Pilih Kota</option>
-                      <option value="1">JNE</option>
-                      <option value="2">Pos Indonesia</option>
-                      <option value="3">TIKI</option>
-                    </select>
-                  </div>
                   <h6 className="detail-cart-title">Atur Jumlah</h6>
                   <div className="group-input">
                     <button
