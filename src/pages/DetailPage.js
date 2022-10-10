@@ -8,7 +8,7 @@ import Breadcumb from "../components/Breadcumb";
 import { formatDate, swalImg, toIDR } from "../helpers";
 import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
-import { swallLoginFirst } from "../helpers";
+// import { swallLoginFirst } from "../helpers";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -60,7 +60,14 @@ export default function DetailPage() {
         });
       }
       if (resp.status === 401) {
-        swallLoginFirst();
+        swalImg.fire({
+          title: "Berhasil Ditambahkan",
+          text: 'Login dulu',
+          imageUrl: product.mainImg,
+          imageWidth: 300,
+          imageHeight: 300,
+          timer: 3000,
+        });
       }
     });
     // if (response.status === 200) {
