@@ -18,6 +18,26 @@ export default function ChatPage() {
     const [room, setRoom] = useState(null)
     const [rooms, setRooms] = useState([])
     const [roomId, setRoomId] = useState("")
+    function onChangeHandler(e) {
+        setChat(e.target.value)
+    }
+    function handleChat(e) {
+        e.preventDefault()
+        socket.emit("send-chat", chat, currentName)
+        appendMessage(`You: ${chat}`)
+        socket.on("send-chat", (payload) => {
+            console.log(payload)
+            appendMessage(`${payload.name}: ${payload.message}`)
+        })
+    }
+    function appendMessage(message) {
+        const messageContainer = document.getElementById("message-container")
+        const messageElement = document.createElement('div')
+        messageElement.classList.add("white")
+        messageElement.innerText = message
+        messageContainer.append(messageElement)
+        document.getElementById("chat-placeholder").remove();
+    }
     async function getAllRooms(id) {
         try {
             let { data } = await axios.get(`${serverUrl}/rooms/${id}`)
@@ -31,19 +51,24 @@ export default function ChatPage() {
         try {
             let { data } = await axios.get(`${serverUrl}/room/${currentId}/${targetId}`)
             setRoom(data)
+            socket.join(data.roomName)
+            socket.emit("join-room", data)
+            console.log(data, "get room")
+
             return data
         } catch (err) {
             console.log(err)
         }
     }
-    async function getUser(id) {
-        try {
-            // let userData = await axios.get("user url/targetUserId")
-            // return targetUserData
-        } catch (err) {
-            console.log(err)
-        }
-    }
+
+    // async function getUser(id) {
+    //     try {
+    //         // let userData = await axios.get("user url/targetUserId")
+    //         // return targetUserData
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
     async function getChats(roomId) {
         try {
             let { data } = await axios.get(`${serverUrl}/chats/${roomId}`)
@@ -108,22 +133,6 @@ export default function ChatPage() {
             getChats(roomId)
         }
     }, [roomId])
-    function onChangeHandler(e) {
-        setChat(e.target.value)
-    }
-    function handleChat(e) {
-        e.preventDefault()
-        socket.emit("send-chat", chat, currentName)
-        appendMessage(`You: ${chat}`)
-    }
-    //global variable
-    function appendMessage(message) {
-        const messageContainer = document.getElementById("message-container")
-        const messageElement = document.createElement('div')
-        messageElement.classList.add("white")
-        messageElement.innerText = message
-        messageContainer.append(messageElement)
-    }
     return (
         <div style={{ paddingLeft: 20, paddingTop: 20 }}>
             {rooms.length &&
@@ -159,21 +168,24 @@ export default function ChatPage() {
                 </div>
             }
             {target &&
-                <div id="message-container">
-                    {
-                        chatHistory.length &&
-                        chatHistory.map((el, idx) => {
-                            if (el.userId == currentId) {
-                                return (
-                                    <p style={{ color: "red" }} key={idx}>You: {el.message}</p>
-                                )
-                            } else {
-                                return (
-                                    <p style={{ color: "blue" }} key={idx} >{el.name}: {el.message}</p>
-                                )
-                            }
-                        })
-                    }
+                <div>
+                    <div id="message-container">
+                        {
+                            chatHistory.length ?
+                                chatHistory.map((el, idx) => {
+                                    if (el.userId == currentId) {
+                                        return (
+                                            <p style={{ color: "red" }} key={idx}>You: {el.message}</p>
+                                        )
+                                    } else {
+                                        return (
+                                            <p style={{ color: "blue" }} key={idx} >{el.name}: {el.message}</p>
+                                        )
+                                    }
+                                })
+                                : <p id="chat-placeholder">No Chat Available</p>
+                        }
+                    </div>
                     <form onSubmit={handleChat}>
                         <input type="text" name="chat" onChange={onChangeHandler} autoComplete="off" />
                         <button type="submit">Chat</button>
