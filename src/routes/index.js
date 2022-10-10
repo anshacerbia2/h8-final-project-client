@@ -15,6 +15,7 @@ import DashboardProducts from "../components/DashboardProducts";
 import DashboardCart from "../components/DashboardCart";
 import DashboardHistory from "../components/DashboardHistory";
 import AllProducts from "../pages/AllProducts";
+import ChatPage from "../pages/ChatPage";
 
 
 const router = createBrowserRouter([
@@ -62,6 +63,12 @@ const router = createBrowserRouter([
       },
     ]
   },
+  //testing chat
+  {
+    path: '/chat',
+    element: <ChatPage />
+  },
+  //testing chat
   {
     path: '/login',
     element: <LoginPage />,
