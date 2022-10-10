@@ -15,7 +15,9 @@ export default function HomePage() {
   const { products } = useSelector((state) => state.productReducer);
   useEffect(() => {
     dispatch(fetchProducts())
-    .then(resp => setLatestProduct(resp.slice(0, 4)))
+    // .then(resp => setLatestProduct(resp.slice(0, 4)))
+    // .then(resp => console.log(resp));
+    setLatestProduct(products.slice(0, 4));
   }, []);
   return (
     <div className="container">

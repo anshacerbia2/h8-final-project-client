@@ -39,12 +39,14 @@ const Nav = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page">
-                  Home
+                <NavLink to="/dashboard/settings" className="nav-link active" aria-current="page">
+                  {isLogin ? "Dashboard" : ""}
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link">Product</NavLink>
+                <NavLink to="/all-products" className="nav-link">
+                  All Products
+                </NavLink>
               </li>
             </ul>
             {/* <form className="d-flex">

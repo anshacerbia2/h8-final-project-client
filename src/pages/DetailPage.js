@@ -8,6 +8,7 @@ import Breadcumb from "../components/Breadcumb";
 import { formatDate, swalImg, toIDR } from "../helpers";
 import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
+import { swallLoginFirst } from "../helpers";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -17,7 +18,6 @@ export default function DetailPage() {
   const { isLoading, provinces, cities } = useSelector(
     (state) => state.globalReducer
   );
-  console.log(product);
   const [quantity, setQuantity] = useState(1);
   let totalPrice = quantity * product.price;
   useEffect(() => {
@@ -58,6 +58,9 @@ export default function DetailPage() {
           imageHeight: 300,
           timer: 3000,
         });
+      }
+      if (resp.status === 401) {
+        swallLoginFirst();
       }
     });
     // if (response.status === 200) {
@@ -164,9 +167,12 @@ export default function DetailPage() {
                 <p>
                   Dikirim dari
                   <span>
-                    {
-                      isLoading ? <Skeleton /> : product.User?.Addresses.find(v => v.default === true)?.city
-                    }
+                    {isLoading ? (
+                      <Skeleton />
+                    ) : (
+                      product.User?.Addresses.find((v) => v.default === true)
+                        ?.city
+                    )}
                   </span>
                 </p>
               </div>
