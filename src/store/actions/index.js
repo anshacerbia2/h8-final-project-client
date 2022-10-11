@@ -46,7 +46,7 @@ export function fetchUser() {
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    fetch(`${baseUrl}/products`)
+    return fetch(`${baseUrl}/products`)
       .then((response) => {
         return response.json();
       })
@@ -55,6 +55,7 @@ export function fetchProducts() {
           type: "products/fetchSuccess",
           payload: data,
         });
+        return data;
       })
       .finally(() => {
         setTimeout(() => {

@@ -16,6 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(fetchProducts())
     .then(resp => setLatestProduct(resp.slice(0, 4)))
+    // setLatestProduct(products)
   }, []);
   return (
     <div className="container">

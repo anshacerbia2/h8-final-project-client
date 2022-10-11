@@ -32,7 +32,6 @@ export default function DetailPage() {
     if (quantity >= product.stock) return;
     setQuantity(quantity + 1);
   };
-
   const addCartHandler = (e) => {
     // try {
     e.preventDefault();
@@ -45,7 +44,6 @@ export default function DetailPage() {
       quantity: quantity,
       // UserId: 1
     };
-    // console.log(cartInfo);
     // Add process cart
     dispatch(postCart(cartInfo)).then((resp) => {
       if (resp.status === 201) {
