@@ -13,7 +13,8 @@ const AllProducts = () => {
   const { products } = useSelector((state) => state.productReducer);
   const { subCategories } = useSelector((state) => state.subCategoriesReducer);
   useEffect(() => {
-    dispatch(fetchProducts()).then((data) => setFilterProduct(data));
+    dispatch(fetchProducts())
+      .then((data) => setFilterProduct(data));
     dispatch(fetchSubCategories());
   }, []);
   // console.log(filterProduct.filter(el => el.SubCategoryId === 7));
@@ -44,7 +45,7 @@ const AllProducts = () => {
               <strong> Filter</strong>
             </h5>
             <div className="row mb-3">
-              <form onSubmit={searchProductHandler} class="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem"}}>
+              <form onSubmit={searchProductHandler} class="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem" }}>
                 <input
                   type="text"
                   class="form-control"

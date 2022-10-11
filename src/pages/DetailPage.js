@@ -1,7 +1,7 @@
 import "../App.css";
 import "../css/detailPage.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, fetchProvinces, postCart } from "../store/actions";
 import Breadcumb from "../components/Breadcumb";
@@ -10,6 +10,7 @@ import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
 
 export default function DetailPage() {
+  const navigate = useNavigate()
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.productReducer);
@@ -75,6 +76,10 @@ export default function DetailPage() {
     //   console.log(error);
     // }
   };
+  const renderChat = (e) => {
+    e.preventDefault()
+    navigate(`/chat/${product.User.id}`)
+  }
   return (
     <div id="DetailPage">
       <Breadcumb />
@@ -148,6 +153,7 @@ export default function DetailPage() {
                     id="openChat"
                     className="btn custom-btn-1"
                     style={{ marginTop: 0 }}
+                    onClick={renderChat}
                   >
                     <span className="material-symbols-outlined">chat</span>
                     <span>Chat</span>

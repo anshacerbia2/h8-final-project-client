@@ -11,7 +11,7 @@ export function userLogin(...resArgs) {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        dispatch({type: "login"})
+        dispatch({ type: "login" })
         return response;
       })
       .catch((err) => {
@@ -46,8 +46,16 @@ export function fetchUser() {
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    fetch(`${baseUrl}/products`)
+    fetch(`${baseUrl}/products`, {
+      method: 'get', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        // 'Content-Type': 'application/json',
+        'access_token': localStorage.getItem("access_token"),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
       .then((response) => {
+        // console.log(response)
         return response.json();
       })
       .then((data) => {
@@ -55,6 +63,7 @@ export function fetchProducts() {
           type: "products/fetchSuccess",
           payload: data,
         });
+        return data
       })
       .finally(() => {
         setTimeout(() => {
@@ -69,19 +78,19 @@ export function fetchProductByTitle(title) {
   return (dispatch, getState) => {
     return fetch(`${baseUrl}/products/search`, {
       method: "POST",
-      body: JSON.stringify({"search": title}),
+      body: JSON.stringify({ "search": title }),
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(resp => resp.json())
-    .then(data => {
-      dispatch({
-        type: "products/searchByTitle",
-        payload: data
+      .then(resp => resp.json())
+      .then(data => {
+        dispatch({
+          type: "products/searchByTitle",
+          payload: data
+        })
+        return data;
       })
-      return data;
-    })
   }
 }
 
