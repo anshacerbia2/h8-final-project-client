@@ -9,7 +9,7 @@ import Register from "../pages/Register";
 import ProductListPage from "../pages/ProductListPage";
 import Dashboard from "../pages/Dashboard";
 import DashboardSettings from "../components/DashboardSettings";
-
+import ChatSeller from "../pages/ChatSeller";
 import DashboardAddress from "../components/DashboardAddress";
 import DashboardProducts from "../components/DashboardProducts";
 import DashboardCart from "../components/DashboardCart";
@@ -33,6 +33,10 @@ const router = createBrowserRouter([
         element: <ChatPage />
       },
       //testing chat
+      {
+        path: '/chat',
+        element: <ChatSeller />
+      },
       {
         path: 'product/:id',
         element: <DetailPage />
