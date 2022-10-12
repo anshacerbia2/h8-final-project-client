@@ -15,6 +15,7 @@ import DashboardProducts from "../components/DashboardProducts";
 import DashboardCart from "../components/DashboardCart";
 import DashboardHistory from "../components/DashboardHistory";
 import AllProducts from "../pages/AllProducts";
+import Auction from "../pages/Auction";
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/all-products',
         element: <AllProducts />
+      },
+      {
+        path: '/auction',
+        element: <Auction />
       },
       {
         path: 'dashboard',
