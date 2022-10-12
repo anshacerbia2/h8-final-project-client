@@ -13,7 +13,7 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products } = useSelector((state) => state.productReducer);
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(fetchProducts())
   }, []);
 
@@ -140,7 +140,7 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-        // <CardProduct products={latestProduct} />
+        // <CardProduct products={products} />
         {/* <CardProduct /> */}
       </div>
       {/* <div className="custom-row-1">
