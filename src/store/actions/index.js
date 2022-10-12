@@ -44,9 +44,10 @@ export function courierCost(args) {
 export function fetchUser() {
   let user = localStorage.getItem("user");
   user = JSON.parse(user);
-  const { id } = user;
+  console.log(user, "ni user")
+  // const { id } = user;
   return (dispatch, getState) => {
-    return fetch(`${baseUrl}/users/${id}`)
+    return fetch(`${baseUrl}/users`)
       .then((response) => {
         return response.json();
       })

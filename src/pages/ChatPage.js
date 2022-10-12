@@ -127,9 +127,10 @@ export default function ChatPage() {
     }
     useEffect(() => {
         //dari localStorage ntar harusny
-        setCurrentId(+localStorage.getItem("id"))
+        let user = JSON.parse(localStorage.getItem("user"))
+        setCurrentName(user.fName)
+        setCurrentId(user.id)
         setTarget(targetUserId)
-        setCurrentName(localStorage.getItem("user"))
         socket.on("send-chat", (payload) => {
             console.log(payload, "useeffect polos")
             appendMessage(payload.name, payload.message, payload["_id"], payload.userId, payload.name)

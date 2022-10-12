@@ -17,7 +17,6 @@ import DashboardHistory from "../components/DashboardHistory";
 import AllProducts from "../pages/AllProducts";
 import ChatPage from "../pages/ChatPage";
 
-
 const router = createBrowserRouter([
   {
     path: '/',
