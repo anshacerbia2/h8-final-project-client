@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toIDR } from "../helpers";
+import axios from 'axios'
+import io from "socket.io-client"
+const serverUrl = `http://localhost:3000` //url server app
+const mongoServerUrl = `http://localhost:4001` //url mongo auction server
+const socket = io(mongoServerUrl)
 
 const Auction = () => {
+  const { id: AuctionProductId } = useParams();
   const [bidPrice, setBidPrice] = useState(0);
   const [openPrice, setOpenPrice] = useState(11500);
+  const [product, setProduct] = useState({}); //di tempel di page buat tampilan
+  const [roomId, setRoomId] = useState("");
+  const [bidHistory, setBidHistory] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null)
+
   const bidHandler = (e) => {
     e.preventDefault();
     if (bidPrice <= openPrice) {
@@ -12,8 +24,33 @@ const Auction = () => {
     } else {
       console.log('bid berhasil')
       setOpenPrice(bidPrice);
+      socket.emit("send-bid", roomId, currentUserId, bidPrice)
     }
   };
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"))
+    setCurrentUserId(user.id)
+    // axios.get(`${serverUrl}/auctions/${AuctionProductId}`)
+    axios.get(`${mongoServerUrl}/room/${AuctionProductId}`)
+      .then(({ data }) => {
+        console.log(data)
+        socket.emit("join-room", data)
+        setRoomId(data["_id"])
+      })
+    socket.on("send-bid", (payload) => {
+      console.log(payload, "socket on send bid")
+      setBidPrice(payload.price)
+      // nge append message
+    })
+  }, [])
+  useEffect(() => {
+    if (roomId) {
+      axios.get(`${mongoServerUrl}/history/${roomId}`)
+        .then(({ data }) => {
+          setBidHistory(data)
+        })
+    }
+  }, [roomId])
   return (
     <>
       <div className="container my-4">

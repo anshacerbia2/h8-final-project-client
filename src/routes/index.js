@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <AllProducts />
       },
       {
-        path: '/auction',
+        path: '/auction/:id',
         element: <Auction />
       },
       {

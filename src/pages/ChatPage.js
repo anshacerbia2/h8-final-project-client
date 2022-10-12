@@ -136,34 +136,6 @@ export default function ChatPage() {
             appendMessage(payload.name, payload.message, payload["_id"], payload.userId, payload.name)
             setChat("")
         })
-        // axios nge get data user berdasarkan id
-        // getUser(targetUserId)
-        //     .then((targetUserData) => {
-        //         socket.on("render-chat", () => {
-        //             // let currentUserId = localStorage.getItem("id")
-        //             // let currentUserData = {
-        //             //     firstName: localStorage.getItem("firstName"),
-        //             //     lastName: localStorage.getItem("lastName"),
-        //             //     profpic: localStorage.getItem("profpic")
-        //             // }
-
-        //             let currentUserData = {
-        //                 firstName: "Ajat",
-        //                 lastName: "",
-        //                 profpic: "http://asnoddoasoda.webp"
-        //             }
-        //             let currentUserId = 1
-        //             // let currentUserData = {
-        //             //     firstName: "Micky",
-        //             //     lastName: "",
-        //             //     profpic: "http://asnoddoasoda.webp"
-        //             // }
-        //             // let currentUserId = 2
-        //             socket.emit("send-id", targetUserId, targetUserData, currentUserId, currentUserData)
-        //         })
-        //     })
-
-        // socket.emit("send-id", targetUserId, currentId)
     }, [targetUserId])
     useEffect(() => {
         if (currentId) {
