@@ -199,30 +199,64 @@ export default function ChatPage() {
     }, [chatHistory])
     return (
         <div>
-            {
-                rooms.length ?
-                    rooms.map((el, idx) => {
-                        return (
-                            el.users.map((elem) => {
-                                if (currentId !== elem.userId) {
-                                    console.log(elem)
-                                    return (
-                                        <button onClick={(e) => {
-                                            e.preventDefault()
-                                            navigate(`/chat/${elem.userId}`)
-                                        }} >{elem.name}</button>
-                                    )
-                                }
-                            })
-                        )
-                    }) : console.log("kosong rooms")
-            }
-
-            <div className="d-flex justify-content-center" style={{ paddingLeft: 20, paddingTop: 20, marginBottom: 100 }}>
-                <div className="col-md-6 col-lg-7 col-xl-8">
-                    {target &&
-                        <div>
-                            <ul className="list-unstyled" id="message-container">
+            <section style={{ backgroundColor: "#eee" }}>
+                <div class="container py-5">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                            {/* <h5 class="font-weight-bold mb-3 text-center text-lg-start">
+                                Member
+                            </h5> */}
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        {
+                                            rooms.length ?
+                                                rooms.map((el, idx) => {
+                                                    return (
+                                                        el.users.map((elem) => {
+                                                            if (currentId !== elem.userId) {
+                                                                console.log(elem)
+                                                                // return (
+                                                                //     <button onClick={(e) => {
+                                                                //         e.preventDefault()
+                                                                //         navigate(`/chat/${elem.userId}`)
+                                                                //     }} ><img width="75" src={elem.profpic} /><p>{elem.name}</p></button>
+                                                                // )
+                                                                return (
+                                                                    <li
+                                                                        class="p-2 border-bottom my-2"
+                                                                        style={{ backgroundColor: "#eee" }}
+                                                                    >
+                                                                        <a href="#!" class="d-flex justify-content-between" onClick={(e) => {
+                                                                            e.preventDefault()
+                                                                            navigate(`/chat/${elem.userId}`)
+                                                                        }}>
+                                                                            <div class="d-flex flex-row">
+                                                                                <img
+                                                                                    src={elem.profpic}
+                                                                                    alt="avatar"
+                                                                                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                                                                                    width="60"
+                                                                                />
+                                                                                <div class="pt-1">
+                                                                                    <p class="mb-0">{elem.name}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                        })
+                                                    )
+                                                }) : console.log("kosong rooms")
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Right */}
+                        <div class="col-md-6 col-lg-7 col-xl-8">
+                            <ul class="list-unstyled">
                                 {
                                     chatHistory.length ?
                                         chatHistory.map((el, idx) => {
@@ -269,46 +303,26 @@ export default function ChatPage() {
                                                         </div>
                                                     </div>
                                                 )
-                                                // messageComponents.push(
-                                                //     <div className="card w-100 mb-3" key={idx}>
-                                                //         <div className="card-header d-flex justify-content-end p-3">
-                                                //             <p className="fw-bold mb-0">{el.name}</p>
-                                                //             <p className="text-muted small mb-0"><i className="far fa-clock"></i></p>
-                                                //         </div>
-                                                //         <div className="card-body d-flex justify-content-end">
-                                                //             <p className="mb-0">
-                                                //                 {el.message}
-                                                //             </p>
-                                                //         </div>
-                                                //     </div>
-                                                // )
                                             }
                                         }) : <p>kosong</p>
                                 }
-                                {/* {
-                                messageComponents.length ?
-                                    messageComponents :
-                                    console.log("empty")
-                            } */}
-                            </ul>
-                            <div className="bg-white">
                                 <form onSubmit={handleChat}>
-                                    <div className="form-outline">
-                                        <input type="text" name="chat" value={chat} onChange={onChangeHandler} autoComplete="off" className="form-control" id="textAreaExample2" rows="4" />
-                                        <label className="form-label" htmlFor="textAreaExample2">Message</label>
-                                    </div>
+                                    <li class="bg-white mb-3">
+                                        <div class="form-outline">
+                                            <textarea
+                                                name="chat" value={chat} onChange={onChangeHandler} autoComplete="off" className="form-control" id="textAreaExample2" rows="4"
+                                                placeholder="Message"
+                                            ></textarea>
+
+                                        </div>
+                                    </li>
                                     <button type="submit" className="btn btn-info btn-rounded float-end">Send</button>
                                 </form>
-                            </div>
+                            </ul>
                         </div>
-                    }
-                </div>
-                {!target &&
-                    <div>
-                        <p>Select A user to begin chatting</p>
                     </div>
-                }
-            </div>
+                </div>
+            </section>
         </div>
     )
 }
