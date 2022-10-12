@@ -11,7 +11,8 @@ export function userLogin(...resArgs) {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        dispatch({type: "login"})
+        dispatch({ type: "login" })
+        console.log(response);
         return response;
       })
       .catch((err) => {
@@ -22,6 +23,22 @@ export function userLogin(...resArgs) {
           dispatch({ type: "loadingSubmit/false" });
         }, 250);
       });
+  };
+}
+
+export function courierCost(args) {
+  console.log(args);
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/courier-cost`, {
+      method: "POST",
+      body: JSON.stringify(args),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then((resp) => {
+      console.log(resp);
+      return resp;
+    });
   };
 }
 
@@ -43,10 +60,33 @@ export function fetchUser() {
   };
 }
 
+export function fetchHistory() {
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/orders`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: "histories/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
+}
+
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    fetch(`${baseUrl}/products`)
+    return fetch(`${baseUrl}/products`)
       .then((response) => {
         return response.json();
       })
@@ -69,19 +109,19 @@ export function fetchProductByTitle(title) {
   return (dispatch, getState) => {
     return fetch(`${baseUrl}/products/search`, {
       method: "POST",
-      body: JSON.stringify({"search": title}),
+      body: JSON.stringify({ "search": title }),
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(resp => resp.json())
-    .then(data => {
-      dispatch({
-        type: "products/searchByTitle",
-        payload: data
+      .then(resp => resp.json())
+      .then(data => {
+        dispatch({
+          type: "products/searchByTitle",
+          payload: data
+        })
+        return data;
       })
-      return data;
-    })
   }
 }
 
@@ -508,6 +548,36 @@ export function postAddress(...resArgs) {
     })
       .then((response) => {
         console.log(response, "<<<<<<<<<<<<<");
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch({ type: "loadingSubmit/false" });
+        }, 250);
+      });
+  };
+}
+
+
+
+export function postCharge(bank) {
+  console.log(bank);
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    dispatch({ type: "loadingSubmit/true" });
+    return fetch(`${baseUrl}/charge`, {
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify(bank),
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((response) => {
         return response;
       })
       .catch((err) => {

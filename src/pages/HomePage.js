@@ -13,9 +13,10 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products } = useSelector((state) => state.productReducer);
-  useEffect(() => {
-    dispatch(fetchProducts())
-    .then(resp => setLatestProduct(resp.slice(0, 4)))
+  useEffect(async () => {
+    const resp = await dispatch(fetchProducts())
+    console.log(resp);
+    setLatestProduct(resp.slice(0, 4))
   }, []);
   return (
     <div className="container">
@@ -130,12 +131,12 @@ export default function HomePage() {
             style={{ color: "rgb(3,172,14)" }}
           >
             <Link
-              style={{ color: "rgb(3,172,14)", textDecoration: "none"}}
+              style={{ color: "rgb(3,172,14)", textDecoration: "none" }}
               to="/all-products"
             >
               Selengkapnya
             </Link>
-            <span class="material-symbols-outlined">
+            <span className="material-symbols-outlined">
               keyboard_double_arrow_right
             </span>
           </div>

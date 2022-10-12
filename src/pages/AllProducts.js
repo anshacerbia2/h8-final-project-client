@@ -44,19 +44,19 @@ const AllProducts = () => {
               <strong> Filter</strong>
             </h5>
             <div className="row mb-3">
-              <form onSubmit={searchProductHandler} class="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem"}}>
+              <form onSubmit={searchProductHandler} className="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem" }}>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Search product"
                   aria-label="Search product"
                   aria-describedby="Search product"
                   value={searchProduct}
                   onChange={(e) => setSearchProduct(e.target.value)}
                 />
-                <div class="input-group-append">
-                  <button class="btn" type="submit">
-                    <span class="material-symbols-outlined">search</span>
+                <div className="input-group-append">
+                  <button className="btn" type="submit">
+                    <span className="material-symbols-outlined">search</span>
                   </button>
                 </div>
               </form>

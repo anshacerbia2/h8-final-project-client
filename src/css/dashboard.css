@@ -154,6 +154,7 @@
 }
 
 .modal-header {
+  border-bottom-color: #89d023;
   padding: 25px 40px;
 }
 
@@ -298,6 +299,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 30px;
 }
 
 .cart-action-container button {
@@ -328,4 +330,19 @@
 
 .cart-action-container button:hover>span {
   color: #6daf0d;
+}
+
+.bank>img {
+  width: 100px;
+  height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  object-position: center;
+
+}
+
+.bank {
+  border-radius: 4px;
+  overflow: hidden;
 }

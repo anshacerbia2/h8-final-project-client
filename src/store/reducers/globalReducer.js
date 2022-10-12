@@ -2,6 +2,7 @@ const initialstate = {
   users: [],
   user: null,
   provinces: [],
+  histories: [],
   cities: [],
   carts: [],
   isLoading: false,
@@ -11,6 +12,11 @@ const initialstate = {
 
 export default function userReducer(state = initialstate, action) {
   switch (action.type) {
+    case 'histories/fetchSuccess':
+      return {
+        ...state,
+        histories: action.payload
+      }
     case 'user/userSuccess':
       return {
         ...state,
