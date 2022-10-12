@@ -54,9 +54,8 @@ export default function LoginPage() {
       // console.log(response);
       if (response.status === 200) {
         console.log(responseJSON)
-        localStorage.setItem('user', responseJSON.username);
+        localStorage.setItem('user', JSON.stringify(responseJSON.user));
         localStorage.setItem('access_token', responseJSON.access_token);
-        localStorage.setItem('id', responseJSON.id)
         console.log(responseJSON.user);
         dispatch({
           type: 'user/loginSuccess',
