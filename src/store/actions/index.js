@@ -45,9 +45,9 @@ export function fetchUser() {
   let user = localStorage.getItem("user");
   user = JSON.parse(user);
   console.log(user, "ni user")
-  // const { id } = user;
+  const { id } = user;
   return (dispatch, getState) => {
-    return fetch(`${baseUrl}/users`)
+    return fetch(`${baseUrl}/users/${id}`)
       .then((response) => {
         return response.json();
       })
