@@ -12,7 +12,6 @@ export function userLogin(...resArgs) {
     })
       .then((response) => {
         dispatch({ type: "login" })
-        console.log(response);
         return response;
       })
       .catch((err) => {
@@ -86,8 +85,17 @@ export function fetchHistory() {
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
-    return fetch(`${baseUrl}/products`)
+
+    fetch(`${baseUrl}/products`, {
+      method: 'get', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        // 'Content-Type': 'application/json',
+        'access_token': localStorage.getItem("access_token"),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
       .then((response) => {
+        // console.log(response)
         return response.json();
       })
       .then((data) => {
@@ -95,6 +103,7 @@ export function fetchProducts() {
           type: "products/fetchSuccess",
           payload: data,
         });
+        return data
       })
       .finally(() => {
         setTimeout(() => {
