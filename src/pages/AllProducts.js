@@ -13,9 +13,9 @@ const AllProducts = () => {
   const { products } = useSelector((state) => state.productReducer);
   const { subCategories } = useSelector((state) => state.subCategoriesReducer);
   useEffect(() => {
-    dispatch(fetchProducts())
-      .then((data) => setFilterProduct(data));
+    dispatch(fetchProducts());
     dispatch(fetchSubCategories());
+    setFilterProduct(products);
   }, []);
   // console.log(filterProduct.filter(el => el.SubCategoryId === 7));
   const filterHandler = (id) => {

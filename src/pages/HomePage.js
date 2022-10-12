@@ -143,6 +143,7 @@ export default function HomePage() {
             </span>
           </div>
         </div>
+        <CardProduct products={products} />
         // <CardProduct products={latestProduct} />
         {/* <CardProduct /> */}
       </div>
