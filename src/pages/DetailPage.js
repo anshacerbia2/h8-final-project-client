@@ -3,7 +3,7 @@ import "../css/detailPage.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct, fetchProvinces, postCart } from "../store/actions";
+import { courierCost, fetchProduct, fetchProvinces, fetchUser, postCart } from "../store/actions";
 import Breadcumb from "../components/Breadcumb";
 import { formatDate, swalImg, toIDR } from "../helpers";
 import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
@@ -14,41 +14,46 @@ export default function DetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.productReducer);
-  const { isLoadingSubmit } = useSelector((state) => state.globalReducer);
-  const { isLoading, provinces, cities } = useSelector(
-    (state) => state.globalReducer
-  );
-  console.log(product);
-  const [quantity, setQuantity] = useState(1);
-  let totalPrice = quantity * product.price;
+  const { isLoadingSubmit, user } = useSelector((state) => state.globalReducer);
+  const { isLoading, provinces, cities } = useSelector((state) => state.globalReducer);
+
+  console.log(user);
+  const [cart, setCart] = useState({
+    origin: null,
+    destination: null,
+    weight: 1000,
+    courier: 'jne',
+    quantity: 1,
+    ProductId: null,
+  });
+
   useEffect(() => {
     dispatch(fetchProduct(id));
-    // dispatch(fetchProvinces());
+    dispatch(fetchUser());
   }, []);
-  const decrementHandler = () => {
-    if (quantity <= 1) return;
-    setQuantity(quantity - 1);
-  };
-  const incrementHandler = () => {
-    if (quantity >= product.stock) return;
-    setQuantity(quantity + 1);
-  };
 
-  const addCartHandler = (e) => {
-    // try {
-    e.preventDefault();
-    if (quantity > product.stock) {
-      console.log("invalid stock");
-      return;
+  useEffect(() => {
+    const setUp = async () => {
+      const orig = product.User.Addresses.find(v => v.default === true);
+      const dest = user.Addresses.find(v => v.default === true);
+      setCart({ ...cart, origin: orig.cityId, destination: dest.cityId, ProductId: product.id })
     }
-    const cartInfo = {
-      ProductId: product.id,
-      quantity: quantity,
-      // UserId: 1
-    };
-    // console.log(cartInfo);
-    // Add process cart
-    dispatch(postCart(cartInfo)).then((resp) => {
+    setUp()
+  }, [product, user]);
+
+  const addCartHandler = async (e) => {
+    try {
+      e.preventDefault();
+      if (cart.quantity > product.stock) {
+        console.log("invalid stock");
+        return;
+      }
+      console.log(cart);
+      const resp = await dispatch(postCart(cart));
+      // const respJSON = await resp.json();
+      console.log(resp);
+      // Add process cart
+      // dispatch(courierCost(cart)).then((resp) => {
       if (resp.status === 201) {
         const responseJSON = resp.json();
         swalImg.fire({
@@ -60,26 +65,35 @@ export default function DetailPage() {
           timer: 3000,
         });
       }
-    });
-    // if (response.status === 200) {
-    //   const responseJSON = await response.json();
-    //   swalImg.fire({
-    //     title: 'Berhasil Ditambahkan',
-    //     text: responseJSON.message,
-    //     imageUrl: product.mainImg,
-    //     imageWidth: 300,
-    //     imageHeight: 300,
-    //     timer: 3000,
-    //   })
-    // }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const renderChat = (e) => {
     e.preventDefault()
     navigate(`/chat/${product.User.id}`)
   }
+  
+  const incrementHandler = () => {
+    if (cart.quantity >= product.stock) return;
+    setCart({ ...cart, ['quantity']: cart.quantity + 1, weight: cart.weight + 1000 });
+  }
+
+  const decrementHandler = () => {
+    if (cart.quantity <= 1) return;
+    setCart({ ...cart, ['quantity']: cart.quantity - 1, weight: cart.weight - 1000 });
+  }
+
+  const handleChange = (e) => {
+    console.log(e);
+    const name = e.currentTarget.name;
+    const value = e.currentTarget.value;
+    if (name === 'quantity' && (value > product.stock || value < 1)) return;
+    setCart({ ...cart, [name]: value });
+  }
+  
   return (
     <div id="DetailPage">
       <Breadcumb />
@@ -178,7 +192,7 @@ export default function DetailPage() {
               </div>
               <div>
                 <span className="material-icons">local_shipping</span>
-                <p>Ongkos kirim ekonomis Rp.18.000</p>
+                <p>Ongkos kirim ekonomis</p>
               </div>
             </div>
           </div>
@@ -193,39 +207,47 @@ export default function DetailPage() {
             <div className="detail-cart">
               <div className="detail-cart-form-wrapper">
                 <form onSubmit={addCartHandler}>
+                  {/* <h6 className="detail-cart-title">Atur Pengiriman</h6>
+                  <div className="group-input mt-3 mb-3">
+                    <select
+                      name="courier"
+                      className="form-select"
+                      aria-label="Default select example"
+                      value={cart.courier}
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option value="jne">JNE</option>
+                      <option value="pos indonesia">Pos Indonesia</option>
+                      <option value="jne">TIKI</option>
+                    </select>
+                  </div> */}
                   <h6 className="detail-cart-title">Atur Jumlah</h6>
                   <div className="group-input">
                     <button
                       type="button"
                       className="btn min"
-                      onClick={decrementHandler}
+                      onClick={() => decrementHandler()}
                     >
                       <span className="material-symbols-outlined">remove</span>
                     </button>
                     <input
                       className="form-control stock"
                       name="quantity"
-                      value={quantity}
+                      value={cart.quantity}
                       min={0}
                       max={product.stock}
-                      onChange={(e) => {
-                        let value = e.target.value;
-                        if (value > product.stock) {
-                          return;
-                        }
-                        setQuantity(value);
-                      }}
+                      onChange={(e) => handleChange(e)}
                     />
                     <button
                       type="button"
                       className="btn add"
-                      onClick={incrementHandler}
+                      onClick={() => incrementHandler()}
                     >
                       <span className="material-symbols-outlined">add</span>
                     </button>
                     <div className="detail-stock">
-                      Stock:{" "}
-                      {isLoading ? <Skeleton /> : <span>{product.stock}</span>}
+                      Stock:
+                      {isLoading ? <Skeleton /> : <span> {product.stock}</span>}
                     </div>
                   </div>
                   <small
@@ -239,7 +261,7 @@ export default function DetailPage() {
                   </small>
                   <p className="total-cart">
                     <span>Subtotal</span>
-                    <span>{toIDR(totalPrice)}</span>
+                    {/* <span>{toIDR(totalPrice)}</span> */}
                   </p>
                   <div className="detail-cart-action">
                     <button

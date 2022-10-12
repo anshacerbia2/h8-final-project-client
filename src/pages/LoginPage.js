@@ -22,7 +22,7 @@ export default function LoginPage() {
   const [errorPassword, setErrorPassword] = useState("");
 
   useEffect(() => {
-    // if (localStorage.getItem('access_token')) navigate('/');
+    if (localStorage.getItem('access_token')) navigate('/');
   });
 
   const pwVisibilitty = () => {
@@ -51,6 +51,7 @@ export default function LoginPage() {
       const response = await dispatch(userLogin(inputVal));
       const responseJSON = await response.json();
 
+      // console.log(response);
       if (response.status === 200) {
         console.log(responseJSON)
         localStorage.setItem('user', responseJSON.username);
@@ -143,7 +144,7 @@ export default function LoginPage() {
                 {errorPassword && (
                   <div className="invalid-validation">{errorPassword}</div>
                 )}
-                <button className="btn custom-btn-1" onClick={clearError}>
+                <button className="btn custom-btn-1" type="submit" onClick={clearError}>
                   {isLoadingSubmit ? (
                     <>
                       <span

@@ -15,12 +15,11 @@ export default function HomePage() {
   const { products } = useSelector((state) => state.productReducer);
   useEffect(() => {
     dispatch(fetchProducts())
-    // .then(resp => setLatestProduct(resp.slice(0, 4)))
-    // .then(resp => console.log(resp))
-    setLatestProduct(products)
-    console.log(products)//sdass
-    console.log(products, "asjdoasjdisao")
+    // const respJSON = await resp.json()
+    // // console.log(resp.j);
+    // setLatestProduct(respJSON.slice(0, 4))
   }, []);
+  
   return (
     <div className="container">
       {/* Section Header */}
@@ -144,7 +143,7 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-        <CardProduct products={latestProduct} />
+        // <CardProduct products={latestProduct} />
         {/* <CardProduct /> */}
       </div>
       {/* <div className="custom-row-1">

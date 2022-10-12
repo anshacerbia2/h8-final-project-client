@@ -183,7 +183,8 @@
 }
 
 .detail-cart .form-control,
-.detail-cart .form-select {
+.detail-cart .form-select,
+#DashboardCart .form-select {
   font-family: 'Lato';
   font-size: 14px;
   height: 30px;
@@ -194,15 +195,24 @@
 .detail-cart button:active:focus,
 .detail-cart .form-select:active,
 .detail-cart .form-select:focus,
-.detail-cart .form-select:active:focus {
+.detail-cart .form-select:active:focus,
+#DashboardCart .form-select:active,
+#DashboardCart .form-select:focus,
+#DashboardCart .form-select:active:focus {
   border-color: #ced4da !important;
   outline: none !important;
   box-shadow: none !important;
 }
 
-.detail-cart .form-select {
+.detail-cart .form-select,
+#DashboardCart .form-select {
   padding: 2px 36px 2px 16px;
   color: #696969;
+}
+
+.select-courier {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
 }
 
 .detail-cart form {

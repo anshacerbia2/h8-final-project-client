@@ -25,6 +25,22 @@ export function userLogin(...resArgs) {
   };
 }
 
+export function courierCost(args) {
+  console.log(args);
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/courier-cost`, {
+      method: "POST",
+      body: JSON.stringify(args),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then((resp) => {
+      console.log(resp);
+      return resp;
+    });
+  };
+}
+
 export function fetchUser() {
   let user = localStorage.getItem("user");
   user = JSON.parse(user);
@@ -43,9 +59,33 @@ export function fetchUser() {
   };
 }
 
+export function fetchHistory() {
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/orders`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: "histories/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
+}
+
 export function fetchProducts() {
   return (dispatch, getState) => {
     dispatch({ type: "loading/true" });
+
     fetch(`${baseUrl}/products`, {
       method: 'get', // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -517,6 +557,36 @@ export function postAddress(...resArgs) {
     })
       .then((response) => {
         console.log(response, "<<<<<<<<<<<<<");
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      })
+      .finally(() => {
+        setTimeout(() => {
+          dispatch({ type: "loadingSubmit/false" });
+        }, 250);
+      });
+  };
+}
+
+
+
+export function postCharge(bank) {
+  console.log(bank);
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    dispatch({ type: "loadingSubmit/true" });
+    return fetch(`${baseUrl}/charge`, {
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify(bank),
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((response) => {
         return response;
       })
       .catch((err) => {
