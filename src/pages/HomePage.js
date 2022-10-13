@@ -38,8 +38,7 @@ export default function HomePage() {
           <h3 className="display-4" style={{ fontFamily: 'Lato', fontWeight: '900' }}>Selamat datang di Agro Shop</h3>
           <p className="text-center" style={{ padding: "0 15rem", fontFamily: 'Lato', fontWeight: '600' }}>
             Belanja semua kebutuhan pangan sayuran dan buah mu disini, langsung
-            dari petani. Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit. Sequi iure ducimus accusamus mollitia nisi.
+            dari petani.
           </p>
         </div>
       </div>
@@ -91,8 +90,7 @@ export default function HomePage() {
               <strong> Produk segar </strong>
             </h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-              a doloremque quam, corporis illo quisquam eum.
+              Beli kebutuhan rumah online produk langsung dari hasil panen petani.
             </p>
           </div>
           <div
@@ -116,8 +114,7 @@ export default function HomePage() {
               <strong> Pengiriman yang cepat</strong>
             </h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-              a doloremque quam, corporis illo quisquam eum.
+              Pengiriman yang cepat menjadi priorioritas kami, jangan khawatir produkmu datang terlambat.
             </p>
           </div>
           <div
@@ -141,8 +138,7 @@ export default function HomePage() {
               <strong>Pelayanan memuaskan</strong>
             </h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-              a doloremque quam, corporis illo quisquam eum.
+              Konsumen adalah raja, kami selalu berkomitmen untuk selalu meningkatkan kepuasan dan layanan pelanggan.
             </p>
           </div>
         </div>

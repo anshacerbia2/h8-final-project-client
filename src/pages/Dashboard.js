@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts, fetchProduct, deleteProduct, fetchSubCategories } from '../store/actions';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useLocation } from "react-router-dom";
+import { swalWithBootstrapButtons } from '../helpers';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -54,6 +55,19 @@ export default function Dashboard() {
     if (idx === 5) navigate('/dashboard/history-lelang');
   }
 
+  const renderChat = (e) => {
+    e.preventDefault()
+    if (!localStorage.getItem('access_token')) {
+      swalWithBootstrapButtons.fire({
+        title: '"Silahkan login dahulu"',
+        icon: 'warning',
+        timer: 3000,
+      });
+      return;
+    }
+    navigate(`/chat/${3}`)
+  }
+
   return (
     <div id="DashboardPage">
       <div className="detail-navbar">
@@ -82,6 +96,22 @@ export default function Dashboard() {
               <img src={cashAvatar} style={{ marginTop: '-5px' }} />
               <span style={{ flexGrow: '1', marginLeft: 10 }}>Saldo</span>
               <span>0</span>
+            </div>
+            <div style={{
+              height: 60, padding: 20, borderRadius: 30,
+              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#696969', fontWeight: 700
+            }}>
+              <div className="detail-cart-action">
+                <button
+                  id="openChat"
+                  className="btn custom-btn-1"
+                  style={{ marginTop: 0 }}
+                  onClick={renderChat}
+                >
+                  <span className="material-symbols-outlined">chat</span>
+                  <span>Chat</span>
+                </button>
+              </div>
             </div>
           </div>
           <div className="dashboard-content">

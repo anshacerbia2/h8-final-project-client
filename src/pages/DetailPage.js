@@ -174,17 +174,21 @@ export default function DetailPage() {
                     )}
                   </h6>
                 </div>
-                <div className="detail-cart-action">
-                  <button
-                    id="openChat"
-                    className="btn custom-btn-1"
-                    style={{ marginTop: 0 }}
-                    onClick={renderChat}
-                  >
-                    <span className="material-symbols-outlined">chat</span>
-                    <span>Chat</span>
-                  </button>
-                </div>
+                {
+                  user && user.id !== product.User.id ?
+                    <div className="detail-cart-action">
+                      <button
+                        id="openChat"
+                        className="btn custom-btn-1"
+                        style={{ marginTop: 0 }}
+                        onClick={renderChat}
+                      >
+                        <span className="material-symbols-outlined">chat</span>
+                        <span>Chat</span>
+                      </button>
+                    </div> :
+                    <></>
+                }
               </div>
             </div>
             <div className="detail-sender">
@@ -194,7 +198,7 @@ export default function DetailPage() {
                   location_on
                 </span>
                 <p>
-                  Dikirim dari
+                  Dikirim dari &nbsp;
                   <span>
                     {
                       isLoading ? <Skeleton /> : product.User?.Addresses.find(v => v.default === true)?.city
