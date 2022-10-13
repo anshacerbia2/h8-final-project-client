@@ -14,9 +14,18 @@ const Auction = () => {
   const [openPrice, setOpenPrice] = useState(11500);
   const [product, setProduct] = useState(null); //di tempel di page buat tampilan
   const [roomId, setRoomId] = useState("");
-  const [bidHistory, setBidHistory] = useState([]);
+  // const [bidHistory, setBidHistory] = useState([{
+  //   // _id: ObjectId("6347f19bba8c48c31de5b461"),
+  //   roomId: '6347edfc3e600dbb2852beaf',
+  //   userId: 1,
+  //   price: 9003000
+  // }
+  // ]);
+  const [bidHistory, setBidHistory] = useState([])
   const [currentUserId, setCurrentUserId] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isAvailable, setIsAvailable] = useState(false)
+  const [dateNow, setDateNow] = useState(Date.now())
 
   const bidHandler = (e) => {
     e.preventDefault();
@@ -39,26 +48,36 @@ const Auction = () => {
       }
     })
       .then(({ data: productData }) => {
-        console.log(new Date(productData.AuctionDateEnd).getTime())
-        console.log(new Date(productData.AuctionDateEnd).getTime() - new Date().getTime())
+        if (new Date(productData.AuctionDateEnd).getTime() > new Date().getTime()) {
+          setIsAvailable(true)
+        }
         setProduct(productData)
         setTimeLeft(new Date(productData.AuctionDateEnd).getTime() - new Date().getTime())
+        // setTimeLeft(new Date().getTime() - new Date(productData.AuctionDateEnd))
       })
     axios.get(`${mongoServerUrl}/room/${AuctionProductId}`)
       .then(({ data }) => {
-        console.log(data)
         socket.emit("join-room", data)
         setRoomId(data["_id"])
+        // setRoomId("6347edfc3e600dbb2852beaf")
       })
+
     socket.on("send-bid", (payload) => {
-      console.log(payload, "socket on send bid")
       setBidPrice(payload.price)
       setOpenPrice(payload.price)
+
+      axios.get(`${mongoServerUrl}/history/${payload.roomId}`)
+        .then(({ data }) => {
+          console.log(data, 87)
+          setBidHistory(data)
+        })
+
       axios.patch(`${serverUrl}/auctions/${AuctionProductId}/bid`, {
         lastBidPrice: payload.price
       }, { headers: { access_token: localStorage.getItem("access_token") } })
     })
   }, [])
+  console.log(bidHistory)
   useEffect(() => {
     if (product) {
       if (!product.lastBidPrice) {
@@ -74,6 +93,7 @@ const Auction = () => {
     if (roomId) {
       axios.get(`${mongoServerUrl}/history/${roomId}`)
         .then(({ data }) => {
+          console.log(data, 87)
           setBidHistory(data)
         })
     }
@@ -81,6 +101,8 @@ const Auction = () => {
   useEffect(() => {
     if (timeLeft > 0) {
       setTimeout(() => {
+        console.log("useeffect timestop")
+        setIsAvailable(false)
         let winner = {
           userId: null,
           price: null
@@ -95,7 +117,7 @@ const Auction = () => {
             auctionName: product.name,
             bidderId: winner.userId,
             finalPrice: winner.price
-          })
+          }, { headers: { access_token: localStorage.getItem("access_token") } })
       }, timeLeft);
     }
   }, [timeLeft])
@@ -108,7 +130,30 @@ const Auction = () => {
             <p>Berakhir pada:
               {
                 product.status !== "Unapproved" ?
-                  <Countdown date={timeLeft}>
+                  <Countdown date={dateNow + timeLeft}
+                    onTick={(e) => {
+                      console.log("ontick")
+                    }}
+                    onStop={(e) => {
+                      console.log("onstop 117")
+                      setIsAvailable(false)
+                      // let winner = {
+                      //   userId: null,
+                      //   price: null
+                      // }
+                      // if (bidHistory.length) {
+                      //   winner = bidHistory[bidHistory.length - 1]
+                      // }
+                      // axios.put(`${serverUrl}/auctions/${AuctionProductId}`,
+                      //   {
+                      //     AuctionProductId,
+                      //     SellerId: product.UserId,
+                      //     auctionName: product.name,
+                      //     bidderId: winner.userId,
+                      //     finalPrice: winner.price
+                      //   }, { headers: { access_token: localStorage.getItem("access_token") } })
+                    }
+                    }>
                     <p>Lelang telah selesai</p>
                   </Countdown>
                   : <p>Lelang belum dibuka</p>
@@ -152,7 +197,7 @@ const Auction = () => {
                 } */}
               </div>
               {
-                timeLeft > 0 &&
+                isAvailable && product.status !== "Unapproved" &&
                 <div className="col">
                   <p>
                     <strong> Masukkan harga bid kamu</strong>
@@ -166,7 +211,7 @@ const Auction = () => {
                       aria-describedby="bid"
                       min="0"
                       value={bidPrice}
-                      onChange={(e) => setBidPrice(e.target.value)}
+                      onChange={(e) => { setBidPrice(e.target.value) }}
                       step={500}
                     />
                     <button
@@ -180,9 +225,17 @@ const Auction = () => {
                 </div>
               }
               <div class="overflow-scroll" style={{ height: "150px", overFlowY: "scroll" }}>
-                <ul>
-                  <li>Seseorang menawar dengan harga Rp.1.000.000,00</li>
-                </ul>
+                <div>
+                  {
+                    bidHistory.length ?
+                      bidHistory.map((el) => {
+                        return (
+                          <p>Seseorang menawar dengan harga {toIDR(el.price)}</p>
+                        )
+                      })
+                      : <p>Mulai lelang sekarang!</p>
+                  }
+                </div>
               </div>
             </div>
           </div>
