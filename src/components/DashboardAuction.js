@@ -10,6 +10,7 @@ export default function DashboardAuction() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, auctionCarts } = useSelector(state => state.globalReducer);
+  console.log(auctionCarts, '<ansha');
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function DashboardAuction() {
             margin: '0'
           }}
         >
-          {/* <div className="dc-cart-content">
+          <div className="dc-cart-content">
             {
               <div className="cart-card" style={{ marginTop: 0 }}>
                 <div className="cart-card-author">
@@ -38,7 +39,7 @@ export default function DashboardAuction() {
                     <img src="https://a1c9fd6e407b46044151-ccb4f7d4d6f45dfb3ad745c5c1495007.ssl.cf1.rackcdn.com/v4/images_flowers/thumbs/5271469782396.jpg" />
                   </div>
                   <div className="cart-content">
-                    <span className="cart-name">Angreek Putih</span>
+                    <span className="cart-name">Anggrek Putih</span>
                     <span className="cart-price">{toIDR(5000000)}</span>
                     <div className="detail-cart-action" style={{ marginTop: 8, maxWidth: 180, marginLeft: 'auto' }}>
                       <button
@@ -54,8 +55,8 @@ export default function DashboardAuction() {
                 </div>
               </div>
             }
-          </div> */}
-          <div className="dc-cart-content">
+          </div>
+          {/* <div className="dc-cart-content">
             {
               auctionCarts.length ?
                 auctionCarts.map((cart, i) => {
@@ -80,7 +81,7 @@ export default function DashboardAuction() {
                 :
                 <></>
             }
-          </div>
+          </div> */}
         </div>
         {/* <div
           style={{

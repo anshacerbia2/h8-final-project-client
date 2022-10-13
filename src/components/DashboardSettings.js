@@ -23,7 +23,7 @@ export default function DashboardSettings(props) {
           }}
         >
           <img src={avatar} style={{ width: '100%', borderRadius: 2 }} />
-          <button className="btn custom-btn-1 dc-btn">Upload Image</button>
+          {/* <button className="btn custom-btn-1 dc-btn">Upload Image</button> */}
         </div>
         <div
           style={{

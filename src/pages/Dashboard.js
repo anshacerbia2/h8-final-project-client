@@ -91,21 +91,23 @@ export default function Dashboard() {
             </div>
             <div style={{
               height: 60, padding: 20, borderRadius: 30,
-              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#696969', fontWeight: 700
+              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#696969', fontWeight: 700, marginBottom: 14,
             }}>
               <img src={cashAvatar} style={{ marginTop: '-5px' }} />
               <span style={{ flexGrow: '1', marginLeft: 10 }}>Saldo</span>
               <span>0</span>
             </div>
             <div style={{
-              height: 60, padding: 20, borderRadius: 30,
-              boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#696969', fontWeight: 700
+
             }}>
               <div className="detail-cart-action">
                 <button
                   id="openChat"
                   className="btn custom-btn-1"
-                  style={{ marginTop: 0 }}
+                  style={{
+                    height: 60, padding: 20, borderRadius: 30,
+                    boxShadow: 'rgb(49 53 59 / 12%) 0px 1px 6px 0px', display: 'flex', alignItems: 'center', fontFamily: 'Lato', fontSize: 14, color: '#fff', fontWeight: 700
+                  }}
                   onClick={renderChat}
                 >
                   <span className="material-symbols-outlined">chat</span>
@@ -120,7 +122,7 @@ export default function Dashboard() {
               <a
                 ref={(element) => { refs.current[0] = element }}
                 onClick={() => changeDetailPage(0)}
-              >Bioata Diri</a>
+              >Biodata Diri</a>
               <a
                 ref={(element) => { refs.current[1] = element }}
                 onClick={() => changeDetailPage(1)}
