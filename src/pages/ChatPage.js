@@ -2,6 +2,7 @@ import { createElement, useEffect, useState } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
 import io from "socket.io-client"
 import axios from 'axios'
+const appUrl = `http://localhost:3000`
 const clientUrl = `http://localhost:3001`
 const serverUrl = `http://localhost:4000` //url chat server
 const socket = io(serverUrl) //url chat server
@@ -16,6 +17,7 @@ export default function ChatPage() {
     const [currentId, setCurrentId] = useState(null)
     const [currentName, setCurrentName] = useState("")
     const [target, setTarget] = useState(null)
+    const [targetName, setTargetName] = useState("")
     const [chat, setChat] = useState("")
     const [chatHistory, setChatHistory] = useState([])
     const [room, setRoom] = useState(null)
@@ -95,7 +97,6 @@ export default function ChatPage() {
     }
     async function getRoom(currentId, targetId) {
         try {
-            console.log(currentId, targetId, "get room async ufunction")
             let { data } = await axios.get(`${serverUrl}/room/${currentId}/${targetId}`)
             setRoom(data)
             socket.emit("join-room", data)
@@ -127,12 +128,15 @@ export default function ChatPage() {
     }
     useEffect(() => {
         //dari localStorage ntar harusny
+        axios.get(`${appUrl}/users/${targetUserId}`)
+            .then(({ data }) => {
+                setTargetName(data.fName)
+            })
         let user = JSON.parse(localStorage.getItem("user"))
         setCurrentName(user.fName)
         setCurrentId(user.id)
         setTarget(targetUserId)
         socket.on("send-chat", (payload) => {
-            console.log(payload, "useeffect polos")
             appendMessage(payload.name, payload.message, payload["_id"], payload.userId, payload.name)
             setChat("")
         })
@@ -160,8 +164,6 @@ export default function ChatPage() {
     }, [roomId])
     useEffect(() => {
         if (chatHistory.length) {
-            console.log("terpanggil")
-            console.log(chatHistory)
             socket.on("send-chat", (payload) => {
                 console.log(payload, "useeffect chat history")
                 appendMessage(payload.name, payload.message, payload["_id"], payload.userId, payload.name)
@@ -199,8 +201,9 @@ export default function ChatPage() {
                                                                         class="p-2 border-bottom my-2"
                                                                         style={{ backgroundColor: "#eee" }}
                                                                     >
-                                                                        <a href="#!" class="d-flex justify-content-between" onClick={(e) => {
+                                                                        <a href="" class="d-flex justify-content-between" onClick={(e) => {
                                                                             e.preventDefault()
+                                                                            socket.emit("leave-room", room.roomName)
                                                                             navigate(`/chat/${elem.userId}`)
                                                                         }}>
                                                                             <div class="d-flex flex-row">
@@ -228,6 +231,11 @@ export default function ChatPage() {
                         </div>
                         {/* Right */}
                         <div class="col-md-6 col-lg-7 col-xl-8">
+                            <div className="mb-5">
+                                <h2 className="fw-bold">
+                                    {targetName}
+                                </h2>
+                            </div>
                             <ul class="list-unstyled">
                                 {
                                     chatHistory.length ?
@@ -276,7 +284,17 @@ export default function ChatPage() {
                                                     </div>
                                                 )
                                             }
-                                        }) : <p>kosong</p>
+                                        }) : <div className="card w-100 mb-3">
+                                            <div className="card-header d-flex justify-content-center p-3">
+                                                <p className="fw-bold mb-0">System</p>
+                                                <p className="text-muted small mb-0"><i className="far fa-clock"></i></p>
+                                            </div>
+                                            <div className="card-body d-flex justify-content-center">
+                                                <p className="mb-0">
+                                                    Type below to begin your conversation with {targetName}
+                                                </p>
+                                            </div>
+                                        </div>
                                 }
                                 <form onSubmit={handleChat}>
                                     <li class="bg-white mb-3">
