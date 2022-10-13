@@ -26,6 +26,7 @@ export default function Dashboard() {
     if (location.pathname === '/dashboard/products') idx = 2;
     if (location.pathname === '/dashboard/cart') idx = 3;
     if (location.pathname === '/dashboard/history') idx = 4;
+    if (location.pathname === '/dashboard/history-lelang') idx = 5;
     const w = refs.current[idx]?.clientWidth;
     const l = refs.current[idx]?.offsetLeft;
     setW(w);
@@ -50,6 +51,7 @@ export default function Dashboard() {
     if (idx === 2) navigate('/dashboard/products');
     if (idx === 3) navigate('/dashboard/cart');
     if (idx === 4) navigate('/dashboard/history');
+    if (idx === 5) navigate('/dashboard/history-lelang');
   }
 
   return (
@@ -105,6 +107,10 @@ export default function Dashboard() {
                 ref={(element) => { refs.current[4] = element }}
                 onClick={() => changeDetailPage(4)}
               >Histori</a>
+              <a
+                ref={(element) => { refs.current[5] = element }}
+                onClick={() => changeDetailPage(5)}
+              >Histori Lelang</a>
             </div>
             <div className="dc-body">
               <Outlet />

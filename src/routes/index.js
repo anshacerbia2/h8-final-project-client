@@ -17,6 +17,7 @@ import DashboardHistory from "../components/DashboardHistory";
 import AllProducts from "../pages/AllProducts";
 import Auction from "../pages/Auction";
 import ChatPage from "../pages/ChatPage";
+import DashboardAuction from "../components/DashboardAuction";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
           {
             path: "history",
             element: <DashboardHistory />
+          },
+          {
+            path: "history-lelang",
+            element: <DashboardAuction />
           }
         ]
       },

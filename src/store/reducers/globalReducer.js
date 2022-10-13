@@ -5,6 +5,7 @@ const initialstate = {
   histories: [],
   cities: [],
   carts: [],
+  auctionCarts: [],
   isLoading: false,
   isLoadingSubmit: false,
   isLogin: false,
@@ -36,6 +37,11 @@ export default function userReducer(state = initialstate, action) {
       return {
         ...state,
         carts: action.payload
+      }
+    case 'auctionCarts/fetchSuccess':
+      return {
+        ...state,
+        auctionCarts: action.payload
       }
     case 'loading/true':
       return {

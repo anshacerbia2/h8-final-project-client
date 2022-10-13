@@ -17,6 +17,7 @@ const AllProducts = () => {
     dispatch(fetchSubCategories());
     setFilterProduct(products);
   }, []);
+  console.log(products);
   // console.log(filterProduct.filter(el => el.SubCategoryId === 7));
   const filterHandler = (id) => {
     // console.log(id, typeof id);
