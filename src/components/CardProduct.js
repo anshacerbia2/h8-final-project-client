@@ -11,8 +11,8 @@ const CardProduct = ({ products }) => {
     <>
       {products.map((product) => {
         return (
-          <div className="col" key={product.id}>
-            <div className="card mb-4" style={{ width: "auto" }}>
+          <div className="card-prod-col" key={product.id}>
+            <div className="card mb-4" style={{ width: "100%", borderRadius: 2 }}>
               {isLoading ? (
                 <Skeleton height="200px" />
               ) : (
@@ -20,12 +20,12 @@ const CardProduct = ({ products }) => {
                   src={product.mainImg}
                   className="card-img-top"
                   alt={product.name}
-                  height="200px"
+                  height="250px"
                   width="300px"
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "contain", borderRadius: 0, padding: 20 }}
                 />
               )}
-              <div className="card-body" style={{ fontSize: "0.875rem" }}>
+              <div className="card-body" style={{ fontSize: "0.875rem", borderRadius: 0 }}>
                 <h5 className="card-title">
                   {isLoading ? <Skeleton /> : <strong> {product.name}</strong>}
                 </h5>
@@ -44,7 +44,7 @@ const CardProduct = ({ products }) => {
                   <Skeleton />
                 ) : (
                   <Link
-                    className="btn btn-sm btn-outline-primary"
+                    className="btn custom-btn-1"
                     to={"/product/" + product.id}
                   >
                     Lihat selengkapnya

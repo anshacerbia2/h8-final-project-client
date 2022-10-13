@@ -600,3 +600,18 @@ export function postCharge(bank) {
       });
   };
 }
+
+export function fetchLatestProducts(subCatId) {
+  return (dispatch, getState) => {
+    fetch(`${baseUrl}/products/latest`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        dispatch({
+          type: 'productsLatest/fetchSuccess',
+          payload: data
+        })
+      })
+  }
+}

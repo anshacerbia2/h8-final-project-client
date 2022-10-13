@@ -94,7 +94,7 @@ export default function DashboardProducts(props) {
           <span className="material-symbols-outlined" style={{ fontSize: 18, marginRight: 2 }}>
             add
           </span>
-          Address
+          Product
         </button>
       </div>
       <div className="product-item-list">

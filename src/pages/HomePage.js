@@ -1,129 +1,155 @@
-import { useEffect, useState } from "react";
+import "../css/home.css";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchProducts } from "../store/actions";
-import logo from "../logo.png";
-import Footer from "../components/Footer";
+import { fetchLatestProducts } from "../store/actions";
 import CardAuction from "../components/CardAuction";
 import CardProduct from "../components/CardProduct";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
-  const [latestProduct, setLatestProduct] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { products } = useSelector((state) => state.productReducer);
+  const { productsLatest } = useSelector((state) => state.productReducer);
+
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(fetchLatestProducts())
   }, []);
 
   return (
-    <div className="container">
-      {/* Section Header */}
+    <>
       <div
-        className="row"
+        // className="row"
         style={{
           color: "#fff",
           width: "100%",
           backgroudRepeat: "no-repeat",
-          backgroundSize: "center",
+          backgroundSize: "cover",
+          backgroundPosition: "center 65%",
           backgroundBlendMode: "darken",
-          background:
-            "rgba(0, 0, 0, 0.6) url('https://cdn.pixabay.com/photo/2017/11/13/16/19/tea-2946057_1280.jpg')",
+          backgroundColor: 'rgba(10, 10, 10, 0.45)',
+          backgroundImage:
+            "url('https://klinegroup.com/wp-content/uploads/Fruit-vegetable-blog-banner.jpg')",
         }}
       >
-        <div className="jumbotron d-flex flex-column justify-content-center align-items-center">
-          <h3 className="display-4">Selamat datang di Agro Shop</h3>
-          <p className="text-center" style={{ padding: "0 15rem" }}>
+        <div className="d-flex flex-column justify-content-center align-items-center" style={{
+          height: 375
+        }}>
+          <h3 className="display-4" style={{ fontFamily: 'Lato', fontWeight: '900' }}>Selamat datang di Agro Shop</h3>
+          <p className="text-center" style={{ padding: "0 15rem", fontFamily: 'Lato', fontWeight: '600' }}>
             Belanja semua kebutuhan pangan sayuran dan buah mu disini, langsung
             dari petani. Lorem ipsum dolor sit amet, consectetur adipisicing
             elit. Sequi iure ducimus accusamus mollitia nisi.
           </p>
         </div>
       </div>
-      {/* Section Lelang */}
-      <div className="row my-4">
-        <h5>Lelang saat ini</h5>
-        <CardAuction />
-        <CardAuction />
-        <CardAuction />
-        <CardAuction />
-      </div>
-      {/* Section Why Us*/}
-      <div
-        className="row"
-        style={{
-          fontSize: "0.875rem",
-          color: "#fff",
-          backgroudRepeat: "no-repeat",
-          backgroundSize: "center",
-          backgroundBlendMode: "darken",
-          background:
-            "rgba(0, 0, 0, 0.6) url('https://cdn.pixabay.com/photo/2017/07/31/04/11/tomato-2556426_1280.jpg')",
-        }}
-      >
+      <div className="container" style={{ paddingBottom: 40 }}>
+        {/* Section Header */}
+        {/* Section Lelang */}
+        {/* <div className="row my-4">
+          <h5>Lelang saat ini</h5>
+          <CardAuction />
+          <CardAuction />
+          <CardAuction />
+          <CardAuction />
+        </div> */}
+        {/* Section Why Us*/}
         <div
-          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+          className="d-flex my-5"
           style={{
-            height: "25rem",
+            // padding: 12,
+            fontSize: "0.875rem",
+            color: "#fff",
+            // background:
+            //   "rgba(0, 0, 0, 0.6) url('https://cdn.pixabay.com/photo/2017/07/31/04/11/tomato-2556426_1280.jpg')",
+            // backgroudRepeat: "no-repeat",
+            // backgroundSize: "cover",
+            // backgroundPosition: 'center',
+            // backgroundBlendMode: "darken",
           }}
         >
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: "5rem", color: "#94d537" }}
+          <div
+            className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+            style={{
+              height: "25rem",
+              padding: 20,
+              background:
+                "rgba(0, 0, 0, 0.3) url('https://media.istockphoto.com/photos/senior-man-with-bunch-of-freshly-harvested-carrots-picture-id1251268131?k=20&m=1251268131&s=612x612&w=0&h=Elmzhbu2RBxIIFq20km7OO3Po69YbruWyrOy5Krmps0=')",
+              backgroudRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: 'center',
+              backgroundBlendMode: "darken",
+            }}
           >
-            nest_eco_leaf
-          </span>
-          <h5>
-            <strong> Produk segar </strong>
-          </h5>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-            a doloremque quam, corporis illo quisquam eum.
-          </p>
-        </div>
-        <div
-          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
-          style={{ height: "25rem" }}
-        >
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: "5rem", color: "#94d537" }}
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: "5rem", color: "#94d537" }}
+            >
+              nest_eco_leaf
+            </span>
+            <h5>
+              <strong> Produk segar </strong>
+            </h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+              a doloremque quam, corporis illo quisquam eum.
+            </p>
+          </div>
+          <div
+            className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+            style={{
+              height: "25rem", background:
+                "rgba(0, 0, 0, 0.3) url('https://media.istockphoto.com/photos/farmer-carrying-a-tray-of-vegetable-seedlings-to-plant-picture-id1399500064?k=20&m=1399500064&s=612x612&w=0&h=zD300KuSDl4p0DG3c_pF_Yih90zAcGlAwhaVttHcSPk=')",
+              backgroudRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: 'center',
+              backgroundBlendMode: "darken",
+            }}
           >
-            schedule
-          </span>
-          <h5>
-            <strong> Pengiriman yang cepat</strong>
-          </h5>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-            a doloremque quam, corporis illo quisquam eum.
-          </p>
-        </div>
-        <div
-          className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
-          style={{ height: "25rem" }}
-        >
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: "5rem", color: "#94d537" }}
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: "5rem", color: "#94d537" }}
+            >
+              schedule
+            </span>
+            <h5>
+              <strong> Pengiriman yang cepat</strong>
+            </h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+              a doloremque quam, corporis illo quisquam eum.
+            </p>
+          </div>
+          <div
+            className="col d-flex flex-column justify-content-sm-evenly align-items-center text-center"
+            style={{
+              height: "25rem", background:
+                "rgba(0, 0, 0, 0.3) url('https://media.istockphoto.com/photos/cheerful-farmer-in-alfalfa-field-picture-id1409900493?k=20&m=1409900493&s=612x612&w=0&h=tF4jAWkGgUafELRsusTznUhZ7du6CzLTq2IXXr6NKQI=')",
+              backgroudRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: 'center',
+              backgroundBlendMode: "darken",
+            }}
           >
-            priority
-          </span>
-          <h5>
-            <strong>Pelayanan memuaskan</strong>
-          </h5>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-            a doloremque quam, corporis illo quisquam eum.
-          </p>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: "5rem", color: "#94d537" }}
+            >
+              priority
+            </span>
+            <h5>
+              <strong>Pelayanan memuaskan</strong>
+            </h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+              a doloremque quam, corporis illo quisquam eum.
+            </p>
+          </div>
         </div>
-      </div>
-      {/* Section Lelang */}
-      <div className="row my-4">
+        {/* Section Lelang */}
         <div className="row">
           <div className="col">
-            <h5>Produk Agro</h5>
+            <h3 style={{ fontFamily: 'Lato', fontWeight: 700, color: '#696969' }}>Produk Terbaru</h3>
           </div>
           <div
             className="col d-flex justify-content-end"
@@ -140,26 +166,10 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-        // <CardProduct products={products} />
-        {/* <CardProduct /> */}
+        <div className="custom-row-1">
+          <CardProduct products={productsLatest} />
+        </div>
       </div>
-      {/* <div className="custom-row-1">
-        {products?.map((product, i) => {
-          return (
-            <div className="custom-col-1" key={"list-product-" + i}>
-              <div className="custom-col-1-card">
-                <div className="custom-col-1-card-img">
-                  <img src={product.mainImg} />
-                </div>
-                <h3 className="card-name">{product.name}</h3>
-                <p className="card-price">
-                  {product.price}/{product.unit}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div> */}
-    </div>
+    </>
   );
 }

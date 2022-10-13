@@ -352,17 +352,19 @@ export default function FormModalNew(props) {
               </div>
             </div>
           </div>
-          <button onClick={clearError} type="submit" style={{ width: 'fit-content', padding: '0 20px', float: 'right', marginBottom: '0' }} className="custom-btn-1">
-            {
-              isLoadingSubmit ?
-                <>
-                  <span className="spinner-border text-light sr-only" style={{ width: '20px', height: '20px', border: '2px solid #fff', borderRightColor: 'transparent' }}></span>
-                  <span style={{ marginLeft: '10px' }}>Loading...</span>
-                </>
-                :
-                'Create'
-            }
-          </button>
+          <div style={{ marginBottom: 40 }}>
+            <button onClick={clearError} type="submit" style={{ width: 'fit-content', padding: '0 20px', float: 'right', marginBottom: '0' }} className="custom-btn-1">
+              {
+                isLoadingSubmit ?
+                  <>
+                    <span className="spinner-border text-light sr-only" style={{ width: '20px', height: '20px', border: '2px solid #fff', borderRightColor: 'transparent' }}></span>
+                    <span style={{ marginLeft: '10px' }}>Loading...</span>
+                  </>
+                  :
+                  'Create'
+              }
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal >

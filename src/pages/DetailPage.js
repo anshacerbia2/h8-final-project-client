@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { courierCost, fetchProduct, fetchProvinces, fetchUser, postCart } from "../store/actions";
 import Breadcumb from "../components/Breadcumb";
-import { formatDate, swalImg, toIDR } from "../helpers";
+import { formatDate, swalImg, swalWithBootstrapButtons, toIDR } from "../helpers";
 import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
 
@@ -17,7 +17,6 @@ export default function DetailPage() {
   const { isLoadingSubmit, user } = useSelector((state) => state.globalReducer);
   const { isLoading, provinces, cities } = useSelector((state) => state.globalReducer);
 
-  console.log(user);
   const [cart, setCart] = useState({
     origin: null,
     destination: null,
@@ -29,13 +28,13 @@ export default function DetailPage() {
 
   useEffect(() => {
     dispatch(fetchProduct(id));
-    dispatch(fetchUser());
+    if (localStorage.getItem('access_token')) dispatch(fetchUser());
   }, []);
 
   useEffect(() => {
     const setUp = async () => {
       const orig = product.User.Addresses.find(v => v.default === true);
-      const dest = user.Addresses.find(v => v.default === true);
+      const dest = user ? user.Addresses.find(v => v.default === true) : null;
       setCart({ ...cart, origin: orig.cityId, destination: dest.cityId, ProductId: product.id })
     }
     setUp()
@@ -44,10 +43,15 @@ export default function DetailPage() {
   const addCartHandler = async (e) => {
     try {
       e.preventDefault();
-      if (cart.quantity > product.stock) {
-        console.log("invalid stock");
+      if (!localStorage.getItem('access_token')) {
+        swalWithBootstrapButtons.fire({
+          title: '"Silahkan login dahulu"',
+          icon: 'warning',
+          timer: 3000,
+        });
         return;
       }
+
       console.log(cart);
       const resp = await dispatch(postCart(cart));
       // const respJSON = await resp.json();
@@ -73,9 +77,17 @@ export default function DetailPage() {
 
   const renderChat = (e) => {
     e.preventDefault()
+    if (!localStorage.getItem('access_token')) {
+      swalWithBootstrapButtons.fire({
+        title: '"Silahkan login dahulu"',
+        icon: 'warning',
+        timer: 3000,
+      });
+      return;
+    }
     navigate(`/chat/${product.User.id}`)
   }
-  
+
   const incrementHandler = () => {
     if (cart.quantity >= product.stock) return;
     setCart({ ...cart, ['quantity']: cart.quantity + 1, weight: cart.weight + 1000 });
@@ -93,10 +105,10 @@ export default function DetailPage() {
     if (name === 'quantity' && (value > product.stock || value < 1)) return;
     setCart({ ...cart, [name]: value });
   }
-  
+
   return (
     <div id="DetailPage">
-      <Breadcumb />
+      <Breadcumb product={product} />
       <div className="container">
         <div className="custom-row-1">
           <div
