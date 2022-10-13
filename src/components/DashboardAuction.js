@@ -22,10 +22,39 @@ export default function DashboardAuction() {
       <div className="custom-row-1">
         <div
           style={{
-            width: 'calc(100% - 240px)',
-            margin: '0 10px'
+            width: '100%',
+            margin: '0'
           }}
         >
+          {/* <div className="dc-cart-content">
+            {
+              <div className="cart-card" style={{ marginTop: 0 }}>
+                <div className="cart-card-author">
+                  <img src={user ? user.avatar : ''} style={{ borderRadius: 15, width: 30, minWidth: 30, height: 30, minHeight: 30, objectFit: 'cover', objectPosition: 'center' }} />
+                  <span style={{ marginLeft: '12px', fontWeight: '600', fontSize: 13 }}>Ansha Cerbia</span>
+                </div>
+                <div div className="custom-row-1" style={{ width: '100%', left: 0 }}>
+                  <div className="cart-img">
+                    <img src="https://a1c9fd6e407b46044151-ccb4f7d4d6f45dfb3ad745c5c1495007.ssl.cf1.rackcdn.com/v4/images_flowers/thumbs/5271469782396.jpg" />
+                  </div>
+                  <div className="cart-content">
+                    <span className="cart-name">Angreek Putih</span>
+                    <span className="cart-price">{toIDR(5000000)}</span>
+                    <div className="detail-cart-action" style={{ marginTop: 8, maxWidth: 180, marginLeft: 'auto' }}>
+                      <button
+                        id="openChat"
+                        type="button"
+                        className="btn custom-btn-1"
+                        onClick={() => auctionCarts.length ? setModalShow(true) : null}
+                      >
+                        <span>Finish Payment</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div> */}
           <div className="dc-cart-content">
             {
               auctionCarts.length ?
@@ -53,15 +82,15 @@ export default function DashboardAuction() {
             }
           </div>
         </div>
-        <div
+        {/* <div
           style={{
             minWidth: 200,
             width: 200,
             margin: '0 10px'
           }}
         >
-          <form>
-            {/* <h6 className="detail-cart-title">Atur Pengiriman</h6>
+          <form> */}
+        {/* <h6 className="detail-cart-title">Atur Pengiriman</h6>
             <div className="group-input mt-3 mb-3 select-courier">
               <select
                 name="courier"
@@ -77,7 +106,7 @@ export default function DashboardAuction() {
             </div>
             <h6 className="detail-cart-title">Total Harga<span style={{ fontSize: 13, fontWeight: 500 }}> (&nbsp;{qty} product)</span></h6>
             <p style={{ color: '#696969', fontWeight: '900' }}>{toIDR(total)}</p> */}
-            <PaymentModal
+        {/* <PaymentModal
               show={modalShow}
               // carts={carts}
               onHide={() => setModalShow(false)}
@@ -91,9 +120,9 @@ export default function DashboardAuction() {
               >
                 <span>Beli Sekarang</span>
               </button>
-            </div>
-          </form>
-        </div>
+            </div> */}
+        {/* </form>
+        </div> */}
       </div>
     </div >
   )

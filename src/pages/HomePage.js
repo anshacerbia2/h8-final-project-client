@@ -153,7 +153,7 @@ export default function HomePage() {
         {
           auctions.length ?
             <div className="custom-row-1 mb-5">
-              <CardProduct products={auctions} />
+              <CardProduct products={auctions} auction="true" />
             </div>
             :
             <div
