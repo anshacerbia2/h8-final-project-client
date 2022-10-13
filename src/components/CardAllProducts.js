@@ -11,10 +11,10 @@ const CardAllProducts = ({ products }) => {
     <>
       {products.map((product) => {
         return (
-          <div className="col" key={product.id}>
+          <div className="card-prod-col" key={product.id}>
             <div
               className="card mb-4"
-              style={{ width: "17rem", fontSize: "0.875rem" }}
+              style={{ fontSize: "0.875rem", borderRadius: 2 }}
             >
               {isLoading ? (
                 <Skeleton height="200px" />
@@ -54,7 +54,7 @@ const CardAllProducts = ({ products }) => {
                 ) : (
                   <Link
                     to={"/product/" + product.id}
-                    className="btn btn-sm btn-outline-primary"
+                    className="btn custom-btn-1"
                   >
                     Lihat selengkapnya
                   </Link>

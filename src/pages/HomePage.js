@@ -152,7 +152,7 @@ export default function HomePage() {
         </div>
         {
           auctions.length ?
-            <div className="custom-row-1 mb-5">
+            <div className="custom-row-1 mb-5" style={{ paddingEight: 30 }}>
               <CardProduct products={auctions} auction="true" />
             </div>
             :

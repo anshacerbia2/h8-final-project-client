@@ -34,9 +34,10 @@ export default function DetailPage() {
 
   useEffect(() => {
     const setUp = async () => {
-      const orig = product.User.Addresses.find(v => v.default === true);
+      const orig = product.User?.Addresses.find(v => v.default === true);
       const dest = user ? user.Addresses.find(v => v.default === true) : null;
-      setCart({ ...cart, origin: orig.cityId, destination: dest.cityId, ProductId: product.id })
+      // setCart({ ...cart, origin: orig.cityId, destination: dest.cityId, ProductId: product.id })
+      setCart({ ...cart, ProductId: product.id })
     }
     setUp()
   }, [product, user]);
@@ -278,7 +279,7 @@ export default function DetailPage() {
                   </small>
                   <p className="total-cart">
                     <span>Subtotal</span>
-                    {/* <span>{toIDR(totalPrice)}</span> */}
+                    {product.price ? <span>{toIDR(cart.quantity * product.price)}</span> : <></>}
                   </p>
                   <div className="detail-cart-action">
                     <button

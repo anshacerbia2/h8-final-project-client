@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDate, toIDR } from '../helpers';
 import { fetchHistory } from '../store/actions';
-
+// ini last push ansha
 
 export default function DashboardHistory() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function DashboardHistory() {
     <div className="DashboardHistory">
       {
         histories.length ?
-          histories.map(v => {
+          histories.reverse().map(v => {
             return (
               <div className="history-row">
                 <div className="hs-orderid">ID : &nbsp;{v.order_id ? v.order_id : ''}

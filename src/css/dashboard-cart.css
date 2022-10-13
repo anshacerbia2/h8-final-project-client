@@ -1,0 +1,12 @@
+.del-cart-btn {
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  width: auto !important;
+  border-right: 1px solid #ccc !important;
+}
+
+.cart-action-container>.del-cart-btn>span {
+  color: '#696969' !important;
+}

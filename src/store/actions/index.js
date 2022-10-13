@@ -552,6 +552,25 @@ export function deleteProduct(id) {
   };
 }
 
+export function deleteCart(id) {
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/cart/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        access_token,
+      },
+    })
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+}
+
 export function fetchProvinces() {
   return (dispatch, getState) => {
     fetch(`${baseUrl}/provinces`)

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import '../css/dashboard-cart.css';
+import { Toast } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toIDR } from "../helpers";
-import { decCart, fetchCarts, fetchUser, incCart, postCharge } from '../store/actions';
+import { swalWithBootstrapButtons, toIDR } from "../helpers";
+import { decCart, fetchCarts, fetchUser, incCart, deleteCart } from '../store/actions';
 import PaymentModal from "./PaymentModal";
 
 export default function DashboardCart() {
@@ -41,6 +43,37 @@ export default function DashboardCart() {
     }
   }
 
+  const handleDelete = async (e, id) => {
+    try {
+      e.stopPropagation();
+      const result = await swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, do it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      });
+
+      if (result.isConfirmed) {
+        const response = await dispatch(deleteCart(id));
+        if (response.status === 200) {
+          dispatch(fetchCarts());
+          Toast.fire({ icon: 'success', title: 'Cart has been deleted successfully..' });
+        } else {
+          const responseJSON = await response.json();
+          swalWithBootstrapButtons.fire({
+            title: responseJSON.message,
+            icon: 'error',
+            timer: 2000
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const detailProduct = (id) => {
     navigate(`/product/${id}`);
   }
@@ -72,6 +105,9 @@ export default function DashboardCart() {
                           <span className="cart-name">{cart.Product?.name}</span>
                           <span className="cart-price">{toIDR(cart.Product?.price)}</span>
                           <div className="cart-action-container" style={{ alignSelf: 'flex-end' }} >
+                            <button className="btn del-cart-btn" onClick={(e) => handleDelete(e, cart.id)}>
+                              <span className="material-symbols-outlined" style={{ fontSize: 22 }}>delete</span>
+                            </button>
                             <button className="btn" onClick={(e) => cart.quantity - 1 <= 0 ? e.stopPropagation() : decCartHandler(e, cart.id)}>
                               <span className="material-symbols-outlined">remove</span>
                             </button>

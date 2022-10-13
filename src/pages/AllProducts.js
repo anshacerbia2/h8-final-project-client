@@ -33,18 +33,15 @@ const AllProducts = () => {
   }
   return (
     <>
-      <Breadcumb />
+      <Breadcumb allproduct={'true'} />
       <div className="container mb-4">
         <div className="row">
           <div className="col-9">
-            <div className="row">
+            <div className="custom-row-1">
               <CardAllProducts products={filterProduct} />
             </div>
           </div>
           <div className="col-3">
-            <h5 style={{ fontFamily: "Lato" }}>
-              <strong> Filter</strong>
-            </h5>
             <div className="row mb-3">
               <form onSubmit={searchProductHandler} className="input-group global-search" style={{ marginLeft: "0", width: "100%", padding: "0 0.875rem" }}>
                 <input
@@ -63,12 +60,16 @@ const AllProducts = () => {
                 </div>
               </form>
             </div>
+
+            <h5 style={{ fontFamily: "Lato", color: '#696969' }}>
+              <strong> Filter</strong>
+            </h5>
             <Accordion defaultActiveKey="0">
-              <Accordion.Item eventKey="0">
+              <Accordion.Item eventKey="0" style={{ borderRadius: 2 }}>
                 <Accordion.Header style={{ fontSize: "0.875rem" }}>
-                  <strong>Kategori</strong>
+                  <strong style={{ color: '#6daf0d' }}>Kategori</strong>
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body style={{ fonFamily: 'Lato' }}>
                   <CategoriesRadio
                     subCategories={subCategories}
                     filterHandler={filterHandler}

@@ -30,10 +30,18 @@ const CardProduct = ({ products, auction }) => {
                 <h5 className="card-title">
                   {isLoading ? <Skeleton /> : <strong> {product.name}</strong>}
                 </h5>
-                <p className="card-text">
-                  <span style={{ fontWeight: 700 }}>Harga Terkini : </span> &nbsp;
-                  {isLoading ? <Skeleton /> : toIDR(auction ? (product.lastBidPrice ? product.lastBidPrice : product.initPrice) : '')}
-                </p>
+                {
+                  auction === 'true' ?
+                    <p className="card-text">
+                      <span style={{ fontWeight: 700 }}>Harga Terkini : </span> &nbsp;
+                      {isLoading ? <Skeleton /> : toIDR(product.lastBidPrice ? product.lastBidPrice : product.initPrice)}
+                    </p>
+                    :
+                    <p className="card-text">
+                      <span style={{ fontWeight: 700 }}>Harga Terkini : </span> &nbsp;
+                      {isLoading ? <Skeleton /> : toIDR(product.price)}
+                    </p>
+                }
                 <p className="card-text">
                   {isLoading ? (
                     <Skeleton />

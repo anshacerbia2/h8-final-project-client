@@ -4,3 +4,8 @@
   font-family: 'Lato';
   color: #696969;
 }
+
+.accordion-button {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
