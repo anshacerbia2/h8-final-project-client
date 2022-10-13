@@ -104,3 +104,27 @@
   display: flex;
   align-items: center;
 }
+
+.navbar-menu>a {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #888888 !important;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 2px;
+  background-color: #fff;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.navbar-menu>a>span {
+  font-size: 20px;
+  margin-top: 1px;
+  margin-left: 4px;
+}
+
+.navbar-menu>a:hover,
+.navbar-menu>a.active {
+  color: #6daf0d !important;
+  background-color: #f5f5f5 !important;
+}

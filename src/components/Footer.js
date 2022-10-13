@@ -7,7 +7,9 @@ const Footer = () => {
         background: "#3d3d3d",
         color: "#fff",
         fontFamily: "Lato",
-        padding: " 40px 0",
+        paddingTop: 70,
+        paddingBotto: 30,
+        fontSize: 14
       }}
     >
       <div className="container">
@@ -93,7 +95,7 @@ const Footer = () => {
             </form>
           </div>
         </div>
-        <p className="text-center mt-4">Copyright 2022 - Agro Shop</p>
+        <p className="text-center py-4 mb-0">Copyright 2022 - Agro Shop</p>
       </div>
     </footer>
   );

@@ -1,14 +1,15 @@
+import { Link } from "react-router-dom"
 
-export default function Breadcumb() {
+export default function Breadcumb(props) {
   return (
     <div className="detail-navbar">
       <div className="container">
         <div className="detail-navbar-wrapper">
-          <a>Home</a>
+          <Link to="/" style={{ color: '#fff', textDecoration: 'none' }}>Home</Link>
           /
-          <a>Category</a>
+          <a>{props.product?.SubCategory.name}</a>
           /
-          <a>Product Name</a>
+          <a>{props.product?.name}</a>
         </div>
       </div>
     </div>

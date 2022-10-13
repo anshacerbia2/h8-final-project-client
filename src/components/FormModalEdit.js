@@ -487,7 +487,7 @@ export default function FormModalEdit(props) {
             load ?
               <Skeleton width={100} height={36} style={{ marginTop: '8px', float: 'right' }} />
               :
-              <div style={{ position: 'sticky', bottom: 0 }}>
+              <div style={{ marginBottom: 40 }}>
                 <button onClick={clearError} type="submit" style={{ width: 'fit-content', padding: '0 20px', float: 'right', marginBottom: '0' }} className="custom-btn-1">
                   {
                     isLoadingSubmit ?

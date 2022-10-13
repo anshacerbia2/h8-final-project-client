@@ -1,82 +1,104 @@
 import "../css/navbar.css";
+
+import React, { useEffect, useState } from "react";
 import logo from "../logo.png";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 export default function Navbar(props) {
-  const { jumbotron } = props;
+  const navigate = useNavigate();
+  // const { isLogin } = useSelector((state) => state.globalReducer);
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("access_token")) {
+      setIsLogin(true);
+    }
+  }, [isLogin])
+  const logoutHandler = () => {
+    setIsLogin(false);
+    localStorage.clear();
+    navigate("/")
+  }
   return (
     // <header>
     <>
       <nav className="navbar-sticky">
         <div className="container">
           <div className="navbar-wrapper">
-            <a className="nav-logo">
+            <Link className="nav-logo" to="/">
               <img src={logo} />
-            </a>
-            <div className="dropdown-container">
-              <button className="cat-dropdown btn">Category</button>
-            </div>
-            <form className="input-group global-search">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Recipient's username"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <div className="input-group-append">
-                <button className="btn" type="button">
-                  <span className="material-symbols-outlined">search</span>
-                </button>
-              </div>
-            </form>
-            {/* <div className=" collapse navbar-collapse" id="navbarNavDropdown">
-              <ul className="navbar-nav ms-auto ">
-                <li className="nav-item">
-                  <a
-                    className="nav-link mx-2 text-uppercase active"
-                    aria-current="page"
-                    href="#"
-                  >
-                    Offers
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2 text-uppercase" href="#">
-                    Products
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2 text-uppercase" href="#">
-                    Catalog
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2 text-uppercase" href="#">
-                    Services
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2 text-uppercase" href="#">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div> */}
-            <div className="navbar-menu">
-              {/* <a>
-                <span className="material-symbols-outlined">
-                  shopping_cart
-                </span>
-              </a>
-              <a>
-                <span className="material-symbols-outlined">
-                  shopping_cart
-                </span>
-              </a> */}
+            </Link>
+            <div style={{ flexGrow: 1 }}></div>
+            <div className="navbar-menu" style={{ marginLeft: "10rem" }}>
+              {!isLogin && (
+                <NavLink
+                  to="/login"
+                  className="d-flex"
+                  style={{
+                    cursor: "pointer",
+                    color: "black",
+                    textDecoration: "none"
+                  }}
+                >
+                  Login
+                  <span className="material-symbols-outlined">login</span>
+                </NavLink>
+              )}
+              {isLogin && (
+                <NavLink
+                  to="/dashboard"
+                  className="d-flex"
+                  style={{
+                    cursor: "pointer",
+                    color: "black",
+                    textDecoration: "none",
+                    marginRight: "1rem",
+                  }}
+                >
+                  Dashboard
+                  <span className="material-symbols-outlined">
+                    dashboard
+                  </span>
+                </NavLink>
+              )}
+              {isLogin && (
+                <Link
+                  to="/dashboard/cart"
+                  className="d-flex"
+                  style={{
+                    cursor: "pointer",
+                    color: "black",
+                    textDecoration: "none",
+                    marginRight: "1rem",
+                  }}
+                >
+                  Cart
+                  <span className="material-symbols-outlined">
+                    shopping_cart
+                  </span>
+                </Link>
+              )}
+              {isLogin && (
+                <a
+                  onClick={logoutHandler}
+                  type="submit"
+                  className="d-flex"
+                  style={{
+                    cursor: "pointer",
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Logout
+                  <span className="material-symbols-outlined">logout</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
       </nav>
-      <header>{jumbotron && <div className="jumbotron"></div>}</header>
+      {/* <header>{jumbotron && <div className="jumbotron"></div>}</header> */}
     </>
   );
 }

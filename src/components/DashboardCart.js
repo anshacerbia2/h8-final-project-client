@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toIDR } from "../helpers";
 import { decCart, fetchCarts, fetchUser, incCart, postCharge } from '../store/actions';
 import PaymentModal from "./PaymentModal";
 
 export default function DashboardCart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user, carts } = useSelector(state => state.globalReducer);
   const [courier, setCourier] = useState('jne');
   let total = 0;
@@ -19,8 +21,9 @@ export default function DashboardCart() {
     dispatch(fetchUser());
   }, []);
 
-  const incCartHandler = async (id) => {
+  const incCartHandler = async (e, id) => {
     try {
+      e.stopPropagation();
       const resp = await dispatch(incCart(id));
       if (resp.status === 200) await dispatch(fetchCarts());
     } catch (error) {
@@ -28,13 +31,18 @@ export default function DashboardCart() {
     }
   }
 
-  const decCartHandler = async (id) => {
+  const decCartHandler = async (e, id) => {
     try {
+      e.stopPropagation();
       const resp = await dispatch(decCart(id));
       if (resp.status === 200) await dispatch(fetchCarts());
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const detailProduct = (id) => {
+    navigate(`/product/${id}`);
   }
 
   return (
@@ -51,7 +59,7 @@ export default function DashboardCart() {
               carts.length ?
                 carts.map((cart, i) => {
                   return (
-                    <div className="cart-card" key={'cart-' + cart.id} style={{ marginTop: i === 0 ? 0 : '' }}>
+                    <div className="cart-card" key={'cart-' + cart.id} style={{ marginTop: i === 0 ? 0 : '' }} onClick={() => detailProduct(cart.ProductId)}>
                       <div className="cart-card-author">
                         <img src={cart.User?.avatar} style={{ borderRadius: 15, width: 30, minWidth: 30, height: 30, minHeight: 30, objectFit: 'cover', objectPosition: 'center' }} />
                         <span style={{ marginLeft: '12px', fontWeight: '600', fontSize: 13 }}>{cart.User?.fName + ' ' + cart.User?.lName}</span>
@@ -64,11 +72,11 @@ export default function DashboardCart() {
                           <span className="cart-name">{cart.Product?.name}</span>
                           <span className="cart-price">{toIDR(cart.Product?.price)}</span>
                           <div className="cart-action-container" style={{ alignSelf: 'flex-end' }} >
-                            <button className="btn" onClick={() => decCartHandler(cart.id)}>
+                            <button className="btn" onClick={(e) => cart.quantity - 1 <= 0 ? e.stopPropagation() : decCartHandler(e, cart.id)}>
                               <span className="material-symbols-outlined">remove</span>
                             </button>
                             <div style={{ fontWeight: '700' }}>{cart.quantity}</div>
-                            <button className="btn" onClick={() => incCartHandler(cart.id)}>
+                            <button className="btn" onClick={(e) => cart.quantity + 1 > cart.Product.stock ? e.stopPropagation() : incCartHandler(e, cart.id)}>
                               <span className="material-symbols-outlined">add</span>
                             </button>
                           </div>
