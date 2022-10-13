@@ -297,6 +297,28 @@ export function fetchAuctionCarts() {
   };
 }
 
+export function fetchAuctions() {
+  const access_token = localStorage.getItem("access_token");
+  return (dispatch, getState) => {
+    return fetch(`${baseUrl}/auctions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: "auctions/fetchSuccess",
+          payload: data,
+        });
+      });
+  };
+}
+
 export function postCart(args) {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
