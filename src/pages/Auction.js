@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toIDR } from "../helpers";
 import axios from 'axios'
 import io from "socket.io-client"
@@ -9,6 +9,7 @@ const mongoServerUrl = `http://localhost:4001` //url mongo auction server
 const socket = io(mongoServerUrl)
 
 const Auction = () => {
+  const navigate = useNavigate()
   const { id: AuctionProductId } = useParams();
   const [bidPrice, setBidPrice] = useState(0);
   const [openPrice, setOpenPrice] = useState(11500);
@@ -40,6 +41,9 @@ const Auction = () => {
     }
   };
   useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate(`/`)
+    }
     let user = JSON.parse(localStorage.getItem("user"))
     setCurrentUserId(user.id)
     axios.get(`${serverUrl}/auctions/${AuctionProductId}`, {
