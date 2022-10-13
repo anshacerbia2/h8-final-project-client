@@ -233,7 +233,7 @@ export default function FormModalNew(props) {
             <div className="custom-col-1">
               <div className="form-floating">
                 <input
-                  type="text"
+                  type="date"
                   name="harvestDate"
                   id="productImage"
                   className="form-control"
