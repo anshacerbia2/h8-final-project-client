@@ -5,8 +5,9 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 
-const CardProduct = ({ products }) => {
+const CardProduct = ({ products, auction }) => {
   const { isLoading } = useSelector((state) => state.globalReducer);
+  console.log(products);
   return (
     <>
       {products.map((product) => {
@@ -17,7 +18,7 @@ const CardProduct = ({ products }) => {
                 <Skeleton height="200px" />
               ) : (
                 <img
-                  src={product.mainImg}
+                  src={product.mainImg ? product.mainImg : product.imgUrl}
                   className="card-img-top"
                   alt={product.name}
                   height="250px"
@@ -30,8 +31,8 @@ const CardProduct = ({ products }) => {
                   {isLoading ? <Skeleton /> : <strong> {product.name}</strong>}
                 </h5>
                 <p className="card-text">
-                  {isLoading ? <Skeleton /> : toIDR(product.price)}/
-                  {product.unit}
+                  <span style={{ fontWeight: 700 }}>Harga Terkini : </span> &nbsp;
+                  {isLoading ? <Skeleton /> : toIDR(auction ? (product.lastBidPrice ? product.lastBidPrice : product.initPrice) : '')}
                 </p>
                 <p className="card-text">
                   {isLoading ? (
@@ -45,7 +46,7 @@ const CardProduct = ({ products }) => {
                 ) : (
                   <Link
                     className="btn custom-btn-1"
-                    to={"/product/" + product.id}
+                    to={auction ? "/auction/" + product.id : "/product/" + product.id}
                   >
                     Lihat selengkapnya
                   </Link>

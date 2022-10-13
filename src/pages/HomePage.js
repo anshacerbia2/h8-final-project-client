@@ -2,7 +2,7 @@ import "../css/home.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchLatestProducts } from "../store/actions";
+import { fetchAuctions, fetchLatestProducts } from "../store/actions";
 import CardAuction from "../components/CardAuction";
 import CardProduct from "../components/CardProduct";
 import { Link } from "react-router-dom";
@@ -11,9 +11,11 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { productsLatest } = useSelector((state) => state.productReducer);
+  const { auctions } = useSelector((state) => state.globalReducer);
 
   useEffect(() => {
     dispatch(fetchLatestProducts())
+    dispatch(fetchAuctions())
   }, []);
 
   return (
@@ -143,6 +145,28 @@ export default function HomePage() {
           </div>
         </div>
         {/* Section Lelang */}
+        <div className="row">
+          <div className="col">
+            <h3 style={{ fontFamily: 'Lato', fontWeight: 700, color: '#696969' }}>Produk Lelang</h3>
+          </div>
+        </div>
+        {
+          auctions.length ?
+            <div className="custom-row-1 mb-5">
+              <CardProduct products={auctions} auction="true" />
+            </div>
+            :
+            <div
+              className="mb-5"
+              style={{
+                border: '1px solid #ccc',
+                fontFamily: 'Lato',
+                fontSize: 18,
+                padding: 140,
+                textAlign: 'center',
+                color: '#696969'
+              }}>Tidak ada lelang yang sedang berlangsung...</div>
+        }
         <div className="row">
           <div className="col">
             <h3 style={{ fontFamily: 'Lato', fontWeight: 700, color: '#696969' }}>Produk Terbaru</h3>
