@@ -10,6 +10,7 @@ import { isValidInputTimeValue } from "@testing-library/user-event/dist/utils";
 import Skeleton from "react-loading-skeleton";
 
 export default function DetailPage() {
+  // 
   const navigate = useNavigate()
   const { id } = useParams();
   const dispatch = useDispatch();
