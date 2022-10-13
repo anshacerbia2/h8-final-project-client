@@ -10,6 +10,7 @@ export default function DashboardAuction() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, auctionCarts } = useSelector(state => state.globalReducer);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -60,7 +61,7 @@ export default function DashboardAuction() {
           }}
         >
           <form>
-            <h6 className="detail-cart-title">Atur Pengiriman</h6>
+            {/* <h6 className="detail-cart-title">Atur Pengiriman</h6>
             <div className="group-input mt-3 mb-3 select-courier">
               <select
                 name="courier"
@@ -75,7 +76,7 @@ export default function DashboardAuction() {
               </select>
             </div>
             <h6 className="detail-cart-title">Total Harga<span style={{ fontSize: 13, fontWeight: 500 }}> (&nbsp;{qty} product)</span></h6>
-            <p style={{ color: '#696969', fontWeight: '900' }}>{toIDR(total)}</p>
+            <p style={{ color: '#696969', fontWeight: '900' }}>{toIDR(total)}</p> */}
             <PaymentModal
               show={modalShow}
               // carts={carts}
@@ -86,7 +87,7 @@ export default function DashboardAuction() {
                 id="openChat"
                 type="button"
                 className="btn custom-btn-1"
-                onClick={() => carts.length ? setModalShow(true) : null}
+                onClick={() => auctionCarts.length ? setModalShow(true) : null}
               >
                 <span>Beli Sekarang</span>
               </button>
